@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 export default function CompanyMobile() {
-  // Your logos
+  // Logos
   const companyImages = [
     { id: 1, src: "/company-logos/company-1.png", alt: "Company 1" },
     { id: 2, src: "/company-logos/company-2.png", alt: "Company 2" },
@@ -13,17 +13,44 @@ export default function CompanyMobile() {
     { id: 6, src: "/company-logos/company-6.png", alt: "Company 6" },
   ];
 
-  // How many "train cars" (segments) you want visible sequentially
-  const SEGMENTS = 4; // tweak this
+  // How many “train cars” (segments) per loop
+  const SEGMENTS = 4;
+
+  // Sizing knobs (use same for measurer & live row)
+  const SIZES = {
+    // container (row) height
+    rowH: "clamp(64px, 18vw, 116px)",
+    // each logo cell width
+    cellW: "clamp(82px, 24vw, 140px)",
+    // gap between cells
+    cellGapClass: "mx-3 sm:mx-4",
+    // max logo visual height
+    imgMaxH: "clamp(36px, 12vw, 80px)",
+  };
+
+  // Speed control: pixels per second (consistent feel across screen sizes)
+  const PX_PER_SEC = 60;
 
   const containerRef = useRef(null);
   const measureRowRef = useRef(null);
   const firstSegmentRef = useRef(null);
 
-  // Ensure a single segment is >= container width
   const [repeatCount, setRepeatCount] = useState(3);
   const [segmentWidth, setSegmentWidth] = useState(0);
+  const [durationSec, setDurationSec] = useState(20);
+  const [reduceMotion, setReduceMotion] = useState(false);
 
+  // Respect prefers-reduced-motion
+  useEffect(() => {
+    const mq = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    if (!mq) return;
+    const handler = () => setReduceMotion(!!mq.matches);
+    handler();
+    mq.addEventListener?.("change", handler);
+    return () => mq.removeEventListener?.("change", handler);
+  }, []);
+
+  // Compute how many base repeats needed to cover one segment width
   useEffect(() => {
     const calc = () => {
       const container = containerRef.current;
@@ -31,11 +58,11 @@ export default function CompanyMobile() {
       if (!container || !row) return;
 
       const containerW = container.offsetWidth;
-      const baseW = row.scrollWidth; // width of one base logo row
+      const baseW = row.scrollWidth;
       if (!baseW) return;
 
       const needed = Math.max(1, Math.ceil(containerW / baseW));
-      setRepeatCount(needed + 1); // +1 buffer to avoid DPR rounding gaps
+      setRepeatCount(needed + 1); // +1 buffer for DPR rounding
     };
 
     calc();
@@ -43,34 +70,43 @@ export default function CompanyMobile() {
     return () => window.removeEventListener("resize", calc);
   }, []);
 
-  // Build one segment (repeats the logos until >= container width)
+  // Build one segment (repeated logos until >= container width)
   const segmentLogos = useMemo(() => {
     const arr = [];
     for (let i = 0; i < repeatCount; i++) arr.push(...companyImages);
     return arr;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [repeatCount]); // companyImages is static here
 
-  // After render, measure the actual pixel width of ONE segment
+  // After render, measure the pixel width of ONE segment
   useEffect(() => {
     if (!firstSegmentRef.current) return;
     const w = firstSegmentRef.current.getBoundingClientRect().width;
     if (w) setSegmentWidth(Math.round(w));
   }, [segmentLogos]);
 
-  // Build the full track: [N segments] + [N segments clone]
+  // Compute duration so speed is constant in px/s
+  useEffect(() => {
+    if (segmentWidth <= 0) return;
+    const loopDistance = segmentWidth * SEGMENTS; // px
+    setDurationSec(loopDistance / PX_PER_SEC); // seconds
+  }, [segmentWidth]);
+
   const half = useMemo(
     () => Array.from({ length: SEGMENTS }, (_, i) => ({ key: `seg-${i}` })),
     [SEGMENTS]
   );
 
-  const durationSec = 100; // speed (lower = faster)
-
   return (
     <div className="bg-white py-8">
-      <div className="container mx-auto px-4">
+      <div className="mx-auto px-4 w-full max-w-[46rem]">
         <h2
-          className="text-center text-[28px] font-normal mb-8"
-          style={{ fontFamily: "Questrial, sans-serif", fontWeight: 400 }}
+          className="text-center font-normal mb-6 leading-[1.15]"
+          style={{
+            fontFamily: "Questrial, sans-serif",
+            fontWeight: 400,
+            fontSize: "clamp(22px, 7vw, 28px)",
+          }}
         >
           We create <br /> digital identities that breathe, <br /> adapt, and inspire change.
         </h2>
@@ -78,7 +114,8 @@ export default function CompanyMobile() {
 
       <div
         ref={containerRef}
-        className="h-[116px] bg-gray-50 overflow-hidden relative"
+        className="overflow-hidden relative w-full"
+        style={{ height: SIZES.rowH, backgroundColor: "#F9FAFB" }} // gray-50
       >
         {/* Hidden measurer for one base row (to compute repeatCount) */}
         <div
@@ -86,38 +123,34 @@ export default function CompanyMobile() {
           className="absolute -z-10 opacity-0 pointer-events-none whitespace-nowrap"
           aria-hidden
         >
-          <LogoRow images={companyImages} />
+          <LogoRow images={companyImages} sizes={SIZES} />
         </div>
 
         {/* Animated track: translate by N × segmentWidth, then loop */}
         <motion.div
           className="flex will-change-transform select-none"
           animate={
-            segmentWidth > 0
+            !reduceMotion && segmentWidth > 0
               ? { x: [0, -segmentWidth * SEGMENTS] }
-              : { x: [0, 0] }
+              : { x: 0 }
           }
-          transition={{
-            ease: "linear",
-            duration: durationSec,
-            repeat: Infinity,
-          }}
+          transition={
+            !reduceMotion && segmentWidth > 0
+              ? { ease: "linear", duration: durationSec, repeat: Infinity }
+              : undefined
+          }
         >
-          {/* FIRST HALF (measured ref on the first segment) */}
+          {/* FIRST HALF */}
           {half.map((h, i) => (
-            <div
-              key={h.key}
-              ref={i === 0 ? firstSegmentRef : null}
-              className="flex"
-            >
-              <LogoRow images={segmentLogos} />
+            <div key={h.key} ref={i === 0 ? firstSegmentRef : null} className="flex">
+              <LogoRow images={segmentLogos} sizes={SIZES} />
             </div>
           ))}
 
           {/* SECOND HALF (exact clone for perfect wrap) */}
-          {half.map((h, i) => (
+          {half.map((h) => (
             <div key={`${h.key}-clone`} className="flex">
-              <LogoRow images={segmentLogos} />
+              <LogoRow images={segmentLogos} sizes={SIZES} />
             </div>
           ))}
         </motion.div>
@@ -126,22 +159,24 @@ export default function CompanyMobile() {
   );
 }
 
-function LogoRow({ images }) {
+function LogoRow({ images, sizes }) {
+  const { cellW, cellGapClass, rowH, imgMaxH } = sizes;
   return (
     <div className="flex whitespace-nowrap">
       {images.map((company, idx) => (
         <div
           key={`${company.id}-${idx}`}
-          className="flex-shrink-0 mx-4 flex items-center justify-center h-[116px]"
-          style={{ width: 120 }} // smaller width for mobile
+          className={`flex-shrink-0 ${cellGapClass} flex items-center justify-center`}
+          style={{ width: cellW, height: rowH }}
         >
           <img
             src={company.src}
             alt={company.alt}
-            className="max-h-[60px] object-contain" // smaller max height for mobile
+            style={{ maxHeight: imgMaxH, width: "auto" }}
+            className="object-contain"
           />
         </div>
       ))}
     </div>
   );
-} 
+}

@@ -6,6 +6,8 @@ import PartnershipCarousel from "@/components/PartnershipCarousel";
 import Beyond from "@/components/Beyond";
 import Journey from "@/components/Journey";
 import Price from "@/components/Price";
+import FAQ from "@/components/FAQ";
+import Outro from "@/components/Outro";
 
 export default function Page() {
   return (
@@ -18,6 +20,11 @@ export default function Page() {
       <Beyond/>
       <Journey/>
       <Price/>
+      <div className="bg-black">
+      <FAQ/>
+      </div>
+      
+      <Outro/>
     </>
   );
 }

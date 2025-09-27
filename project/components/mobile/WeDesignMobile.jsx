@@ -31,24 +31,19 @@ export default function WeDesignMobile() {
     return index - 1; // real slides are shifted by +1
   }, [index, base.length, items.length]);
 
-  // auto-advance every 2s
+  // auto-advance every 2.2s (slightly calmer)
   useEffect(() => {
-    const id = setInterval(() => {
-      setIndex((i) => i + 1);
-    }, 2000);
+    const id = setInterval(() => setIndex((i) => i + 1), 2200);
     return () => clearInterval(id);
   }, []);
 
   // seamless loop: when animation ends on a clone, jump (no animation) to matching real
   const handleAnimComplete = () => {
     if (index === items.length - 1) {
-      // at right clone -> jump to first real (1)
       setNoAnim(true);
       setIndex(1);
-      // re-enable animation on next frame
       requestAnimationFrame(() => setNoAnim(false));
     } else if (index === 0) {
-      // at left clone -> jump to last real (items.length - 2)
       setNoAnim(true);
       setIndex(items.length - 2);
       requestAnimationFrame(() => setNoAnim(false));
@@ -60,44 +55,55 @@ export default function WeDesignMobile() {
     const dots = [];
     for (let offset = -1; offset <= 1; offset++) {
       const idx = (real + offset + base.length) % base.length;
-      dots.push({
-        id: idx, // stable within base
-        position: offset, // -1, 0, 1
-        active: offset === 0,
-      });
+      dots.push({ id: idx, position: offset, active: offset === 0 });
     }
     return dots;
   }, [real, base.length]);
 
   return (
-    <div className="bg-white min-h-screen flex flex-col items-center justify-center py-8 px-4">
-      {/* Centered text - Mobile */}
+    <div className="bg-white py-6 px-4">
+      {/* Centered text - Mobile (fluid, compact) */}
       <h1
-        className="text-center mb-8 text-[24px] sm:text-[28px] leading-[32px] sm:leading-[36px]"
-        style={{ fontFamily: "Questrial, sans-serif", color: "#000000" }}
+        className="text-center mb-5 leading-[1.2]"
+        style={{
+          fontFamily: "Questrial, sans-serif",
+          color: "#000",
+          fontSize: "clamp(20px, 6.2vw, 28px)",
+        }}
       >
         Your <span className="text-black/50">website is</span> <br />
         <span className="text-black/50">your most</span> powerful touchpoint.
       </h1>
 
-      {/* Green box - Mobile */}
-      <div className="w-full max-w-sm mx-auto">
+      {/* Green box - compact, fluid */}
+      <div className="w-full max-w-[28rem] mx-auto">
         <div
-          className="rounded-2xl relative p-6 mb-6"
-          style={{ backgroundColor: "#E8FC53", minHeight: "200px" }}
+          className="rounded-2xl relative px-4 sm:px-6 pt-5 pb-4 sm:pb-6 mb-4 sm:mb-6"
+          style={{
+            backgroundColor: "#E8FC53",
+            minHeight: "clamp(140px, 34vw, 220px)",
+          }}
         >
-          {/* Center aligned text - Mobile */}
-          <div className="mb-4">
+          {/* Heading */}
+          <div className="mb-3 sm:mb-4">
             <h2
-              className="text-[44px] mb-4 text-center"
-              style={{ fontFamily: "Syne, sans-serif", color: "#000000", lineHeight: "1.1" }}
+              className="text-center"
+              style={{
+                fontFamily: "Syne, sans-serif",
+                color: "#000",
+                lineHeight: "1.08",
+                fontSize: "clamp(26px, 9vw, 44px)",
+              }}
             >
               We design for
             </h2>
           </div>
 
-          {/* Carousel text - Mobile */}
-          <div className="relative h-24 overflow-hidden">
+          {/* Carousel text - fluid height & type */}
+          <div
+            className="relative overflow-hidden mx-auto"
+            style={{ height: "clamp(56px, 14vw, 96px)" }}
+          >
             <motion.div
               className="flex"
               animate={{ x: `-${index * 100}%` }}
@@ -110,9 +116,9 @@ export default function WeDesignMobile() {
                   className="w-full flex-shrink-0 text-center"
                   style={{
                     fontFamily: "Questrial, sans-serif",
-                    fontSize: "28px",
-                    color: "#000000",
-                    lineHeight: "1.2",
+                    color: "#000",
+                    lineHeight: "1.15",
+                    fontSize: "clamp(18px, 6.2vw, 28px)",
                   }}
                   dangerouslySetInnerHTML={{ __html: item }}
                 />
@@ -121,44 +127,31 @@ export default function WeDesignMobile() {
           </div>
         </div>
 
-        {/* Mobile dots indicator */}
-        <div className="flex justify-center gap-4">
+        {/* Dots — smaller & tighter to save vertical space */}
+        <div className="flex justify-center gap-2.5 sm:gap-3">
           {visibleDots.map((dot) => {
             const isActive = dot.active;
             const isLeft = dot.position === -1;
             const isRight = dot.position === 1;
-
             return (
-              <motion.div
+              <motion.button
                 key={`dot-${dot.id}`}
-                className="rounded-full bg-gray-500 cursor-pointer"
-                layout
-                initial={{
-                  scale: 1,
-                  opacity: 0,
-                  x: isRight ? 30 : isLeft ? -30 : 0,
+                aria-label={`Show slide ${dot.id + 1}`}
+                className="rounded-full bg-gray-500"
+                style={{
+                  width: "clamp(8px, 2.8vw, 12px)",
+                  height: "clamp(8px, 2.8vw, 12px)",
                 }}
+                layout
+                initial={{ scale: 1, opacity: 0, x: isRight ? 20 : isLeft ? -20 : 0 }}
                 animate={{
-                  scale: isActive ? 2.6 : 1,
+                  scale: isActive ? 2.1 : 1,
                   opacity: isActive ? 1 : 0.5,
                   x: 0,
                 }}
-                exit={{
-                  opacity: 0,
-                  x: isLeft ? -30 : isRight ? 30 : 0,
-                  transition: { duration: 0.3 },
-                }}
-                style={{ width: "15px", height: "15px" }}
-                transition={{
-                  duration: 0.6,
-                  ease: "easeInOut",
-                  layout: { duration: 0.6, ease: "easeInOut" },
-                }}
-                onClick={() => {
-                  // jump to the clicked real slide by setting index to real+1
-                  const targetIndex = dot.id + 1; // because of left clone at 0
-                  setIndex(targetIndex);
-                }}
+                exit={{ opacity: 0, x: isLeft ? -20 : isRight ? 20 : 0, transition: { duration: 0.25 } }}
+                transition={{ duration: 0.45, ease: "easeInOut", layout: { duration: 0.45, ease: "easeInOut" } }}
+                onClick={() => setIndex(dot.id + 1)} // because of left clone at 0
               />
             );
           })}
