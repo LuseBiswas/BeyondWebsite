@@ -1,324 +1,389 @@
 "use client";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function BeyondMobile() {
-  const videoCards = [
+  // timings & easing (match desktop)
+  const TRANSITION_MS = 900;   // crossfade duration
+  const SLIDE_MS = 5000;       // time per slide
+  const EASE = "easeInOut";
+
+  // Mobile slides now mirror desktop: include a STATIC first slide
+  const slides = [
+    {
+      id: 0,
+      isStatic: true,
+      imageUrl: "/image/bg.png",
+      title: "Beyond the Surface",
+      subtitle: "It's always"
+    },
     {
       id: 1,
+      isStatic: false,
       videoUrl: "https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_11.mov",
-      imageUrl: "/image/img_1.png",
-      title: "Beyond Attraction",
-      subtitle: "into trust, engagement, and action."
+      title: "Beyond <br/> Attraction",
+      subtitle: "into trust, engagement,<br/> and action."
     },
     {
       id: 2,
+      isStatic: false,
       videoUrl: "https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_12.mov",
-      imageUrl: "/image/img_2.png",
-      title: "Beyond Colours",
-      subtitle: "into clarity, accessibility, and emotion."
+      title: "Beyond <br/>Colours",
+      subtitle: "into clarity, accessibility,<br/>and emotion."
     },
     {
       id: 3,
+      isStatic: false,
       videoUrl: "https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_13.mov",
-      imageUrl: "/image/img_3.png",
-      title: "Beyond Trends",
-      subtitle: "into timeless design that adapts to change."
+      title: "Beyond<br/>Trends",
+      subtitle: "into timeless design<br/>that adapts to change."
     },
     {
       id: 4,
+      isStatic: false,
       videoUrl: "https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_14.mov",
-      imageUrl: "/image/img_4.png",
-      title: "Beyond Layouts",
-      subtitle: "into journeys that feel intuitive and human."
+      title: "Beyond<br/>Layouts",
+      subtitle: "into journeys that feel<br/>intuitive and human."
     }
   ];
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const [activeVideoIndex, setActiveVideoIndex] = useState(0); // 0 or 1 to track which video is active
+  const [selectedSlide, setSelectedSlide] = useState(slides[0]);
+  const [activeVideoLayer, setActiveVideoLayer] = useState(0); // 0 or 1
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const backgroundVideoRef = useRef(null);
-  const backgroundVideoRef2 = useRef(null);
-  
-  // Touch/swipe state
-  const [touchStart, setTouchStart] = useState(null);
-  const [touchEnd, setTouchEnd] = useState(null);
 
-  const handleCardChange = async (index) => {
-    if (isTransitioning) return; // Prevent multiple transitions
-    
-    setActiveIndex(index);
-    
-    const currentVideo = activeVideoIndex === 0 ? backgroundVideoRef.current : backgroundVideoRef2.current;
-    const nextVideo = activeVideoIndex === 0 ? backgroundVideoRef2.current : backgroundVideoRef.current;
-    
-    if (index > 0 && currentVideo && nextVideo) {
-      // Start transition for video background
+  const videoARef = useRef(null);
+  const videoBRef = useRef(null);
+  const preloadRef = useRef(null);
+
+  // Swipe handling
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd,   setTouchEnd]   = useState(null);
+
+  const waitForPlaying = (el) =>
+    new Promise((resolve) => {
+      if (!el) return resolve();
+      if (!el.paused && !el.ended && el.readyState >= 3) return resolve();
+      const onPlaying = () => {
+        el.removeEventListener("playing", onPlaying);
+        resolve();
+      };
+      const t = setTimeout(() => {
+        el.removeEventListener("playing", onPlaying);
+        resolve();
+      }, 1200);
+      el.addEventListener("playing", onPlaying, { once: true });
+      el.play().catch(() => {}); // muted + playsInline should allow autoplay
+    });
+
+  // Auto-advance loop (deterministic like desktop)
+  useEffect(() => {
+    let cancelled = false;
+    let timer;
+
+    const lookaheadPreload = (index) => {
+      const la = slides[(index + 1) % slides.length];
+      if (!la.isStatic && preloadRef.current) {
+        if (preloadRef.current.src !== la.videoUrl) {
+          preloadRef.current.src = la.videoUrl;
+        }
+        preloadRef.current.load();
+      }
+    };
+
+    const goTo = async (nextIndex) => {
+      if (cancelled) return;
+
+      const next = slides[nextIndex];
+
+      // Lookahead preload
+      lookaheadPreload(nextIndex);
+
+      // If next is static: simple swap content
+      if (next.isStatic) {
+        setSelectedSlide(next);
+        setActiveIndex(nextIndex);
+        return;
+      }
+
+      // Next is video: prep + crossfade
+      const currentVideo = activeVideoLayer === 0 ? videoARef.current : videoBRef.current;
+      const nextVideo    = activeVideoLayer === 0 ? videoBRef.current : videoARef.current;
+
+      if (!nextVideo) {
+        setSelectedSlide(next);
+        setActiveIndex(nextIndex);
+        return;
+      }
+
       setIsTransitioning(true);
-      
-      // Prepare the new video
-      nextVideo.src = videoCards[index].videoUrl;
-      nextVideo.currentTime = 0;
-      
       try {
-        await nextVideo.play();
-        
-        // Switch active video index to trigger smooth animation
-        setActiveVideoIndex(activeVideoIndex === 0 ? 1 : 0);
-        
-        // After animation completes, clean up the old video
+        if (nextVideo.src !== next.videoUrl) nextVideo.src = next.videoUrl;
+        nextVideo.muted = true;
+        nextVideo.loop = true;
+        nextVideo.playsInline = true;
+        nextVideo.preload = "auto";
+        // tiny seek helps avoid black-first-frame on some Safari builds
+        nextVideo.currentTime = 0.01;
+        nextVideo.load();
+
+        await waitForPlaying(nextVideo);
+
+        // 1) Flip visible layer
+        setActiveVideoLayer(activeVideoLayer === 0 ? 1 : 0);
+
+        // 2) Update overlay right after flip starts
+        requestAnimationFrame(() => setSelectedSlide(next));
+
+        // 3) Pause old after fade
         setTimeout(() => {
-          currentVideo.pause();
+          try { currentVideo && currentVideo.pause(); } catch {}
           setIsTransitioning(false);
-        }, 600);
-        
-      } catch (error) {
-        console.error('Background video play error:', error);
+        }, TRANSITION_MS + 40);
+
+        // 4) Commit index
+        setActiveIndex(nextIndex);
+      } catch (e) {
+        console.error("mobile transition error:", e);
+        setSelectedSlide(next);
+        setActiveIndex(nextIndex);
         setIsTransitioning(false);
       }
-    } else if (index > 0 && currentVideo) {
-      // First time switching from background image to video
-      currentVideo.src = videoCards[index].videoUrl;
-      currentVideo.currentTime = 0;
-      try {
-        await currentVideo.play();
-      } catch (error) {
-        console.error('Background video play error:', error);
+    };
+
+    const advance = async () => {
+      const nextIndex = (activeIndex + 1) % slides.length;
+      await goTo(nextIndex);
+      if (!cancelled) {
+        timer = setTimeout(advance, SLIDE_MS);
       }
+    };
+
+    // initial schedule
+    timer = setTimeout(advance, SLIDE_MS);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeIndex, activeVideoLayer]);
+
+  // Manual swipe -> jump to target index via same transition logic
+  const handleGoTo = async (index) => {
+    if (isTransitioning) return;
+    if (index === activeIndex) return;
+
+    // Cancel any pending auto-advance by nudging activeIndex afterward (loop effect will reschedule)
+    const next = index < 0
+      ? slides.length - 1
+      : index >= slides.length
+        ? 0
+        : index;
+
+    // replicate core of goTo() without duplicating code:
+    const la = slides[(next + 1) % slides.length];
+    if (!la.isStatic && preloadRef.current) {
+      if (preloadRef.current.src !== la.videoUrl) {
+        preloadRef.current.src = la.videoUrl;
+      }
+      preloadRef.current.load();
     }
-    // If index === 0, we show the background image (no video needed)
+
+    const target = slides[next];
+    if (target.isStatic) {
+      setSelectedSlide(target);
+      setActiveIndex(next);
+      return;
+    }
+
+    const currentVideo = activeVideoLayer === 0 ? videoARef.current : videoBRef.current;
+    const nextVideo    = activeVideoLayer === 0 ? videoBRef.current : videoARef.current;
+
+    if (!nextVideo) {
+      setSelectedSlide(target);
+      setActiveIndex(next);
+      return;
+    }
+
+    setIsTransitioning(true);
+    try {
+      if (nextVideo.src !== target.videoUrl) nextVideo.src = target.videoUrl;
+      nextVideo.muted = true;
+      nextVideo.loop = true;
+      nextVideo.playsInline = true;
+      nextVideo.preload = "auto";
+      nextVideo.currentTime = 0.01;
+      nextVideo.load();
+
+      await waitForPlaying(nextVideo);
+
+      setActiveVideoLayer(activeVideoLayer === 0 ? 1 : 0);
+      requestAnimationFrame(() => setSelectedSlide(target));
+
+      setTimeout(() => {
+        try { currentVideo && currentVideo.pause(); } catch {}
+        setIsTransitioning(false);
+      }, TRANSITION_MS + 40);
+
+      setActiveIndex(next);
+    } catch (e) {
+      console.error("mobile swipe transition error:", e);
+      setSelectedSlide(target);
+      setActiveIndex(next);
+      setIsTransitioning(false);
+    }
   };
 
-  // Touch handlers for swipe functionality
+  // Touch/swipe handlers
   const onTouchStart = (e) => {
-    setTouchEnd(null); // otherwise the swipe is fired even with usual touch events
+    setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
   };
-
   const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX);
-
   const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-
-    if (isLeftSwipe) {
-      // Swipe left - go to next card
-      const nextIndex = (activeIndex + 1) % videoCards.length;
-      handleCardChange(nextIndex);
-    }
-    
-    if (isRightSwipe) {
-      // Swipe right - go to previous card
-      const prevIndex = (activeIndex - 1 + videoCards.length) % videoCards.length;
-      handleCardChange(prevIndex);
-    }
-  };
-
-  const getVisibleCards = () => {
-    const cards = [];
-    for (let i = -1; i <= 1; i++) {
-      const index = (activeIndex + i + videoCards.length) % videoCards.length;
-      cards.push({
-        ...videoCards[index],
-        position: i
-      });
-    }
-    return cards;
+    if (touchStart == null || touchEnd == null) return;
+    const dx = touchStart - touchEnd;
+    if (dx > 50)  handleGoTo(activeIndex + 1); // left swipe -> next
+    if (dx < -50) handleGoTo(activeIndex - 1); // right swipe -> prev
   };
 
   return (
-    <div 
+    <div
       className="bg-black relative min-h-screen overflow-hidden"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
     >
-      {/* Background image/video */}
+      {/* Background: static image + dual video layers */}
       <div className="absolute inset-0">
-        {/* Default background image */}
+        {/* Static image */}
         <motion.div
-          animate={{ opacity: activeIndex === 0 ? 1 : 0 }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
+          animate={{ opacity: selectedSlide?.isStatic ? 1 : 0 }}
+          transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
           className="w-full h-full"
+          style={{ willChange: "opacity" }}
         >
           <Image
             src="/image/bg.png"
             alt="Background"
             fill
-            className="object-cover"
+            className="object-cover object-top"
             priority
           />
         </motion.div>
-        
-        {/* Background videos for seamless crossfade */}
+
+        {/* Video layer A */}
         <motion.video
-          ref={backgroundVideoRef}
+          ref={videoARef}
           className="absolute inset-0 w-full h-full object-cover"
-          animate={{ 
-            opacity: activeIndex > 0 ? (activeVideoIndex === 0 ? 1 : 0) : 0 
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: selectedSlide?.isStatic ? 0 : activeVideoLayer === 0 ? 1 : 0
           }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
-          loop
+          transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
           muted
+          loop
           playsInline
-          style={{ 
-            zIndex: activeVideoIndex === 0 ? 2 : 1
+          preload="auto"
+          style={{
+            zIndex: activeVideoLayer === 0 ? 2 : 1,
+            willChange: "opacity",
+            WebkitBackfaceVisibility: "hidden",
+            backfaceVisibility: "hidden"
           }}
         />
-        
-        {/* Second video element for seamless transitions */}
+
+        {/* Video layer B */}
         <motion.video
-          ref={backgroundVideoRef2}
+          ref={videoBRef}
           className="absolute inset-0 w-full h-full object-cover"
-          animate={{ 
-            opacity: activeIndex > 0 ? (activeVideoIndex === 1 ? 1 : 0) : 0 
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: selectedSlide?.isStatic ? 0 : activeVideoLayer === 1 ? 1 : 0
           }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
-          loop
+          transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
           muted
+          loop
           playsInline
-          style={{ 
-            zIndex: activeVideoIndex === 1 ? 2 : 1
+          preload="auto"
+          style={{
+            pointerEvents: "none",
+            zIndex: activeVideoLayer === 1 ? 2 : 1,
+            willChange: "opacity",
+            WebkitBackfaceVisibility: "hidden",
+            backfaceVisibility: "hidden"
           }}
         />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 flex flex-col min-h-screen">
-        {/* Headers */}
-        <div className="text-center pt-12 px-4">
-          <p
-            className="mb-4"
-            style={{
-              fontFamily: "Questrial, sans-serif",
-              fontSize: "28px",
-              color: "#FFFFFF"
-            }}
-          >
-            It's always
-          </p>
-          <h1
-            className="mb-4"
-            style={{
-              fontFamily: "Syne, sans-serif",
-              fontSize: "44px",
-              color: "#FFFFFF",
-              lineHeight: "1.1"
-            }}
-            dangerouslySetInnerHTML={{ __html: videoCards[activeIndex].title }}
-          />
-          <p
-            className="mb-16"
-            style={{
-              fontFamily: "Questrial, sans-serif",
-              fontSize: "20px",
-              color: "#FFFFFF",
-              lineHeight: "1.3"
-            }}
-            dangerouslySetInnerHTML={{ __html: videoCards[activeIndex].subtitle }}
-          />
-        </div>
+      {/* Hidden preload video (lookahead) */}
+      <video ref={preloadRef} className="hidden" muted playsInline preload="auto" />
 
-        {/* Dot indicators - Fixed position */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-32 z-20">
-          <div className="flex items-center justify-center gap-2">
-            {getVisibleCards().map((card, index) => {
-              const isActive = card.position === 0;
-              const isLeft = card.position === -1;
-              const isRight = card.position === 1;
-              
-              return (
-                <motion.div
-                  key={`dot-${card.id}`}
-                  className="rounded-full bg-white cursor-pointer"
-                  layout
-                  animate={{
-                    width: isActive ? "39px" : "15px",
-                    height: isActive ? "39px" : "15px",
-                    opacity: isActive ? 1 : 0.5
-                  }}
-                  transition={{ 
-                    duration: 0.6, 
-                    ease: "easeInOut",
-                    layout: { duration: 0.6, ease: "easeInOut" }
-                  }}
-                  onClick={() => {
-                    if (!isActive) {
-                      const newIndex = videoCards.findIndex(c => c.id === card.id);
-                      handleCardChange(newIndex);
-                    }
-                  }}
-                />
-              );
-            })}
-          </div>
-        </div>
+      {/* Overlay content (top-anchored like desktop, no cards/dots) */}
+      <div className="relative z-10 min-h-screen">
+        <AnimatePresence mode="wait">
+          {/* Static content */}
+          {selectedSlide?.isStatic && (
+            <motion.div
+              key="static-mobile"
+              className="absolute left-0 right-0 top-0 pt-20 px-5"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
+            >
+              <motion.p
+                className="text-white mb-3"
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+                style={{ fontFamily: "Questrial, sans-serif", fontSize: "22px" }}
+                dangerouslySetInnerHTML={{ __html: selectedSlide.subtitle }}
+              />
+              <motion.h1
+                className="text-white"
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.25 }}
+                style={{ fontFamily: "Syne, sans-serif", fontSize: "42px", lineHeight: 1.12 }}
+              >
+                {selectedSlide.title}
+              </motion.h1>
+            </motion.div>
+          )}
 
-        {/* Carousel */}
-        <div className="flex-1 flex items-center justify-center px-4">
-          <div className="flex items-center justify-center gap-2">
-            {getVisibleCards().map((card, index) => {
-              const isActive = card.position === 0;
-              const isLeft = card.position === -1;
-              const isRight = card.position === 1;
-              
-              return (
-                <motion.div
-                  key={card.id}
-                  className="cursor-pointer"
-                  layout
-                  animate={{
-                    scale: isActive ? 1 : 0.85,
-                    zIndex: isActive ? 3 : 1
-                  }}
-                  transition={{ 
-                    duration: 0.6, 
-                    ease: "easeInOut",
-                    layout: { duration: 0.6, ease: "easeInOut" }
-                  }}
-                  onClick={() => {
-                    if (!isActive) {
-                      const newIndex = videoCards.findIndex(c => c.id === card.id);
-                      handleCardChange(newIndex);
-                    }
-                  }}
-                >
-                  <motion.div
-                    className="relative overflow-hidden rounded-2xl"
-                    animate={{
-                      width: isActive ? "277px" : "224px",
-                      height: isActive ? "319px" : "262px"
-                    }}
-                    transition={{ duration: 0.6, ease: "easeInOut" }}
-                  >
-                    <Image
-                      src={card.imageUrl}
-                      alt={`Card ${card.id}`}
-                      fill
-                      className="object-cover"
-                    />
-                    
-                    {/* Overlay for non-active cards */}
-                    <motion.div
-                      className="absolute inset-0 bg-black"
-                      animate={{
-                        opacity: isActive ? 0 : 0.4
-                      }}
-                      transition={{ duration: 0.6, ease: "easeInOut" }}
-                    />
-                  </motion.div>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-
-
+          {/* Video slide content */}
+          {selectedSlide && !selectedSlide.isStatic && (
+            <motion.div
+              key={`video-mobile-${selectedSlide.id}`}
+              className="absolute left-0 right-0 top-0 pt-24 px-5"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
+            >
+              <motion.h1
+                className="text-white mb-3"
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+                style={{ fontFamily: "Syne, sans-serif", fontSize: "40px", lineHeight: 1.12 }}
+                dangerouslySetInnerHTML={{ __html: selectedSlide.title }}
+              />
+              <motion.p
+                className="text-white"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: 0.25 }}
+                style={{ fontFamily: "Questrial, sans-serif", fontSize: "18px", lineHeight: 1.35 }}
+                dangerouslySetInnerHTML={{ __html: selectedSlide.subtitle }}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
-} 
+}
