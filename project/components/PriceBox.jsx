@@ -12,7 +12,7 @@ export default function PriceBox({
 }) {
   return (
     <div className="flex flex-col gap-8 cursor-pointer relative group">
-      {/* CARD (this element BOTH blurs and scales) */}
+      {/* Card: scales and keeps the blur */}
       <div
         className="
           relative w-[320px] lg:w-[360px] xl:w-[420px] 2xl:w-[480px]
@@ -23,10 +23,7 @@ export default function PriceBox({
           transform-gpu will-change-transform
           group-hover:scale-[1.03] hover:drop-shadow-2xl
         "
-        style={{
-          // Slight alpha helps some browsers render backdrop-filter reliably
-          backgroundColor: "rgba(255,255,255,0.06)",
-        }}
+        style={{ backgroundColor: "rgba(255,255,255,0.06)" }}
       >
         {/* Gradient border (unchanged) */}
         <div
@@ -84,7 +81,6 @@ export default function PriceBox({
 
           {/* CTA ABOVE bullet points */}
           <div className="relative inline-block mb-8 lg:mb-10 xl:mb-12 2xl:mb-14 group/button">
-            {/* Button gradient frame on hover */}
             <div
               className="absolute rounded-3xl lg:rounded-4xl pointer-events-none opacity-0 group-hover/button:opacity-100 transition-opacity duration-300"
               style={{
@@ -113,17 +109,32 @@ export default function PriceBox({
             </button>
           </div>
 
-          {/* Bullet Points BELOW CTA */}
+          {/* Bullet Points BELOW CTA + divider after the first bullet */}
           {bulletPoints?.length > 0 && (
             <div className="space-y-3 lg:space-y-4 2xl:space-y-5">
               {bulletPoints.map((point, index) => (
-                <div key={index} className="flex items-center gap-3 lg:gap-4 2xl:gap-5">
-                  <CircleCheckBig className="flex-shrink-0 w-[24px] lg:w-[28px] xl:w-[31px] 2xl:w-[36px] h-[24px] lg:h-[28px] xl:h-[31px] 2xl:h-[36px] text-white" />
-                  <span
-                    className="text-white/90 text-[16px] lg:text-[18px] xl:text-[20px] 2xl:text-[24px] font-normal"
-                    style={{ fontFamily: "Questrial, sans-serif" }}
-                    dangerouslySetInnerHTML={{ __html: point }}
-                  />
+                <div key={index}>
+                  {/* bullet row */}
+                  <div className="flex items-center gap-3 lg:gap-4 2xl:gap-5">
+                    <CircleCheckBig className="flex-shrink-0 w-[24px] lg:w-[28px] xl:w-[31px] 2xl:w-[36px] h-[24px] lg:h-[28px] xl:h-[31px] 2xl:h-[36px] text-white" />
+                    <span
+                      className="text-white/90 text-[16px] lg:text-[18px] xl:text-[20px] 2xl:text-[24px] font-normal"
+                      style={{ fontFamily: "Questrial, sans-serif" }}
+                      dangerouslySetInnerHTML={{ __html: point }}
+                    />
+                  </div>
+
+                  {/* pure white 3px divider after first bullet */}
+                  {index === 0 && (
+                    <div
+                      role="separator"
+                      className="
+                        mx-2 lg:mx-3 xl:mx-4 2xl:mx-5
+                        my-3 lg:my-4 2xl:my-5
+                        h-[3px] bg-white rounded-full
+                      "
+                    />
+                  )}
                 </div>
               ))}
             </div>

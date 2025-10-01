@@ -74,11 +74,12 @@ export default function Price() {
             <PriceBox 
               title="PURELY WEBSITE"
               tag="Quick"
-              price="4000"
-              description="Best suited for startups,<br/> small businesses."
+              price="4800"
+              description="For startups,<br/> small businesses."
               cta="Get started"
               link="#"
               bulletPoints={[
+                "Starter Landing Page<br/>[1-5 Pages]",
                 "A high-performing website.",
                 "Modern, responsive design.",
                 "Essential integrations<br/> with contact forms, analytics,<br/>SEO basics.",
@@ -88,11 +89,12 @@ export default function Price() {
             <PriceBox 
               title="WEBSITE+"
               tag="Popular"
-              price="5000"
-              description="Best suited for growing<br/>businesses that need their<br/>website to work as hard<br/>as they do."
+              price="6500"
+              description="For growing businesses that<br/>need their website to work as<br/>hard as they do."
               cta="Get started"
               link="#"
               bulletPoints={[
+                "6–15 pages,<br/>with Content Management<br/>System & Payment setup",
                 "Everything in Purely Website",
                 "Deeper brand alignment<br/>& storytelling-driven design",
                 "Advanced integrations<br/>(CRM, e-commerce,<br/>automation)",
@@ -103,11 +105,12 @@ export default function Price() {
             <PriceBox 
               title="BEYOND SITE"
               tag="Comprehensive +"
-              price="7000"
-              description="Best suited for ambitious<br/>brands, non-profits, and<br/>enterprises who want to<br/>lead change."
+              price="8000+"
+              description="For ambitious brands,<br/>non-profits, and enterprises<br/>who want to lead change."
               cta="Get Started"
               link="#"
               bulletPoints={[
+                "Custom Website for a tailored digital product or SaaS platform<br/>with core features. Highly<br/>customizable, scalable.",
                 "Everything in Website +",
                 "Continuous strategy & evolution",
                 "Conversion-focused<br/>campaigns, landing pages,<br/>and A/B testing",
