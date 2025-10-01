@@ -21,7 +21,7 @@ export default function PriceBox({
           backdrop-blur-sm backdrop-saturate-150
           bg-white/6 transition-transform duration-300
           transform-gpu will-change-transform
-          group-hover:scale-[1.03] hover:drop-shadow-2xl
+           hover:drop-shadow-2xl
         "
         style={{ backgroundColor: "rgba(255,255,255,0.06)" }}
       >
