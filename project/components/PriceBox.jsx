@@ -12,7 +12,7 @@ export default function PriceBox({
   bulletPoints,
 }) {
   return (
-    <div className="flex flex-col gap-8 transition-all duration-300 hover:scale-105 hover:drop-shadow-2xl cursor-pointer relative group">
+    <div className="flex flex-col gap-8 cursor-pointer relative group">
       {/* Single Transparent/Blur Card */}
       <div className="relative w-[320px] lg:w-[360px] xl:w-[420px] 2xl:w-[480px] rounded-[40px] lg:rounded-[45px] xl:rounded-[50px] 2xl:rounded-[60px] bg-transparent z-10">
         {/* Gradient border layer */}
