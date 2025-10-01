@@ -29,7 +29,7 @@ export default function Price() {
 
   return (
     <div id="pricing-section" className="relative min-h-screen overflow-hidden bg-gray-800">
-            <video
+      <video
         ref={videoRef}
         className="absolute w-full h-full object-cover pointer-events-none"
         autoPlay
