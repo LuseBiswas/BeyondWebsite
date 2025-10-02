@@ -36,6 +36,7 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Questrial&family=Syne:wght@400..800&display=swap" rel="stylesheet" />
+        <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} ${manrope.variable}`}>
         {children}

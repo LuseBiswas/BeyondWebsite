@@ -1,10 +1,12 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+import Script from "next/script";
 import PriceBox from "./PriceBox";
 import PriceMobile from "./mobile/PriceMobile";
 
 export default function Price() {
   const videoRef = useRef(null);
+  const [calendlyLoaded, setCalendlyLoaded] = useState(false);
 
   useEffect(() => {
     const v = videoRef.current;
@@ -26,6 +28,17 @@ export default function Price() {
 
     return () => v.removeEventListener("canplay", start);
   }, []);
+
+  const openCalendly = () => {
+    if (typeof window !== 'undefined' && window.Calendly) {
+      window.Calendly.initPopupWidget({
+        url: 'https://calendly.com/riteshbiswasut'
+      });
+    } else {
+      console.error('Calendly is not loaded yet');
+      alert('Please wait a moment and try again');
+    }
+  };
 
   return (
     <div id="pricing-section" className="relative min-h-screen overflow-hidden bg-gray-800">
@@ -77,7 +90,7 @@ export default function Price() {
               price="4800"
               description="For startups,<br/> small businesses."
               cta="Get started"
-              link="#"
+              onCtaClick={openCalendly}
               bulletPoints={[
                 "Starter Landing Page<br/>[1-5 Pages]",
                 "A high-performing website.",
@@ -92,7 +105,7 @@ export default function Price() {
               price="6500"
               description="For growing businesses that<br/>need their website to work as<br/>hard as they do."
               cta="Get started"
-              link="#"
+              onCtaClick={openCalendly}
               bulletPoints={[
                 "6–15 pages,<br/>with Content Management<br/>System & Payment setup",
                 "Everything in Purely Website",
@@ -108,7 +121,7 @@ export default function Price() {
               price="8000+"
               description="For ambitious brands,<br/>non-profits, and enterprises<br/>who want to lead change."
               cta="Get Started"
-              link="#"
+              onCtaClick={openCalendly}
               bulletPoints={[
                 "Custom Website for a tailored digital product or SaaS platform<br/>with core features. Highly<br/>customizable, scalable.",
                 "Everything in Website +",
@@ -127,6 +140,14 @@ export default function Price() {
       <div className="lg:hidden">
         <PriceMobile />
       </div>
+
+      {/* Calendly Script */}
+      <Script
+        src="https://assets.calendly.com/assets/external/widget.js"
+        strategy="afterInteractive"
+        onLoad={() => setCalendlyLoaded(true)}
+        onError={() => console.error('Failed to load Calendly script')}
+      />
     </div>
   );
 } 

@@ -26,6 +26,17 @@ export default function PriceMobile() {
     return () => v.removeEventListener("canplay", start);
   }, []);
 
+  const openCalendly = () => {
+    if (typeof window !== 'undefined' && window.Calendly) {
+      window.Calendly.initPopupWidget({
+        url: 'https://calendly.com/riteshbiswasut'
+      });
+    } else {
+      console.error('Calendly is not loaded yet');
+      alert('Please wait a moment and try again');
+    }
+  };
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-gray-800">
       <video
@@ -79,7 +90,7 @@ export default function PriceMobile() {
               price="4000"
               description="Best suited for startups,<br/> small businesses."
               cta="Get started"
-              link="#"
+              onCtaClick={openCalendly}
               bulletPoints={[
                 "A high-performing website.",
                 "Modern, responsive design.",
@@ -93,7 +104,7 @@ export default function PriceMobile() {
               price="5000"
               description="Best suited for growing<br/>businesses that need their<br/>website to work as hard<br/>as they do."
               cta="Get started"
-              link="#"
+              onCtaClick={openCalendly}
               bulletPoints={[
                 "Everything in Purely Website",
                 "Deeper brand alignment<br/>& storytelling-driven design",
@@ -108,7 +119,7 @@ export default function PriceMobile() {
               price="7000"
               description="Best suited for ambitious<br/>brands, non-profits, and<br/>enterprises who want to<br/>lead change."
               cta="Get Started"
-              link="#"
+              onCtaClick={openCalendly}
               bulletPoints={[
                 "Everything in Website +",
                 "Continuous strategy & evolution",

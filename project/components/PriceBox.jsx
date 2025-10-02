@@ -9,7 +9,16 @@ export default function PriceBox({
   cta,
   link,
   bulletPoints,
+  onCtaClick,
 }) {
+  const handleClick = () => {
+    if (onCtaClick) {
+      onCtaClick();
+    } else if (link) {
+      window.open(link, "_blank");
+    }
+  };
+
   return (
     <div className="flex flex-col gap-8 cursor-pointer relative group">
       {/* Card: scales and keeps the blur */}
@@ -103,7 +112,7 @@ export default function PriceBox({
             <button
               className="relative text-white px-4 lg:px-5 xl:px-6 2xl:px-8 rounded-3xl lg:rounded-4xl text-[24px] lg:text-[27px] xl:text-[30px] 2xl:text-[36px] font-normal transition-opacity duration-300 h-[50px] lg:h-[55px] xl:h-[61px] 2xl:h-[70px] flex items-center justify-center cursor-pointer bg-black/90 border-2 border-white hover:opacity-85"
               style={{ fontFamily: "Questrial, sans-serif" }}
-              onClick={() => link && window.open(link, "_blank")}
+              onClick={handleClick}
             >
               {cta}
             </button>
