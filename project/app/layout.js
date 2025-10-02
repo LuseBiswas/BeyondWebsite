@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono, Syne, Manrope } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -38,6 +39,11 @@ export default function RootLayout({ children }) {
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} ${manrope.variable}`}>
         {children}
+        <Script
+          id="hs-script-loader"
+          strategy="afterInteractive"
+          src="//js-na2.hs-scripts.com/242602003.js"
+        />
       </body>
     </html>
   );
