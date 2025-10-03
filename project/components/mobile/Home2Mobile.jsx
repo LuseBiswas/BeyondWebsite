@@ -1,9 +1,11 @@
 "use client";
-import { useRef, useEffect } from "react";
-import { Menu } from "lucide-react";
+import { useRef, useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Home2Mobile() {
   const videoRef = useRef(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const v = videoRef.current;
@@ -58,102 +60,134 @@ export default function Home2Mobile() {
       <div className="relative z-10 p-3 sm:p-4 min-h-screen">
         <div className="border-2 border-white/50 rounded-2xl h-[calc(100vh-1.5rem)] sm:h-[calc(100vh-2rem)] w-full p-4 sm:p-6 relative text-white">
           {/* Top left text - Mobile */}
-          <div className="absolute top-4 sm:top-6 left-4 sm:left-6">
+          <div className="absolute top-4 sm:top-6 left-4 sm:left-6 z-50">
             <div
-              className="text-white font-normal text-right"
+              className="font-normal text-right transition-colors duration-300"
               style={{
                 fontFamily: "Questrial, sans-serif",
                 fontWeight: 400,
-                // fluid, readable on tiny screens
                 fontSize: "clamp(22px, 7vw, 38px)",
                 lineHeight: "1.1",
+                color: isMenuOpen ? "#193A43" : "#FFFFFF",
               }}
               dangerouslySetInnerHTML={{ __html: "too <br/> often" }}
             />
           </div>
 
-          {/* Top right floating box with hamburger menu */}
-          <div className="absolute top-0 right-0">
-            <div
-              className="bg-[#D9D9D9C4] backdrop-blur-sm relative rounded-tr-2xl rounded-bl-2xl"
-              style={{
-                // fluid size; avoids overflow on very small phones
-                width: "clamp(180px, 42vw, 229px)",
-                height: "clamp(320px, 56vh, 430px)",
-              }}
-            >
-              {/* Hamburger menu icon in top right corner of the box */}
-              <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
-                <Menu
-                  className="text-black"
-                  style={{
-                    width: "clamp(28px, 7vw, 43px)",
-                    height: "clamp(20px, 5vw, 28px)",
-                  }}
-                />
-              </div>
+          {/* Hamburger/Close Icon - Always visible */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="absolute top-3 right-3 sm:top-4 sm:right-4 z-50"
+          >
+            {isMenuOpen ? (
+              <X
+                className="text-black"
+                style={{
+                  width: "clamp(28px, 7vw, 43px)",
+                  height: "clamp(28px, 7vw, 43px)",
+                }}
+              />
+            ) : (
+              <Menu
+                className="text-white"
+                style={{
+                  width: "clamp(28px, 7vw, 43px)",
+                  height: "clamp(20px, 5vw, 28px)",
+                }}
+              />
+            )}
+          </button>
 
-              {/* Text content inside the box */}
-              <div className="absolute top-16 sm:top-20 right-3 sm:right-4 left-3 sm:left-4 text-right">
-                <div className="flex flex-col gap-3 sm:gap-4">
-                  <div
-                    className="text-black font-normal text-right"
-                    style={{
-                      fontFamily: "Questrial, sans-serif",
-                      fontWeight: 400,
-                      fontSize: "clamp(18px, 5.2vw, 24px)",
-                      lineHeight: "1.25",
-                      letterSpacing: "0%",
-                    }}
-                    dangerouslySetInnerHTML={{
-                      __html: "Just treated <br/> as decoration",
-                    }}
-                  />
-                  <div
-                    className="text-black font-normal text-right"
-                    style={{
-                      fontFamily: "Questrial, sans-serif",
-                      fontWeight: 400,
-                      fontSize: "clamp(18px, 5.2vw, 24px)",
-                      lineHeight: "1.25",
-                      letterSpacing: "0%",
-                    }}
-                  >
-                    Vibrant colours
-                  </div>
-                  <div
-                    className="text-black font-normal text-right"
-                    style={{
-                      fontFamily: "Questrial, sans-serif",
-                      fontWeight: 400,
-                      fontSize: "clamp(18px, 5.2vw, 24px)",
-                      lineHeight: "1.25",
-                      letterSpacing: "0%",
-                    }}
-                    dangerouslySetInnerHTML={{
-                      __html: "Pixels arranged <br/> without purpose",
-                    }}
-                  />
-
-                  {/* Button */}
-                  <div className="flex justify-end mt-2 sm:mt-4">
-                    <button
-                      className="bg-white text-black font-normal rounded-4xl"
+          {/* Expandable Yellow Ribbon */}
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.div
+                initial={{ width: 0, height: 0 }}
+                animate={{ 
+                  width: "100%",
+                  height: "50vh"
+                }}
+                exit={{ width: 0, height: 0 }}
+                transition={{ 
+                  duration: 0.5,
+                  ease: [0.43, 0.13, 0.23, 0.96]
+                }}
+                className="absolute top-0 right-0 overflow-hidden origin-top-right"
+                style={{
+                  backgroundColor: "#FCEE21",
+                  borderTopLeftRadius: "1rem",
+                  borderTopRightRadius: "1rem",
+                  clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 85%)",
+                }}
+              >
+                {/* Text content inside the ribbon */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ delay: 0.3, duration: 0.3 }}
+                  className="absolute top-16 sm:top-20 right-3 sm:right-4 left-3 sm:left-4 text-right"
+                >
+                  <div className="flex flex-col gap-3 sm:gap-4">
+                    <div
+                      className="text-black font-normal text-right"
                       style={{
-                        width: "clamp(110px, 32vw, 127px)",
-                        height: "clamp(40px, 11vw, 48px)",
                         fontFamily: "Questrial, sans-serif",
-                        fontSize: "clamp(14px, 4.2vw, 18px)",
                         fontWeight: 400,
+                        fontSize: "clamp(18px, 5.2vw, 24px)",
+                        lineHeight: "1.25",
+                        letterSpacing: "0%",
+                      }}
+                      dangerouslySetInnerHTML={{
+                        __html: "Just treated <br/> as decoration",
+                      }}
+                    />
+                    <div
+                      className="text-black font-normal text-right"
+                      style={{
+                        fontFamily: "Questrial, sans-serif",
+                        fontWeight: 400,
+                        fontSize: "clamp(18px, 5.2vw, 24px)",
+                        lineHeight: "1.25",
+                        letterSpacing: "0%",
                       }}
                     >
-                      But, Why?
-                    </button>
+                      Vibrant colours
+                    </div>
+                    <div
+                      className="text-black font-normal text-right"
+                      style={{
+                        fontFamily: "Questrial, sans-serif",
+                        fontWeight: 400,
+                        fontSize: "clamp(18px, 5.2vw, 24px)",
+                        lineHeight: "1.25",
+                        letterSpacing: "0%",
+                      }}
+                      dangerouslySetInnerHTML={{
+                        __html: "Pixels arranged <br/> without purpose",
+                      }}
+                    />
+
+                    {/* Button */}
+                    <div className="flex justify-end mt-2 sm:mt-4">
+                      <button
+                        className="bg-white text-black font-normal rounded-4xl"
+                        style={{
+                          width: "clamp(110px, 32vw, 127px)",
+                          height: "clamp(40px, 11vw, 48px)",
+                          fontFamily: "Questrial, sans-serif",
+                          fontSize: "clamp(14px, 4.2vw, 18px)",
+                          fontWeight: 400,
+                        }}
+                      >
+                        But, Why?
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Bottom content - Mobile */}
           <div className="absolute left-4 sm:left-6 right-4 sm:right-6 bottom-12 sm:bottom-6">
