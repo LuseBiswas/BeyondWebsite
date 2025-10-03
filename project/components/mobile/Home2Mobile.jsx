@@ -126,11 +126,12 @@ export default function Home2Mobile() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ delay: 0.3, duration: 0.3 }}
-                  className="absolute top-16 sm:top-20 right-3 sm:right-4 left-3 sm:left-4 text-right"
+                  className="absolute top-16 sm:top-20 right-3 sm:right-4 left-3 sm:left-4 text-right flex flex-col justify-center"
+                  style={{ height: "calc(100% - 5rem)" }}
                 >
-                  <div className="flex flex-col gap-3 sm:gap-4">
+                  <div className="flex flex-col gap-6 sm:gap-8">
                     <div
-                      className="text-black font-normal text-right"
+                      className="text-[#193A43] font-normal text-right"
                       style={{
                         fontFamily: "Questrial, sans-serif",
                         fontWeight: 400,
@@ -143,7 +144,7 @@ export default function Home2Mobile() {
                       }}
                     />
                     <div
-                      className="text-black font-normal text-right"
+                      className="text-[#193A43] font-normal text-right"
                       style={{
                         fontFamily: "Questrial, sans-serif",
                         fontWeight: 400,
@@ -155,7 +156,7 @@ export default function Home2Mobile() {
                       Vibrant colours
                     </div>
                     <div
-                      className="text-black font-normal text-right"
+                      className="text-[#193A43] font-normal text-right"
                       style={{
                         fontFamily: "Questrial, sans-serif",
                         fontWeight: 400,
@@ -171,13 +172,15 @@ export default function Home2Mobile() {
                     {/* Button */}
                     <div className="flex justify-end mt-2 sm:mt-4">
                       <button
-                        className="bg-white text-black font-normal rounded-4xl"
+                        className="font-normal rounded-4xl"
                         style={{
                           width: "clamp(110px, 32vw, 127px)",
                           height: "clamp(40px, 11vw, 48px)",
                           fontFamily: "Questrial, sans-serif",
                           fontSize: "clamp(14px, 4.2vw, 18px)",
                           fontWeight: 400,
+                          backgroundColor: "#193A43",
+                          color: "#FCEE21",
                         }}
                       >
                         But, Why?
