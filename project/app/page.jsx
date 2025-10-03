@@ -11,7 +11,7 @@ import Outro from "@/components/Outro";
 
 export default function Page() {
   return (
-    <>
+    <div className="overflow-x-hidden w-full">
       <Home />
       <Company />
       <Home_2 />
@@ -25,6 +25,6 @@ export default function Page() {
       </div>
       
       <Outro/>
-    </>
+    </div>
   );
 }

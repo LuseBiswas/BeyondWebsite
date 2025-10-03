@@ -25,7 +25,7 @@ export default function WeDesign() {
   return (
     <>
       {/* Desktop and Tablet Layout (lg and above) */}
-      <div className="hidden lg:block bg-white min-h-screen flex flex-col items-center justify-center py-16">
+      <div className="hidden lg:block bg-white py-16 lg:py-20 xl:py-24 2xl:py-32">
         {/* Centered text - Responsive */}
         <h1
           className="text-center mb-8 lg:mb-10 xl:mb-12 2xl:mb-16 text-[28px] lg:text-[32px] xl:text-[38px] 2xl:text-[48px] leading-[36px] lg:leading-[40px] xl:leading-[48px] 2xl:leading-[60px]"
@@ -39,7 +39,7 @@ export default function WeDesign() {
         </h1>
 
         {/* Container for green box and dots - centered together */}
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center px-4">
           {/* Green box - Responsive */}
           <div
             className="rounded-2xl lg:rounded-3xl relative flex items-center"

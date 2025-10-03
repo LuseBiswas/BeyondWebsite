@@ -60,13 +60,13 @@ export default function Home2Mobile() {
       <div className="relative z-10 p-3 sm:p-4 min-h-screen">
         <div className="border-2 border-white/50 rounded-2xl h-[calc(100vh-1.5rem)] sm:h-[calc(100vh-2rem)] w-full p-4 sm:p-6 relative text-white">
           {/* Top left text - Mobile */}
-          <div className="absolute top-4 sm:top-6 left-4 sm:left-6 z-50">
+          <div className="absolute top-4 sm:top-6 md:top-8 lg:top-10 left-4 sm:left-6 md:left-8 lg:left-10 z-50">
             <div
               className="font-normal text-right transition-colors duration-300"
               style={{
                 fontFamily: "Questrial, sans-serif",
                 fontWeight: 400,
-                fontSize: "clamp(22px, 7vw, 38px)",
+                fontSize: "clamp(22px, 5.5vw, 60px)",
                 lineHeight: "1.1",
                 color: isMenuOpen ? "#193A43" : "#FFFFFF",
               }}
@@ -77,22 +77,22 @@ export default function Home2Mobile() {
           {/* Hamburger/Close Icon - Always visible */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="absolute top-3 right-3 sm:top-4 sm:right-4 z-50"
+            className="absolute top-3 right-3 sm:top-4 sm:right-4 md:top-6 md:right-6 lg:top-8 lg:right-8 z-50"
           >
             {isMenuOpen ? (
               <X
                 className="text-black"
                 style={{
-                  width: "clamp(28px, 7vw, 43px)",
-                  height: "clamp(28px, 7vw, 43px)",
+                  width: "clamp(28px, 5vw, 56px)",
+                  height: "clamp(28px, 5vw, 56px)",
                 }}
               />
             ) : (
               <Menu
                 className="text-white"
                 style={{
-                  width: "clamp(28px, 7vw, 43px)",
-                  height: "clamp(20px, 5vw, 28px)",
+                  width: "clamp(28px, 5vw, 56px)",
+                  height: "clamp(20px, 3.5vw, 40px)",
                 }}
               />
             )}
@@ -105,7 +105,7 @@ export default function Home2Mobile() {
                 initial={{ width: 0, height: 0 }}
                 animate={{ 
                   width: "100%",
-                  height: "50vh"
+                  height: "clamp(450px, 55vh, 700px)"
                 }}
                 exit={{ width: 0, height: 0 }}
                 transition={{ 
@@ -126,16 +126,16 @@ export default function Home2Mobile() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ delay: 0.3, duration: 0.3 }}
-                  className="absolute top-16 sm:top-20 right-3 sm:right-4 left-3 sm:left-4 text-right flex flex-col justify-center"
-                  style={{ height: "calc(100% - 5rem)" }}
+                  className="absolute top-16 sm:top-20 md:top-24 lg:top-28 right-3 sm:right-4 md:right-8 lg:right-10 left-3 sm:left-4 md:left-8 lg:left-10 text-right flex flex-col justify-center pb-8 sm:pb-10 md:pb-12"
+                  style={{ height: "calc(100% - 8rem)" }}
                 >
-                  <div className="flex flex-col gap-6 sm:gap-8">
+                  <div className="flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-12">
                     <div
                       className="text-[#193A43] font-normal text-right"
                       style={{
                         fontFamily: "Questrial, sans-serif",
                         fontWeight: 400,
-                        fontSize: "clamp(18px, 5.2vw, 24px)",
+                        fontSize: "clamp(18px, 4vw, 36px)",
                         lineHeight: "1.25",
                         letterSpacing: "0%",
                       }}
@@ -148,7 +148,7 @@ export default function Home2Mobile() {
                       style={{
                         fontFamily: "Questrial, sans-serif",
                         fontWeight: 400,
-                        fontSize: "clamp(18px, 5.2vw, 24px)",
+                        fontSize: "clamp(18px, 4vw, 36px)",
                         lineHeight: "1.25",
                         letterSpacing: "0%",
                       }}
@@ -160,7 +160,7 @@ export default function Home2Mobile() {
                       style={{
                         fontFamily: "Questrial, sans-serif",
                         fontWeight: 400,
-                        fontSize: "clamp(18px, 5.2vw, 24px)",
+                        fontSize: "clamp(18px, 4vw, 36px)",
                         lineHeight: "1.25",
                         letterSpacing: "0%",
                       }}
@@ -170,14 +170,14 @@ export default function Home2Mobile() {
                     />
 
                     {/* Button */}
-                    <div className="flex justify-end mt-2 sm:mt-4">
+                    <div className="flex justify-end mt-2 sm:mt-4 md:mt-6">
                       <button
                         className="font-normal rounded-4xl"
                         style={{
-                          width: "clamp(110px, 32vw, 127px)",
-                          height: "clamp(40px, 11vw, 48px)",
+                          width: "clamp(110px, 24vw, 180px)",
+                          height: "clamp(40px, 8vw, 64px)",
                           fontFamily: "Questrial, sans-serif",
-                          fontSize: "clamp(14px, 4.2vw, 18px)",
+                          fontSize: "clamp(14px, 3vw, 24px)",
                           fontWeight: 400,
                           backgroundColor: "#193A43",
                           color: "#FCEE21",
@@ -193,12 +193,12 @@ export default function Home2Mobile() {
           </AnimatePresence>
 
           {/* Bottom content - Mobile */}
-          <div className="absolute left-4 sm:left-6 right-4 sm:right-6 bottom-12 sm:bottom-6">
+          <div className="absolute left-4 sm:left-6 md:left-8 lg:left-10 right-4 sm:right-6 md:right-8 lg:right-10 bottom-12 sm:bottom-8 md:bottom-10 lg:bottom-12">
             <h1
-              className="text-white font-normal mb-4 sm:mb-6"
+              className="text-white font-normal mb-4 sm:mb-6 md:mb-8 lg:mb-10"
               style={{
                 fontFamily: "Syne, sans-serif",
-                fontSize: "clamp(28px, 8vw, 44px)",
+                fontSize: "clamp(28px, 6vw, 72px)",
                 lineHeight: "1.12",
               }}
             >
@@ -209,7 +209,7 @@ export default function Home2Mobile() {
               className="text-white font-normal"
               style={{
                 fontFamily: "Questrial, sans-serif",
-                fontSize: "clamp(16px, 5.5vw, 28px)",
+                fontSize: "clamp(16px, 4vw, 42px)",
                 lineHeight: "1.35",
               }}
             >
