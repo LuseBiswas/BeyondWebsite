@@ -91,6 +91,7 @@ export default function Price() {
               description="For startups,<br/> small businesses."
               cta="Get started"
               onCtaClick={openCalendly}
+              backgroundImage="/image/price/img_1.png"
               bulletPoints={[
                 "Starter Landing Page<br/>[1-5 Pages]",
                 "A high-performing website.",
@@ -106,6 +107,7 @@ export default function Price() {
               description="For growing businesses that<br/>need their website to work as<br/>hard as they do."
               cta="Get started"
               onCtaClick={openCalendly}
+              backgroundImage="/image/price/img_2.png"
               bulletPoints={[
                 "6–15 pages,<br/>with Content Management<br/>System & Payment setup",
                 "Everything in Purely Website",
@@ -122,6 +124,7 @@ export default function Price() {
               description="For ambitious brands,<br/>non-profits, and enterprises<br/>who want to lead change."
               cta="Get Started"
               onCtaClick={openCalendly}
+              backgroundImage="/image/price/img_3.png"
               bulletPoints={[
                 "Custom Website for a tailored digital product or SaaS platform<br/>with core features. Highly<br/>customizable, scalable.",
                 "Everything in Website +",

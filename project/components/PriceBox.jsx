@@ -10,6 +10,7 @@ export default function PriceBox({
   link,
   bulletPoints,
   onCtaClick,
+  backgroundImage,
 }) {
   const handleClick = () => {
     if (onCtaClick) {
@@ -21,6 +22,28 @@ export default function PriceBox({
 
   return (
     <div className="flex flex-col gap-8 cursor-pointer relative group">
+      {/* Gradient border - positioned outside to not be clipped */}
+      <div
+        className="absolute pointer-events-none rounded-[45px] lg:rounded-[50px] xl:rounded-[55px] 2xl:rounded-[65px] transition-transform duration-300 transform-gpu will-change-transform group-hover:scale-[1.03]"
+        style={{
+          inset: "-3px",
+          padding: "3px",
+          background: `
+            linear-gradient(108.74deg,
+              rgba(105,120,255,0.8) 0%,
+              rgba(255,255,255,0.8) 36.46%,
+              rgba(255,255,255,0.6) 73.96%,
+              rgba(13,220,170,0.8) 100%
+            )
+          `,
+          WebkitMask:
+            "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+          WebkitMaskComposite: "xor",
+          maskComposite: "exclude",
+          zIndex: 1,
+        }}
+      />
+      
       {/* Card: scales and keeps the blur */}
       <div
         className="
@@ -28,33 +51,25 @@ export default function PriceBox({
           rounded-[40px] lg:rounded-[45px] xl:rounded-[50px] 2xl:rounded-[60px]
           p-6 lg:p-7 xl:p-8 2xl:p-10
           backdrop-blur-sm backdrop-saturate-150
-          bg-white/6 transition-transform duration-300
+          bg-white/6 transition-all duration-300
           transform-gpu will-change-transform
           group-hover:scale-[1.03] hover:drop-shadow-2xl
+          overflow-hidden
         "
         style={{ backgroundColor: "rgba(255,255,255,0.06)" }}
       >
-        {/* Gradient border (unchanged) */}
-        <div
-          className="absolute pointer-events-none rounded-[45px] lg:rounded-[50px] xl:rounded-[55px] 2xl:rounded-[65px]"
-          style={{
-            inset: "-3px",
-            padding: "3px",
-            background: `
-              linear-gradient(108.74deg,
-                rgba(105,120,255,0.8) 0%,
-                rgba(255,255,255,0.8) 36.46%,
-                rgba(255,255,255,0.6) 73.96%,
-                rgba(13,220,170,0.8) 100%
-              )
-            `,
-            WebkitMask:
-              "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-            WebkitMaskComposite: "xor",
-            maskComposite: "exclude",
-            zIndex: 0,
-          }}
-        />
+        {/* Background Image on Hover */}
+        {backgroundImage && (
+          <div
+            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            style={{
+              backgroundImage: `url(${backgroundImage})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              zIndex: 0,
+            }}
+          />
+        )}
 
         {/* CONTENT */}
         <div className="relative z-10">
