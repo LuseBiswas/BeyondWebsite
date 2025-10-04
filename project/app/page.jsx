@@ -8,11 +8,13 @@ import Journey from "@/components/Journey";
 import Price from "@/components/Price";
 import FAQ from "@/components/FAQ";
 import Outro from "@/components/Outro";
+import Workflow from "@/components/Workflow";
 
 export default function Page() {
   return (
     <div className="overflow-x-hidden w-full">
       <Home />
+      <Workflow/>
       <Company />
       <Home_2 />
       <WeDesign/>
