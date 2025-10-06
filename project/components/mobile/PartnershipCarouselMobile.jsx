@@ -1,4 +1,6 @@
 "use client";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 
 export default function PartnershipCarouselMobile() {
   const carouselData = [
@@ -7,6 +9,60 @@ export default function PartnershipCarouselMobile() {
     { title: "Deliver",  videoUrl: "https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_7.mp4", videoText: "We launch <br/> with precision", textPos: "40%" },
     { title: "Evolve",   videoUrl: "https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/10.mov",   videoText: "Because your <br/> growth doesn't <br/> stop here.", textPos: "35%" },
   ];
+
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [loadedVideos, setLoadedVideos] = useState(new Set([0]));
+  const videoRefs = useRef({});
+
+  // Preload adjacent videos
+  useEffect(() => {
+    const preloadIndexes = [
+      activeIndex,
+      (activeIndex + 1) % carouselData.length,
+      (activeIndex - 1 + carouselData.length) % carouselData.length
+    ];
+
+    preloadIndexes.forEach(index => {
+      if (!loadedVideos.has(index)) {
+        const video = document.createElement('video');
+        video.preload = 'auto';
+        video.src = carouselData[index].videoUrl;
+        video.load();
+        setLoadedVideos(prev => new Set([...prev, index]));
+      }
+    });
+  }, [activeIndex, carouselData, loadedVideos]);
+
+  // Auto-carousel functionality
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % carouselData.length);
+    }, 6000);
+
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, carouselData.length]);
+
+  // Pause auto-play when user interacts
+  const handleTabClick = (index) => {
+    setActiveIndex(index);
+    setIsAutoPlaying(false);
+    
+    // Resume auto-play after 8 seconds of no interaction
+    setTimeout(() => {
+      setIsAutoPlaying(true);
+    }, 8000);
+  };
+
+  // Ensure video plays when it becomes active
+  useEffect(() => {
+    const currentVideo = videoRefs.current[activeIndex];
+    if (currentVideo) {
+      currentVideo.play().catch(() => {});
+    }
+  }, [activeIndex]);
 
   return (
     <div className="bg-white min-h-screen py-8 px-4">
@@ -29,29 +85,60 @@ export default function PartnershipCarouselMobile() {
         It&apos;s a partnership.
       </h1>
 
-      {/* Stacked video cards */}
-      <div className="mx-auto w-full max-w-[30rem] space-y-6 sm:space-y-8">
+      {/* Navigation tabs */}
+      <div className="flex justify-center gap-6 sm:gap-8 mb-8 sm:mb-10">
         {carouselData.map((item, index) => (
-          <div key={index} className="flex flex-col items-center">
-            {/* Title */}
-            <h2
-              className="text-center mb-3 sm:mb-4 font-medium text-[clamp(18px,5.6vw,24px)]"
-              style={{ fontFamily: "Questrial, sans-serif", color: "#000" }}
-            >
-              {item.title}
-            </h2>
+          <button
+            key={index}
+            onClick={() => handleTabClick(index)}
+            className={`transition-all duration-300 text-[clamp(16px,4.5vw,20px)] ${
+              activeIndex === index 
+                ? "text-black font-medium" 
+                : "text-gray-500"
+            }`}
+            style={{
+              fontFamily: "Questrial, sans-serif",
+              background: "none",
+              border: "none",
+              cursor: "pointer"
+            }}
+          >
+            {item.title}
+          </button>
+        ))}
+      </div>
 
-            {/* Video card */}
-            <div
-              className="relative overflow-hidden rounded-2xl w-full"
-              style={{ aspectRatio: "341 / 467", backgroundColor: "#f3f4f6" }}
+      {/* Video carousel */}
+      <div className="mx-auto w-full max-w-[30rem]">
+        <div
+          className="relative overflow-hidden rounded-2xl w-full"
+          style={{ aspectRatio: "341 / 467", backgroundColor: "#f3f4f6" }}
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeIndex}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ 
+                duration: 0.8,
+                ease: "easeInOut"
+              }}
+              className="absolute inset-0"
             >
               <video
+                ref={(el) => { if (el) videoRefs.current[activeIndex] = el; }}
                 className="absolute inset-0 w-full h-full object-cover"
-                style={{ objectPosition: `50% ${item.textPos || "35%"}` }}
-                autoPlay loop muted playsInline preload="metadata" crossOrigin="anonymous"
+                style={{ objectPosition: `50% ${carouselData[activeIndex].textPos || "35%"}` }}
+                autoPlay 
+                loop 
+                muted 
+                playsInline 
+                preload="auto"
+                crossOrigin="anonymous"
+                key={carouselData[activeIndex].videoUrl}
               >
-                <source src={item.videoUrl} />
+                <source src={carouselData[activeIndex].videoUrl} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
 
@@ -63,15 +150,18 @@ export default function PartnershipCarouselMobile() {
 
               {/* Overlay text */}
               <div className="absolute inset-0 flex items-end justify-center pb-10 sm:pb-14">
-                <h3
+                <motion.h3
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.3, duration: 0.6 }}
                   className="text-white text-center text-[clamp(24px,8vw,44px)]"
                   style={{ fontFamily: "Syne, sans-serif", lineHeight: "1.1", textShadow: "0 4px 8px rgba(0, 0, 0, 0.35)" }}
-                  dangerouslySetInnerHTML={{ __html: item.videoText }}
+                  dangerouslySetInnerHTML={{ __html: carouselData[activeIndex].videoText }}
                 />
               </div>
-            </div>
-          </div>
-        ))}
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
 
       <div className="h-6 sm:h-8" />

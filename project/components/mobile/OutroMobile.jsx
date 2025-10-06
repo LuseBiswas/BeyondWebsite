@@ -30,11 +30,14 @@ export default function OutroMobile() {
         </h1>
 
         {/* CTA Buttons */}
-        <div className="flex flex-row items-center justify-center gap-4">
+        <div className="flex flex-row items-center justify-center gap-3 sm:gap-4">
           {/* CTA 1 - See Our Pricing */}
           <button
-            className="flex-1 text-white border-2 border-white bg-black px-4 rounded-3xl text-[20px] font-normal transition-all duration-300 h-[50px] flex items-center justify-center hover:bg-white hover:text-black cursor-pointer"
-            style={{ fontFamily: "Questrial, sans-serif" }}
+            className="flex-1 text-white border-2 border-white bg-black px-3 sm:px-4 rounded-3xl font-normal transition-all duration-300 h-[50px] flex items-center justify-center hover:bg-white hover:text-black cursor-pointer whitespace-nowrap"
+            style={{ 
+              fontFamily: "Questrial, sans-serif",
+              fontSize: "clamp(15px, 4.2vw, 20px)"
+            }}
             onClick={scrollToPricing}
           >
             See our pricing
@@ -42,12 +45,15 @@ export default function OutroMobile() {
 
           {/* CTA 2 - Book a Call */}
           <button
-            className="flex-1 text-black bg-white px-4 rounded-3xl text-[20px] font-normal transition-all duration-300 h-[50px] flex items-center justify-center hover:bg-gray-100 cursor-pointer gap-1"
-            style={{ fontFamily: "Questrial, sans-serif" }}
+            className="flex-1 text-black bg-white px-3 sm:px-4 rounded-3xl font-normal transition-all duration-300 h-[50px] flex items-center justify-center hover:bg-gray-100 cursor-pointer gap-1 whitespace-nowrap"
+            style={{ 
+              fontFamily: "Questrial, sans-serif",
+              fontSize: "clamp(15px, 4.2vw, 20px)"
+            }}
             onClick={handleBookCall}
           >
             Book a Call
-            <ArrowUpRight className="w-[20px] h-[20px]" />
+            <ArrowUpRight style={{ width: "clamp(16px, 4vw, 20px)", height: "clamp(16px, 4vw, 20px)" }} />
           </button>
         </div>
       </div>

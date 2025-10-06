@@ -78,14 +78,14 @@ export default function WeDesignMobile() {
       {/* Green box - compact, fluid */}
       <div className="w-full max-w-[28rem] mx-auto">
         <div
-          className="rounded-2xl relative px-4 sm:px-6 pt-5 pb-4 sm:pb-6 mb-4 sm:mb-6"
+          className="rounded-2xl relative px-4 sm:px-6 pt-8 pb-8 sm:pb-10 mb-4 sm:mb-6"
           style={{
             backgroundColor: "#E8FC53",
-            minHeight: "clamp(140px, 34vw, 220px)",
+            minHeight: "clamp(180px, 44vw, 280px)",
           }}
         >
           {/* Heading */}
-          <div className="mb-3 sm:mb-4">
+          <div className="mb-6 sm:mb-8">
             <h2
               className="text-center"
               style={{
@@ -102,7 +102,7 @@ export default function WeDesignMobile() {
           {/* Carousel text - fluid height & type */}
           <div
             className="relative overflow-hidden mx-auto"
-            style={{ height: "clamp(56px, 14vw, 96px)" }}
+            style={{ height: "clamp(60px, 16vw, 100px)" }}
           >
             <motion.div
               className="flex"
@@ -128,7 +128,7 @@ export default function WeDesignMobile() {
         </div>
 
         {/* Dots — smaller & tighter to save vertical space */}
-        <div className="flex justify-center gap-2.5 sm:gap-3">
+        {/* <div className="flex justify-center gap-2.5 sm:gap-3">
           {visibleDots.map((dot) => {
             const isActive = dot.active;
             const isLeft = dot.position === -1;
@@ -155,7 +155,7 @@ export default function WeDesignMobile() {
               />
             );
           })}
-        </div>
+        </div> */}
       </div>
     </div>
   );

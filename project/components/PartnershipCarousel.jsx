@@ -1,6 +1,6 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import PartnershipCarouselMobile from "./mobile/PartnershipCarouselMobile";
 
 export default function PartnershipCarousel() {
@@ -26,12 +26,33 @@ export default function PartnershipCarousel() {
     {
       title: "Evolve",
       videoUrl: "https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/10.mov",
-      videoText: "Because your growth <br/> doesn’t stop here."
+      videoText: "Because your growth <br/> doesn't stop here."
     }
   ];
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [loadedVideos, setLoadedVideos] = useState(new Set([0]));
+  const videoRefs = useRef({});
+
+  // Preload adjacent videos
+  useEffect(() => {
+    const preloadIndexes = [
+      activeIndex,
+      (activeIndex + 1) % carouselData.length,
+      (activeIndex - 1 + carouselData.length) % carouselData.length
+    ];
+
+    preloadIndexes.forEach(index => {
+      if (!loadedVideos.has(index)) {
+        const video = document.createElement('video');
+        video.preload = 'auto';
+        video.src = carouselData[index].videoUrl;
+        video.load();
+        setLoadedVideos(prev => new Set([...prev, index]));
+      }
+    });
+  }, [activeIndex, carouselData, loadedVideos]);
 
   // Auto-carousel functionality
   useEffect(() => {
@@ -54,6 +75,14 @@ export default function PartnershipCarousel() {
       setIsAutoPlaying(true);
     }, 8000);
   };
+
+  // Ensure video plays when it becomes active
+  useEffect(() => {
+    const currentVideo = videoRefs.current[activeIndex];
+    if (currentVideo) {
+      currentVideo.play().catch(() => {});
+    }
+  }, [activeIndex]);
 
   return (
     <>
@@ -129,15 +158,16 @@ export default function PartnershipCarousel() {
             className="absolute inset-0"
           >
             <video
+              ref={(el) => { if (el) videoRefs.current[activeIndex] = el; }}
               className="w-full h-full object-cover"
               autoPlay
               loop
               muted
               playsInline
-              preload="metadata"
+              preload="auto"
               key={carouselData[activeIndex].videoUrl}
             >
-              <source src={carouselData[activeIndex].videoUrl} />
+              <source src={carouselData[activeIndex].videoUrl} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
 

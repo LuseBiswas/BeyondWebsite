@@ -41,7 +41,7 @@ export default function PriceMobile() {
     <div className="relative min-h-screen overflow-hidden bg-gray-800">
       <video
         ref={videoRef}
-        className="absolute w-full h-full object-cover pointer-events-none"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none z-0"
         autoPlay
         loop
         muted
@@ -53,6 +53,9 @@ export default function PriceMobile() {
         <source src="https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_15.mov" />
         Your browser does not support the video tag.
       </video>
+
+      {/* Black transparent overlay */}
+      <div className="absolute inset-0 bg-black/70 z-[5]"></div>
 
       {/* Mobile Content */}
       <div className="relative z-10 py-12 px-4">

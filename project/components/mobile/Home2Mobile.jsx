@@ -35,6 +35,15 @@ export default function Home2Mobile() {
     return () => v.removeEventListener("canplay", start);
   }, []);
 
+  // Auto-toggle menu effect
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsMenuOpen((prev) => !prev);
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }, [isMenuOpen]);
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-gray-800">
       {/* Background Video */}
@@ -109,8 +118,8 @@ export default function Home2Mobile() {
                 }}
                 exit={{ width: 0, height: 0 }}
                 transition={{ 
-                  duration: 0.5,
-                  ease: [0.43, 0.13, 0.23, 0.96]
+                  duration: 0.8,
+                  ease: [0.25, 0.1, 0.25, 1]
                 }}
                 className="absolute top-0 right-0 overflow-hidden origin-top-right"
                 style={{
@@ -122,10 +131,10 @@ export default function Home2Mobile() {
               >
                 {/* Text content inside the ribbon */}
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ delay: 0.3, duration: 0.3 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ delay: 0.4, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
                   className="absolute top-16 sm:top-20 md:top-24 lg:top-28 right-3 sm:right-4 md:right-8 lg:right-10 left-3 sm:left-4 md:left-8 lg:left-10 text-right flex flex-col justify-center pb-8 sm:pb-10 md:pb-12"
                   style={{ height: "calc(100% - 8rem)" }}
                 >
