@@ -60,11 +60,11 @@ export default function Home() {
           <img
             src="/image/logo.png"
             alt="Logo"
-            className="absolute top-4 lg:top-6 xl:top-8 2xl:top-12 left-6 lg:left-8 xl:left-12 2xl:left-16 w-[180px] lg:w-[220px] xl:w-[257px] 2xl:w-[320px] h-[79px] lg:h-[97px] xl:h-[113px] 2xl:h-[140px]"
+            className="absolute top-4 lg:top-6 xl:top-8 2xl:top-12 left-6 lg:left-8 xl:left-12 2xl:left-16 w-[160px] lg:w-[180px] xl:w-[220px] 2xl:w-[320px] h-[70px] lg:h-[79px] xl:h-[97px] 2xl:h-[140px]"
           />
                     <div className="absolute bottom-8 2xl:bottom-12 left-6 lg:left-8 xl:left-12 2xl:left-16 right-6 lg:right-8 xl:right-12 2xl:right-16">
             <h1
-              className="text-white font-normal text-[60px] lg:text-[80px] xl:text-[96px] 2xl:text-[120px] mb-12 2xl:mb-16"
+              className="text-white font-normal text-[48px] lg:text-[64px] xl:text-[80px] 2xl:text-[120px] mb-8 lg:mb-10 xl:mb-12 2xl:mb-16"
               style={{
                 fontFamily: "Syne, sans-serif",
                 lineHeight: "1.08"
@@ -74,7 +74,7 @@ export default function Home() {
               transform.
             </h1>
             <p
-              className="text-white font-normal text-[26px] lg:text-[32px] xl:text-[38px] 2xl:text-[48px] leading-[32px] lg:leading-[40px] xl:leading-[48px] 2xl:leading-[60px] mb-12 2xl:mb-16"
+              className="text-white font-normal text-[22px] lg:text-[26px] xl:text-[32px] 2xl:text-[48px] leading-[28px] lg:leading-[34px] xl:leading-[40px] 2xl:leading-[60px] mb-8 lg:mb-10 xl:mb-12 2xl:mb-16"
               style={{
                 fontFamily: "Questrial, sans-serif",
               }}
@@ -83,21 +83,21 @@ export default function Home() {
               Because your story deserves more than screens and clicks - <br />
               it deserves to live beyond websites.
             </p>
-            <div className="flex gap-4 lg:gap-5 xl:gap-6 2xl:gap-8">
+            <div className="flex gap-3 lg:gap-4 xl:gap-5 2xl:gap-8">
               <button
-                className="w-[180px] lg:w-[220px] xl:w-[250px] 2xl:w-[320px] h-[45px] lg:h-[53px] xl:h-[61px] 2xl:h-[75px] bg-transparent border-2 border-white text-white text-[22px] lg:text-[26px] xl:text-[30px] 2xl:text-[38px] rounded-4xl cursor-pointer hover:bg-white hover:text-black transition-all duration-300"
+                className="w-[160px] lg:w-[180px] xl:w-[220px] 2xl:w-[320px] h-[42px] lg:h-[48px] xl:h-[53px] 2xl:h-[75px] bg-transparent border-2 border-white text-white text-[18px] lg:text-[22px] xl:text-[26px] 2xl:text-[38px] rounded-4xl cursor-pointer hover:bg-white hover:text-black transition-all duration-300"
                 style={{ fontFamily: "Questrial, sans-serif" }}
                 onClick={() => window.open("#pricing", "_blank")}
               >
                 See Our Pricing
               </button>
               <button
-                className="w-[150px] lg:w-[176px] xl:w-[203px] 2xl:w-[260px] h-[45px] lg:h-[53px] xl:h-[61px] 2xl:h-[75px] bg-white text-black text-[22px] lg:text-[26px] xl:text-[30px] 2xl:text-[38px] rounded-4xl cursor-pointer hover:bg-transparent hover:text-white hover:border-2 hover:border-white transition-all duration-300 flex items-center justify-center gap-1"
+                className="w-[140px] lg:w-[150px] xl:w-[176px] 2xl:w-[260px] h-[42px] lg:h-[48px] xl:h-[53px] 2xl:h-[75px] bg-white text-black text-[18px] lg:text-[22px] xl:text-[26px] 2xl:text-[38px] rounded-4xl cursor-pointer hover:bg-transparent hover:text-white hover:border-2 hover:border-white transition-all duration-300 flex items-center justify-center gap-1"
                 style={{ fontFamily: "Questrial, sans-serif" }}
                 onClick={() => window.open("#book-call", "_blank")}
               >
                 Book Call
-                <ArrowUpRight className="w-[28px] lg:w-[32px] xl:w-[36px] 2xl:w-[45px] h-[28px] lg:h-[32px] xl:h-[36px] 2xl:h-[45px]" />
+                <ArrowUpRight className="w-[24px] lg:w-[28px] xl:w-[32px] 2xl:w-[45px] h-[24px] lg:h-[28px] xl:h-[32px] 2xl:h-[45px]" />
               </button>
             </div>
           </div>

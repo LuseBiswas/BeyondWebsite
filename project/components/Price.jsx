@@ -67,11 +67,11 @@ export default function Price() {
       </video>
 
       {/* Desktop and Tablet Layout (lg and above) */}
-      <div className="hidden lg:block relative z-10 py-12 lg:py-16 xl:py-20 2xl:py-24 px-4 lg:px-6 xl:px-8 2xl:px-12">
+      <div className="hidden lg:block relative z-10 py-12 lg:py-16 xl:py-20 2xl:py-24 px-6 lg:px-4 xl:px-12 2xl:px-16">
         <div className="max-w-5xl lg:max-w-6xl xl:max-w-7xl 2xl:max-w-8xl mx-auto">
           {/* Main Header */}
           <h1
-            className="text-center mb-9  text-[64px] lg:text-[80px] xl:text-[96px] 2xl:text-[120px] leading-[1.1]"
+            className="text-center mb-6 lg:mb-8 xl:mb-9 2xl:mb-12 text-[48px] lg:text-[64px] xl:text-[80px] 2xl:text-[120px] leading-[1.1]"
             style={{
               fontFamily: "Syne, sans-serif",
               color: "#FFFFFF"
@@ -82,7 +82,7 @@ export default function Price() {
 
           {/* Sub Header */}
           <p
-            className="text-center mb-16 lg:mb-20 xl:mb-24 2xl:mb-32 text-[28px] lg:text-[32px] xl:text-[38px] 2xl:text-[48px] leading-[1.3]"
+            className="text-center mb-12 lg:mb-16 xl:mb-20 2xl:mb-32 text-[22px] lg:text-[26px] xl:text-[32px] 2xl:text-[48px] leading-[1.3]"
             style={{
               fontFamily: "Questrial, sans-serif",
               color: "#FFFFFF"
@@ -92,7 +92,7 @@ export default function Price() {
           </p>
 
           {/* Pricing Cards */}
-          <div className="flex justify-center items-start gap-6 lg:gap-8 xl:gap-10 2xl:gap-12 px-4 lg:px-8 xl:px-12 2xl:px-16">
+          <div className="flex justify-center items-start gap-3 lg:gap-4 xl:gap-8 2xl:gap-12">
             <PriceBox 
               title="PURELY WEBSITE"
               tag="Quick"
