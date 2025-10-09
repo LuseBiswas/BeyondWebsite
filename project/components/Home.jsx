@@ -2,9 +2,19 @@
 import { useRef, useEffect } from "react";
 import { ArrowUpRight } from "lucide-react";
 import HomeMobile from "./mobile/HomeMobile";
+import { getOptimizedVideoUrl } from "../lib/cloudinary";
 
 export default function Home() {
   const videoRef = useRef(null); // no TS generic here
+
+  // Generate optimized video URL
+  const optimizedVideoUrl = getOptimizedVideoUrl(
+    "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760025790/shutterstock_1065158980_1_jalep4.mov",
+    {
+      quality: "auto",
+      format: "mp4"
+    }
+  );
 
   useEffect(() => {
     const v = videoRef.current;
@@ -37,12 +47,10 @@ export default function Home() {
         loop
         muted
         playsInline
-        preload="metadata" // was "auto"
-        crossOrigin="anonymous" // helps with cross-origin fetch
-        poster="/poster.jpg" // optional but recommended
+        preload="auto"
+        crossOrigin="anonymous"
       >
-        <source src="https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_5.mov" />
-        {/* or explicitly: type="video/quicktime" */}
+        <source src={optimizedVideoUrl} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
