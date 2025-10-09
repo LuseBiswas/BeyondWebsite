@@ -38,16 +38,15 @@ export default function WeDesign() {
           <span className="text-black/50">your most</span> powerful touchpoint.
         </h1>
 
-        {/* Container for green box and dots - centered together */}
-        <div className="flex items-center justify-center px-4">
+        {/* Container for green box - centered */}
+        <div className="flex items-center justify-center px-4 lg:px-6 xl:px-8 2xl:px-12">
           {/* Green box - Responsive */}
           <div
-            className="rounded-2xl lg:rounded-3xl relative flex items-center"
+            className="rounded-2xl lg:rounded-3xl relative flex items-center mx-auto"
             style={{
               backgroundColor: "#E8FC53",
               width: "clamp(800px, 85vw, 1400px)",
-              height: "clamp(300px, 32vw, 520px)",
-              marginRight: "clamp(40px, 8vw, 100px)"
+              height: "clamp(300px, 32vw, 520px)"
             }}
           >
             {/* Left side text - Responsive */}
@@ -112,7 +111,7 @@ export default function WeDesign() {
             </div>
 
             {/* Dotted indicators outside the box on the right - Responsive */}
-            <div className="absolute top-0 h-full flex flex-col justify-center" style={{ right: "clamp(-60px, -12vw, -80px)" }}>
+            {/* <div className="absolute top-0 h-full flex flex-col justify-center" style={{ right: "clamp(-60px, -12vw, -80px)" }}>
               <div className="relative flex flex-col justify-center" style={{ height: "clamp(250px, 30vw, 320px)" }}>
                 {carouselItems.map((item, index) => {
                   const position = (index - currentIndex + carouselItems.length) % carouselItems.length;
@@ -159,7 +158,7 @@ export default function WeDesign() {
                   );
                 })}
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

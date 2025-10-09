@@ -1,10 +1,12 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
+import Script from "next/script";
 import { getOptimizedVideoUrl } from "../../lib/cloudinary";
 
 export default function HomeMobile() {
   const videoRef = useRef(null);
+  const [calendlyLoaded, setCalendlyLoaded] = useState(false);
 
   // Generate optimized video URL
   const optimizedVideoUrl = getOptimizedVideoUrl(
@@ -14,6 +16,27 @@ export default function HomeMobile() {
       format: "mp4"
     }
   );
+
+  const scrollToPricing = () => {
+    const pricingSection = document.getElementById('pricing-section');
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
+  const handleBookCall = () => {
+    if (typeof window !== 'undefined' && window.Calendly) {
+      window.Calendly.initPopupWidget({
+        url: 'https://calendly.com/riteshbiswasut'
+      });
+    } else {
+      console.error('Calendly is not loaded yet');
+      alert('Please wait a moment and try again');
+    }
+  };
 
   useEffect(() => {
     const v = videoRef.current;
@@ -98,7 +121,7 @@ export default function HomeMobile() {
                   height: "clamp(40px, 11vw, 48px)",
                   fontSize: "clamp(16px, 4.5vw, 20px)",
                 }}
-                onClick={() => (window.location.hash = "pricing")}
+                onClick={scrollToPricing}
               >
                 Our Pricing
               </button>
@@ -111,7 +134,7 @@ export default function HomeMobile() {
                   height: "clamp(40px, 11vw, 48px)",
                   fontSize: "clamp(16px, 4.5vw, 20px)",
                 }}
-                onClick={() => (window.location.hash = "book-call")}
+                onClick={handleBookCall}
               >
                 Book Call
                 <ArrowUpRight
@@ -123,6 +146,14 @@ export default function HomeMobile() {
           </div>
         </div>
       </div>
+
+      {/* Calendly Script */}
+      <Script
+        src="https://assets.calendly.com/assets/external/widget.js"
+        strategy="afterInteractive"
+        onLoad={() => setCalendlyLoaded(true)}
+        onError={() => console.error('Failed to load Calendly script')}
+      />
     </div>
   );
 }

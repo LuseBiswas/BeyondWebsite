@@ -1,11 +1,13 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
+import Script from "next/script";
 import HomeMobile from "./mobile/HomeMobile";
 import { getOptimizedVideoUrl } from "../lib/cloudinary";
 
 export default function Home() {
   const videoRef = useRef(null); // no TS generic here
+  const [calendlyLoaded, setCalendlyLoaded] = useState(false);
 
   // Generate optimized video URL
   const optimizedVideoUrl = getOptimizedVideoUrl(
@@ -15,6 +17,27 @@ export default function Home() {
       format: "mp4"
     }
   );
+
+  const scrollToPricing = () => {
+    const pricingSection = document.getElementById('pricing-section');
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
+  const handleBookCall = () => {
+    if (typeof window !== 'undefined' && window.Calendly) {
+      window.Calendly.initPopupWidget({
+        url: 'https://calendly.com/riteshbiswasut'
+      });
+    } else {
+      console.error('Calendly is not loaded yet');
+      alert('Please wait a moment and try again');
+    }
+  };
 
   useEffect(() => {
     const v = videoRef.current;
@@ -87,14 +110,14 @@ export default function Home() {
               <button
                 className="w-[160px] lg:w-[180px] xl:w-[220px] 2xl:w-[320px] h-[42px] lg:h-[48px] xl:h-[53px] 2xl:h-[75px] bg-transparent border-2 border-white text-white text-[18px] lg:text-[22px] xl:text-[26px] 2xl:text-[38px] rounded-4xl cursor-pointer hover:bg-white hover:text-black transition-all duration-300"
                 style={{ fontFamily: "Questrial, sans-serif" }}
-                onClick={() => window.open("#pricing", "_blank")}
+                onClick={scrollToPricing}
               >
                 See Our Pricing
               </button>
               <button
                 className="w-[140px] lg:w-[150px] xl:w-[176px] 2xl:w-[260px] h-[42px] lg:h-[48px] xl:h-[53px] 2xl:h-[75px] bg-white text-black text-[18px] lg:text-[22px] xl:text-[26px] 2xl:text-[38px] rounded-4xl cursor-pointer hover:bg-transparent hover:text-white hover:border-2 hover:border-white transition-all duration-300 flex items-center justify-center gap-1"
                 style={{ fontFamily: "Questrial, sans-serif" }}
-                onClick={() => window.open("#book-call", "_blank")}
+                onClick={handleBookCall}
               >
                 Book Call
                 <ArrowUpRight className="w-[24px] lg:w-[28px] xl:w-[32px] 2xl:w-[45px] h-[24px] lg:h-[28px] xl:h-[32px] 2xl:h-[45px]" />
@@ -108,6 +131,14 @@ export default function Home() {
       <div className="lg:hidden">
         <HomeMobile />
       </div>
+
+      {/* Calendly Script */}
+      <Script
+        src="https://assets.calendly.com/assets/external/widget.js"
+        strategy="afterInteractive"
+        onLoad={() => setCalendlyLoaded(true)}
+        onError={() => console.error('Failed to load Calendly script')}
+      />
     </div>
   );
 }

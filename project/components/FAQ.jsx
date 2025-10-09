@@ -2,10 +2,12 @@
 import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Script from "next/script";
 import FAQMobile from "./mobile/FAQMobile";
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(null);
+  const [calendlyLoaded, setCalendlyLoaded] = useState(false);
 
   const faqs = [
     {
@@ -48,6 +50,17 @@ export default function FAQ() {
 
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
+  };
+
+  const openCalendly = () => {
+    if (typeof window !== 'undefined' && window.Calendly) {
+      window.Calendly.initPopupWidget({
+        url: 'https://calendly.com/riteshbiswasut'
+      });
+    } else {
+      console.error('Calendly is not loaded yet');
+      alert('Please wait a moment and try again');
+    }
   };
 
   return (
@@ -198,7 +211,7 @@ export default function FAQ() {
                 <button
                   className="relative text-white px-6 lg:px-8 xl:px-10 2xl:px-12 rounded-3xl lg:rounded-4xl text-[24px] lg:text-[27px] xl:text-[30px] 2xl:text-[36px] font-normal transition-all duration-300 h-[50px] lg:h-[55px] xl:h-[61px] 2xl:h-[70px] flex items-center justify-center hover:opacity-80 cursor-pointer"
                   style={{ fontFamily: "Questrial, sans-serif", backgroundColor: "#595959" }}
-                  onClick={() => window.open("#", "_blank")}
+                  onClick={openCalendly}
                 >
                   Quick 15 Minute Call
                 </button>
@@ -220,6 +233,14 @@ export default function FAQ() {
       <div className="lg:hidden">
         <FAQMobile />
       </div>
+
+      {/* Calendly Script */}
+      <Script
+        src="https://assets.calendly.com/assets/external/widget.js"
+        strategy="afterInteractive"
+        onLoad={() => setCalendlyLoaded(true)}
+        onError={() => console.error('Failed to load Calendly script')}
+      />
     </>
   );
 }
