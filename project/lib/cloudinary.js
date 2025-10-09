@@ -1,10 +1,10 @@
 // Cloudinary configuration
-// TODO: Move to environment variables before production
+// Environment variables are now used for security
 
 export const cloudinaryConfig = {
-  cloudName: "drbcb1ziy",
-  apiKey: "524296464367938",
-  apiSecret: "b5FxSprSLyfdX-gAnjZZpps4IAs"
+  cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ,
+  apiKey: process.env.CLOUDINARY_API_KEY ,
+  apiSecret: process.env.CLOUDINARY_API_SECRET ,
 };
 
 /**
