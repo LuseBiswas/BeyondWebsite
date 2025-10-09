@@ -12,10 +12,10 @@ export default function Beyond() {
 
   const carouselData = [
     { id: 0, isStatic: true, imageUrl: "/image/bg.png", title: "Beyond the Surface", subtitle: "It's always" },
-    { id: 1, isStatic: false, videoUrl: "https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_11.mov", title: "Beyond <br/> Attraction", subtitle: "into trust, engagement,<br/> and action." },
-    { id: 2, isStatic: false, videoUrl: "https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_12.mov", title: "Beyond <br/>Colours", subtitle: "into clarity, accessibility,<br/>and emotion." },
-    { id: 3, isStatic: false, videoUrl: "https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_13.mov", title: "Beyond<br/>Trends", subtitle: "into timeless design<br/>that adapts to change." },
-    { id: 4, isStatic: false, videoUrl: "https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_14.mov", title: "Beyond<br/>Layouts", subtitle: "into journeys that feel<br/>intuitive and human." }
+    { id: 1, isStatic: false, videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760025674/shutterstock_3767390_1_nwf9tw.mov", title: "Beyond <br/> Attraction", subtitle: "into trust, engagement,<br/> and action." },
+    { id: 2, isStatic: false, videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760025686/shutterstock_3625121845_zvc0xp.mov", title: "Beyond <br/>Colours", subtitle: "into clarity, accessibility,<br/>and emotion." },
+    { id: 3, isStatic: false, videoUrl: null, title: "Beyond<br/>Trends", subtitle: "into timeless design<br/>that adapts to change." },
+    { id: 4, isStatic: false, videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760025710/shutterstock_3847367763_jbsax0.mov", title: "Beyond<br/>Layouts", subtitle: "into journeys that feel<br/>intuitive and human." }
   ];
 
   const [activeIndex, setActiveIndex] = useState(0);                 // which slide index we're on
@@ -147,7 +147,7 @@ export default function Beyond() {
       {/* Desktop and Tablet */}
       <div className="hidden lg:block bg-black relative h-[1260px]">
         {/* Background image & videos */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0" style={{ backgroundColor: "#000" }}>
           {/* Static image layer */}
           <motion.div
             animate={{ opacity: selectedCard?.isStatic ? 1 : 0 }}
@@ -165,19 +165,33 @@ export default function Beyond() {
             />
           </motion.div>
 
+          {/* Black background layer (for null videos) */}
+          <motion.div
+            className="absolute inset-0 w-full h-full bg-black"
+            animate={{
+              opacity: selectedCard?.isStatic ? 0 : !selectedCard?.videoUrl ? 1 : 0
+            }}
+            transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
+            style={{
+              zIndex: !selectedCard?.videoUrl ? 2 : 0,
+              willChange: "opacity"
+            }}
+          />
+
           {/* Video layer A */}
           <motion.video
             ref={backgroundVideoRef}
             className="absolute inset-0 w-full h-full object-cover"
             initial={{ opacity: 0 }}
             animate={{
-              opacity: selectedCard?.isStatic ? 0 : activeVideoIndex === 0 ? 1 : 0
+              opacity: selectedCard?.isStatic ? 0 : selectedCard?.videoUrl && activeVideoIndex === 0 ? 1 : 0
             }}
             transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
             muted
             loop
             playsInline
             preload="auto"
+            crossOrigin="anonymous"
             style={{
               zIndex: activeVideoIndex === 0 ? 2 : 1,
               willChange: "opacity",
@@ -192,13 +206,14 @@ export default function Beyond() {
             className="absolute inset-0 w-full h-full object-cover"
             initial={{ opacity: 0 }}
             animate={{
-              opacity: selectedCard?.isStatic ? 0 : activeVideoIndex === 1 ? 1 : 0
+              opacity: selectedCard?.isStatic ? 0 : selectedCard?.videoUrl && activeVideoIndex === 1 ? 1 : 0
             }}
             transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
             muted
             loop
             playsInline
             preload="auto"
+            crossOrigin="anonymous"
             style={{
               pointerEvents: "none",
               zIndex: activeVideoIndex === 1 ? 2 : 1,

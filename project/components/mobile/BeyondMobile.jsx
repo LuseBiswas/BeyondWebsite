@@ -21,28 +21,28 @@ export default function BeyondMobile() {
     {
       id: 1,
       isStatic: false,
-      videoUrl: "https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_11.mov",
+      videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760025674/shutterstock_3767390_1_nwf9tw.mov",
       title: "Beyond <br/> Attraction",
       subtitle: "It's always"
     },
     {
       id: 2,
       isStatic: false,
-      videoUrl: "https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_12.mov",
+      videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760025686/shutterstock_3625121845_zvc0xp.mov",
       title: "Beyond <br/>Colours",
       subtitle: "It's always"
     },
     {
       id: 3,
       isStatic: false,
-      videoUrl: "https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_13.mov",
+      videoUrl: null,
       title: "Beyond<br/>Trends",
       subtitle: "It's always"
     },
     {
       id: 4,
       isStatic: false,
-      videoUrl: "https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_14.mov",
+      videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760025710/shutterstock_3847367763_jbsax0.mov",
       title: "Beyond<br/>Layouts",
       subtitle: "It's always"
     }
@@ -262,7 +262,7 @@ export default function BeyondMobile() {
       {/* Video card container */}
       <div className="relative w-full max-w-[360px] mx-auto" style={{ minWidth: "360px", minHeight: "646px" }}>
         {/* Background: static image + dual video layers */}
-        <div className="absolute inset-0 rounded-3xl overflow-hidden">
+        <div className="absolute inset-0 rounded-3xl overflow-hidden" style={{ backgroundColor: "#000" }}>
           {/* Static image */}
           <motion.div
             animate={{ opacity: selectedSlide?.isStatic ? 1 : 0 }}
@@ -279,19 +279,33 @@ export default function BeyondMobile() {
             />
           </motion.div>
 
+          {/* Black background layer (for null videos) */}
+          <motion.div
+            className="absolute inset-0 w-full h-full bg-black"
+            animate={{
+              opacity: selectedSlide?.isStatic ? 0 : !selectedSlide?.videoUrl ? 1 : 0
+            }}
+            transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
+            style={{
+              zIndex: !selectedSlide?.videoUrl ? 2 : 0,
+              willChange: "opacity"
+            }}
+          />
+
           {/* Video layer A */}
           <motion.video
             ref={videoARef}
             className="absolute inset-0 w-full h-full object-cover"
             initial={{ opacity: 0 }}
             animate={{
-              opacity: selectedSlide?.isStatic ? 0 : activeVideoLayer === 0 ? 1 : 0
+              opacity: selectedSlide?.isStatic ? 0 : selectedSlide?.videoUrl && activeVideoLayer === 0 ? 1 : 0
             }}
             transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
             muted
             loop
             playsInline
             preload="auto"
+            crossOrigin="anonymous"
             style={{
               zIndex: activeVideoLayer === 0 ? 2 : 1,
               willChange: "opacity",
@@ -306,13 +320,14 @@ export default function BeyondMobile() {
             className="absolute inset-0 w-full h-full object-cover"
             initial={{ opacity: 0 }}
             animate={{
-              opacity: selectedSlide?.isStatic ? 0 : activeVideoLayer === 1 ? 1 : 0
+              opacity: selectedSlide?.isStatic ? 0 : selectedSlide?.videoUrl && activeVideoLayer === 1 ? 1 : 0
             }}
             transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
             muted
             loop
             playsInline
             preload="auto"
+            crossOrigin="anonymous"
             style={{
               pointerEvents: "none",
               zIndex: activeVideoLayer === 1 ? 2 : 1,
