@@ -1,9 +1,19 @@
 "use client";
 import { useRef, useEffect } from "react";
 import PriceBox from "../PriceBox";
+import { getOptimizedVideoUrl } from "../../lib/cloudinary";
 
 export default function PriceMobile() {
   const videoRef = useRef(null);
+
+  // Generate optimized video URL
+  const optimizedVideoUrl = getOptimizedVideoUrl(
+    "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760031462/shutterstock_3642258413_jjy2hh.mov",
+    {
+      quality: "auto",
+      format: "mp4"
+    }
+  );
 
   useEffect(() => {
     const v = videoRef.current;
@@ -46,11 +56,10 @@ export default function PriceMobile() {
         loop
         muted
         playsInline
-        preload="metadata"
+        preload="auto"
         crossOrigin="anonymous"
-        poster="/poster.jpg"
       >
-        <source src="https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_15.mov" />
+        <source src={optimizedVideoUrl} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
@@ -86,7 +95,7 @@ export default function PriceMobile() {
           </div>
 
           {/* Stacked Pricing Cards */}
-          <div className="space-y-8 flex flex-col items-center">
+          <div className="space-y-8 flex flex-col items-center [&_.group:hover_.opacity-0]:!opacity-100 [&_.opacity-0]:!opacity-100">
             <PriceBox 
               title="PURELY WEBSITE"
               tag="Quick"
@@ -94,6 +103,7 @@ export default function PriceMobile() {
               description="Best suited for startups,<br/> small businesses."
               cta="Get started"
               onCtaClick={openCalendly}
+              backgroundImage="/image/price/img_1.png"
               bulletPoints={[
                 "A high-performing website.",
                 "Modern, responsive design.",
@@ -108,6 +118,7 @@ export default function PriceMobile() {
               description="Best suited for growing<br/>businesses that need their<br/>website to work as hard<br/>as they do."
               cta="Get started"
               onCtaClick={openCalendly}
+              backgroundImage="/image/price/img_2.png"
               bulletPoints={[
                 "Everything in Purely Website",
                 "Deeper brand alignment<br/>& storytelling-driven design",
@@ -123,6 +134,7 @@ export default function PriceMobile() {
               description="Best suited for ambitious<br/>brands, non-profits, and<br/>enterprises who want to<br/>lead change."
               cta="Get Started"
               onCtaClick={openCalendly}
+              backgroundImage="/image/price/img_3.png"
               bulletPoints={[
                 "Everything in Website +",
                 "Continuous strategy & evolution",

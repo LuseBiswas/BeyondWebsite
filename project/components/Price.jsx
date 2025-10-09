@@ -3,10 +3,20 @@ import { useRef, useEffect, useState } from "react";
 import Script from "next/script";
 import PriceBox from "./PriceBox";
 import PriceMobile from "./mobile/PriceMobile";
+import { getOptimizedVideoUrl } from "../lib/cloudinary";
 
 export default function Price() {
   const videoRef = useRef(null);
   const [calendlyLoaded, setCalendlyLoaded] = useState(false);
+
+  // Generate optimized video URL
+  const optimizedVideoUrl = getOptimizedVideoUrl(
+    "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760031462/shutterstock_3642258413_jjy2hh.mov",
+    {
+      quality: "auto",
+      format: "mp4"
+    }
+  );
 
   useEffect(() => {
     const v = videoRef.current;
@@ -49,11 +59,10 @@ export default function Price() {
         loop
         muted
         playsInline
-        preload="metadata"
+        preload="auto"
         crossOrigin="anonymous"
-        poster="/poster.jpg"
       >
-        <source src="https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_15.mov" />
+        <source src={optimizedVideoUrl} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
