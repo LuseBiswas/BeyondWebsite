@@ -23,28 +23,28 @@ export default function BeyondMobile() {
       isStatic: false,
       videoUrl: "https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_11.mov",
       title: "Beyond <br/> Attraction",
-      subtitle: "into trust, engagement,<br/> and action."
+      subtitle: "It's always"
     },
     {
       id: 2,
       isStatic: false,
       videoUrl: "https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_12.mov",
       title: "Beyond <br/>Colours",
-      subtitle: "into clarity, accessibility,<br/>and emotion."
+      subtitle: "It's always"
     },
     {
       id: 3,
       isStatic: false,
       videoUrl: "https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_13.mov",
       title: "Beyond<br/>Trends",
-      subtitle: "into timeless design<br/>that adapts to change."
+      subtitle: "It's always"
     },
     {
       id: 4,
       isStatic: false,
       videoUrl: "https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_14.mov",
       title: "Beyond<br/>Layouts",
-      subtitle: "into journeys that feel<br/>intuitive and human."
+      subtitle: "It's always"
     }
   ];
 
@@ -251,138 +251,141 @@ export default function BeyondMobile() {
 
   return (
     <div
-      className="bg-black relative min-h-screen overflow-hidden"
+      className="bg-white relative min-h-screen overflow-hidden px-4 flex items-center justify-center"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
     >
-      {/* Background: static image + dual video layers */}
-      <div className="absolute inset-0">
-        {/* Static image */}
-        <motion.div
-          animate={{ opacity: selectedSlide?.isStatic ? 1 : 0 }}
-          transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
-          className="w-full h-full"
-          style={{ willChange: "opacity" }}
-        >
-          <Image
-            src="/image/bg.png"
-            alt="Background"
-            fill
-            className="object-cover object-top"
-            priority
-          />
-        </motion.div>
-
-        {/* Video layer A */}
-        <motion.video
-          ref={videoARef}
-          className="absolute inset-0 w-full h-full object-cover"
-          initial={{ opacity: 0 }}
-          animate={{
-            opacity: selectedSlide?.isStatic ? 0 : activeVideoLayer === 0 ? 1 : 0
-          }}
-          transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
-          muted
-          loop
-          playsInline
-          preload="auto"
-          style={{
-            zIndex: activeVideoLayer === 0 ? 2 : 1,
-            willChange: "opacity",
-            WebkitBackfaceVisibility: "hidden",
-            backfaceVisibility: "hidden"
-          }}
-        />
-
-        {/* Video layer B */}
-        <motion.video
-          ref={videoBRef}
-          className="absolute inset-0 w-full h-full object-cover"
-          initial={{ opacity: 0 }}
-          animate={{
-            opacity: selectedSlide?.isStatic ? 0 : activeVideoLayer === 1 ? 1 : 0
-          }}
-          transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
-          muted
-          loop
-          playsInline
-          preload="auto"
-          style={{
-            pointerEvents: "none",
-            zIndex: activeVideoLayer === 1 ? 2 : 1,
-            willChange: "opacity",
-            WebkitBackfaceVisibility: "hidden",
-            backfaceVisibility: "hidden"
-          }}
-        />
-      </div>
-
       {/* Hidden preload video (lookahead) */}
       <video ref={preloadRef} className="hidden" muted playsInline preload="auto" />
 
-      {/* Overlay content (top-anchored like desktop, no cards/dots) */}
-      <div className="relative z-10 min-h-screen">
-        <AnimatePresence mode="wait">
-          {/* Static content */}
-          {selectedSlide?.isStatic && (
-            <motion.div
-              key="static-mobile"
-              className="absolute left-0 right-0 top-0 pt-20 px-5"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
-            >
-              <motion.p
-                className="text-white mb-3"
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-                style={{ fontFamily: "Questrial, sans-serif", fontSize: "22px" }}
-                dangerouslySetInnerHTML={{ __html: selectedSlide.subtitle }}
-              />
-              <motion.h1
-                className="text-white"
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 0.25 }}
-                style={{ fontFamily: "Syne, sans-serif", fontSize: "42px", lineHeight: 1.12 }}
-              >
-                {selectedSlide.title}
-              </motion.h1>
-            </motion.div>
-          )}
+      {/* Video card container */}
+      <div className="relative w-full max-w-[360px] mx-auto" style={{ minWidth: "360px", minHeight: "646px" }}>
+        {/* Background: static image + dual video layers */}
+        <div className="absolute inset-0 rounded-3xl overflow-hidden">
+          {/* Static image */}
+          <motion.div
+            animate={{ opacity: selectedSlide?.isStatic ? 1 : 0 }}
+            transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
+            className="w-full h-full"
+            style={{ willChange: "opacity" }}
+          >
+            <Image
+              src="/image/bg.png"
+              alt="Background"
+              fill
+              className="object-cover object-top"
+              priority
+            />
+          </motion.div>
 
-          {/* Video slide content */}
-          {selectedSlide && !selectedSlide.isStatic && (
-            <motion.div
-              key={`video-mobile-${selectedSlide.id}`}
-              className="absolute left-0 right-0 top-0 pt-24 px-5"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
-            >
-              <motion.h1
-                className="text-white mb-3"
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
-                style={{ fontFamily: "Syne, sans-serif", fontSize: "40px", lineHeight: 1.12 }}
-                dangerouslySetInnerHTML={{ __html: selectedSlide.title }}
-              />
-              <motion.p
-                className="text-white"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut", delay: 0.25 }}
-                style={{ fontFamily: "Questrial, sans-serif", fontSize: "18px", lineHeight: 1.35 }}
-                dangerouslySetInnerHTML={{ __html: selectedSlide.subtitle }}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
+          {/* Video layer A */}
+          <motion.video
+            ref={videoARef}
+            className="absolute inset-0 w-full h-full object-cover"
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: selectedSlide?.isStatic ? 0 : activeVideoLayer === 0 ? 1 : 0
+            }}
+            transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
+            muted
+            loop
+            playsInline
+            preload="auto"
+            style={{
+              zIndex: activeVideoLayer === 0 ? 2 : 1,
+              willChange: "opacity",
+              WebkitBackfaceVisibility: "hidden",
+              backfaceVisibility: "hidden"
+            }}
+          />
+
+          {/* Video layer B */}
+          <motion.video
+            ref={videoBRef}
+            className="absolute inset-0 w-full h-full object-cover"
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: selectedSlide?.isStatic ? 0 : activeVideoLayer === 1 ? 1 : 0
+            }}
+            transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
+            muted
+            loop
+            playsInline
+            preload="auto"
+            style={{
+              pointerEvents: "none",
+              zIndex: activeVideoLayer === 1 ? 2 : 1,
+              willChange: "opacity",
+              WebkitBackfaceVisibility: "hidden",
+              backfaceVisibility: "hidden"
+            }}
+          />
+        </div>
+
+        {/* Overlay content */}
+        <div className="relative z-10" style={{ minHeight: "646px" }}>
+          <AnimatePresence mode="wait">
+            {/* Static content */}
+            {selectedSlide?.isStatic && (
+              <motion.div
+                key="static-mobile"
+                className="absolute left-0 right-0 top-0 pt-10 px-6 text-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
+              >
+                <motion.p
+                  className="text-white mb-3"
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+                  style={{ fontFamily: "Questrial, sans-serif", fontSize: "28px" }}
+                  dangerouslySetInnerHTML={{ __html: selectedSlide.subtitle }}
+                />
+                <motion.h1
+                  className="text-white"
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.25 }}
+                  style={{ fontFamily: "Syne, sans-serif", fontSize: "44px", lineHeight: 1.12 }}
+                >
+                  {selectedSlide.title}
+                </motion.h1>
+              </motion.div>
+            )}
+
+            {/* Video slide content */}
+            {selectedSlide && !selectedSlide.isStatic && (
+              <motion.div
+                key={`video-mobile-${selectedSlide.id}`}
+                className="absolute left-0 right-0 top-0 pt-10 px-6 text-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
+              >
+                <motion.p
+                  className="text-white mb-3"
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+                  style={{ fontFamily: "Questrial, sans-serif", fontSize: "28px", lineHeight: 1.35 }}
+                  dangerouslySetInnerHTML={{ __html: selectedSlide.subtitle }}
+                />
+                <motion.h1
+                  className="text-white"
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.25 }}
+                  style={{ fontFamily: "Syne, sans-serif", fontSize: "44px", lineHeight: 1.12 }}
+                  dangerouslySetInnerHTML={{ __html: selectedSlide.title }}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );

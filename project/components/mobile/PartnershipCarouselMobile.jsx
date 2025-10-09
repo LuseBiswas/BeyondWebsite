@@ -65,28 +65,17 @@ export default function PartnershipCarouselMobile() {
   }, [activeIndex]);
 
   return (
-    <div className="bg-white min-h-screen py-8 px-4">
+    <div className="bg-white min-h-screen py-12 px-4">
       {/* Sub header */}
       <p
-        className="text-center mb-4 sm:mb-6 leading-[1.35] text-[clamp(16px,5.2vw,28px)] lg:text-[38px]"
+        className="text-center mb-8 sm:mb-10 leading-[1.35] text-[clamp(26px,8.2vw,32px)] lg:text-[38px]"
         style={{ fontFamily: "Questrial, sans-serif", color: "#000" }}
       >
-        Our process is simple, human, <br />
-        and built around you.
+        Our process is <br /> simple, human, and built <br /> around you.
       </p>
 
-      {/* Main header */}
-      <h1
-        className="text-center mb-8 sm:mb-12 leading-[1.1] text-[clamp(28px,9vw,44px)] lg:text-[96px]"
-        style={{ fontFamily: "Syne, sans-serif", color: "#000" }}
-      >
-        <span className="text-gray-500">This is not</span>
-        <br /> just a project. <br />
-        It&apos;s a partnership.
-      </h1>
-
       {/* Navigation tabs */}
-      <div className="flex justify-center gap-6 sm:gap-8 mb-8 sm:mb-10">
+      <div className="flex justify-center gap-6 sm:gap-8 mb-10 sm:mb-12">
         {carouselData.map((item, index) => (
           <button
             key={index}
@@ -109,7 +98,7 @@ export default function PartnershipCarouselMobile() {
       </div>
 
       {/* Video carousel */}
-      <div className="mx-auto w-full max-w-[30rem]">
+      <div className="mx-auto w-full max-w-[30rem] mb-12 sm:mb-16">
         <div
           className="relative overflow-hidden rounded-2xl w-full"
           style={{ aspectRatio: "341 / 467", backgroundColor: "#f3f4f6" }}
@@ -164,7 +153,17 @@ export default function PartnershipCarouselMobile() {
         </div>
       </div>
 
-      <div className="h-6 sm:h-8" />
+       {/* Main header */}
+       <h1
+        className="text-center leading-[1.1] text-[clamp(28px,9vw,44px)] lg:text-[96px]"
+        style={{ fontFamily: "Syne, sans-serif", color: "#000" }}
+      >
+        <span className="text-gray-500">This is not</span>
+        <br /> just a project. <br />
+        It&apos;s a partnership.
+      </h1>
+
+      <div className="h-12 sm:h-16" />
     </div>
   );
 }

@@ -78,30 +78,31 @@ export default function WeDesignMobile() {
       {/* Green box - compact, fluid */}
       <div className="w-full max-w-[28rem] mx-auto">
         <div
-          className="rounded-2xl relative px-4 sm:px-6 pt-8 pb-8 sm:pb-10 mb-4 sm:mb-6"
+          className="rounded-2xl relative p-8 mb-4 sm:mb-6 flex flex-col justify-center items-center"
           style={{
             backgroundColor: "#E8FC53",
-            minHeight: "clamp(180px, 44vw, 280px)",
+            minHeight: "348px",
+            minWidth: "354px",
           }}
         >
           {/* Heading */}
-          <div className="mb-6 sm:mb-8">
+          <div className="mb-6">
             <h2
               className="text-center"
               style={{
                 fontFamily: "Syne, sans-serif",
                 color: "#000",
                 lineHeight: "1.08",
-                fontSize: "clamp(26px, 9vw, 44px)",
+                fontSize: "clamp(32.5px, 11.25vw, 55px)",
               }}
             >
-              We design for
+              We <br /> design for
             </h2>
           </div>
 
           {/* Carousel text - fluid height & type */}
           <div
-            className="relative overflow-hidden mx-auto"
+            className="relative overflow-hidden w-full"
             style={{ height: "clamp(60px, 16vw, 100px)" }}
           >
             <motion.div
@@ -113,12 +114,12 @@ export default function WeDesignMobile() {
               {items.map((item, i) => (
                 <div
                   key={i}
-                  className="w-full flex-shrink-0 text-center"
+                  className="w-full flex-shrink-0 text-center font-extralight"
                   style={{
                     fontFamily: "Questrial, sans-serif",
                     color: "#000",
                     lineHeight: "1.15",
-                    fontSize: "clamp(18px, 6.2vw, 28px)",
+                    fontSize: "clamp(21.6px, 7.44vw, 33.6px)",
                   }}
                   dangerouslySetInnerHTML={{ __html: item }}
                 />
