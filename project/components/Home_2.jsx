@@ -1,9 +1,19 @@
 "use client";
 import { useRef, useEffect } from "react";
 import Home2Mobile from "./mobile/Home2Mobile";
+import { getOptimizedVideoUrl } from "../lib/cloudinary";
 
 export default function Home_2() {
   const videoRef = useRef(null); // no TS generic here
+
+  // Generate optimized video URL
+  const optimizedVideoUrl = getOptimizedVideoUrl(
+    "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760026792/shutterstock_3468863127_h7embb.mov",
+    {
+      quality: "auto",
+      format: "mp4"
+    }
+  );
 
   useEffect(() => {
     const v = videoRef.current;
@@ -36,11 +46,10 @@ export default function Home_2() {
         loop
         muted
         playsInline
-        preload="metadata"
+        preload="auto"
         crossOrigin="anonymous"
-        poster="/poster.jpg"
       >
-        <source src="https://mj30wjmjc20cbmuo.public.blob.vercel-storage.com/vid_6.mov" />
+        <source src={optimizedVideoUrl} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
