@@ -36,18 +36,30 @@ export default function Workflow() {
           <div className="flex justify-center gap-6 lg:gap-8 xl:gap-10 2xl:gap-12">
           <Card
             image="/image/work/work1.png"
+            imageMove={true}
+            centerImage="/image/work/Perfectbutton.png"
+            centerImageWidth={120}
+            centerImageHeight={120}
             title="Tools"
             description="We've figured out a perfect working<br/>eco-system that is lead by human centric design<br/> and development that is led by AI<br/>making us one of the fastest to deliver a digital<br/> transformation that is just not vanilla. "
             
           />
           <Card
-            image="/image/work/work2.png"
+            image="/image/work/Wireframes.png"
+            imageWidth={311}
+            imageHeight={238}
+            customImage="/image/work/123.png"
+            customImageWidth={278}
+            customImageHeight={128}
+            customImageTop={"30%"}
+            customImageMove={true}
             title="Workflow"
             description="Design → Develop → Launch!"
             subDescription="We prioritise communication<br/>at all the stages, for transparency,<br/>confidence and simply projecting the right <br/>brand emotion that reflects on your site!"
           />
           <Card
-            image="/image/work/work3.png"
+            image="/image/work/Mock-up2.png"
+            imageMove={true}
             title="Output"
             description="Each phase ends with a solid output.<br/>1 . Design Phase →  Figma Prototype<br/>2. Development Phase →  Final Production Code<br/>3. Launch Phase →  Hosted Website<br/>+ 30 day live support."
             overflowImage={true}
