@@ -6,12 +6,16 @@ import CompanyMobile from "./mobile/CompanyMobile";
 export default function Company() {
   // Your logos
   const companyImages = [
-    { id: 1, src: "/company-logos/company-1.png", alt: "Company 1" },
-    { id: 2, src: "/company-logos/company-2.png", alt: "Company 2" },
-    { id: 3, src: "/company-logos/company-3.png", alt: "Company 3" },
-    { id: 4, src: "/company-logos/company-4.png", alt: "Company 4" },
-    { id: 5, src: "/company-logos/company-5.png", alt: "Company 5" },
-    { id: 6, src: "/company-logos/company-6.png", alt: "Company 6" },
+    { id: 1, src: "/company-logos/AKCH.png", alt: "Company 1" },
+    { id: 2, src: "/company-logos/BarDouro_logo.png", alt: "Company 2" },
+    { id: 3, src: "/company-logos/Berrilogo.png", alt: "Company 3" },
+    { id: 4, src: "/company-logos/C&CHC_logo.png", alt: "Company 4" },
+    { id: 5, src: "/company-logos/KI_Logo.png", alt: "Company 5" },
+    { id: 6, src: "/company-logos/Leanplum.png", alt: "Company 6" },
+    { id: 7, src: "/company-logos/Matterport_logo.png", alt: "Company 7" },
+    { id: 8, src: "/company-logos/Quest.png", alt: "Company 8" },
+    { id: 9, src: "/company-logos/Trint_logo.png", alt: "Company 9" },
+    { id: 10, src: "/company-logos/Unistellar.png", alt: "Company 10" },
   ];
 
   // How many "train cars" (segments) you want visible sequentially
