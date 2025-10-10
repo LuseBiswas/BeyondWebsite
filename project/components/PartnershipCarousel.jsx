@@ -15,7 +15,7 @@ export default function PartnershipCarousel() {
     },
     {
       title: "Design",
-      videoUrl: null,
+      videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760111025/River_k5zwtq.mp4",
       videoText: "We shape with <br/> empathy and strategy",
       marginBottom: "9rem"
     },

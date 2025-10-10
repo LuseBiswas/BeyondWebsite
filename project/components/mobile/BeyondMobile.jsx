@@ -13,7 +13,7 @@ export default function BeyondMobile() {
   const slides = [
     {
       id: 0,
-      isStatic: true,
+      isStatic: false,
       imageUrl: "/image/bg.png",
       title: "Beyond the Surface",
       subtitle: "It's always"
@@ -35,7 +35,7 @@ export default function BeyondMobile() {
     {
       id: 3,
       isStatic: false,
-      videoUrl: null,
+      videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760110792/Website_Videos_kdvmfv.mp4",
       title: "Beyond<br/>Trends",
       subtitle: "It's always"
     },

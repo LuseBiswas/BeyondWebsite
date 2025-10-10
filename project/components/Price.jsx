@@ -1,13 +1,11 @@
 "use client";
-import { useRef, useEffect, useState } from "react";
-import Script from "next/script";
+import { useRef, useEffect } from "react";
 import PriceBox from "./PriceBox";
 import PriceMobile from "./mobile/PriceMobile";
 import { getOptimizedVideoUrl } from "../lib/cloudinary";
 
 export default function Price() {
   const videoRef = useRef(null);
-  const [calendlyLoaded, setCalendlyLoaded] = useState(false);
 
   // Generate optimized video URL
   const optimizedVideoUrl = getOptimizedVideoUrl(
@@ -40,14 +38,7 @@ export default function Price() {
   }, []);
 
   const openCalendly = () => {
-    if (typeof window !== 'undefined' && window.Calendly) {
-      window.Calendly.initPopupWidget({
-        url: 'https://calendly.com/riteshbiswasut'
-      });
-    } else {
-      console.error('Calendly is not loaded yet');
-      alert('Please wait a moment and try again');
-    }
+    window.open('https://calendly.com/hello-designresponsible/new-meeting', '_blank');
   };
 
   return (
@@ -152,14 +143,6 @@ export default function Price() {
       <div className="lg:hidden">
         <PriceMobile />
       </div>
-
-      {/* Calendly Script */}
-      <Script
-        src="https://assets.calendly.com/assets/external/widget.js"
-        strategy="afterInteractive"
-        onLoad={() => setCalendlyLoaded(true)}
-        onError={() => console.error('Failed to load Calendly script')}
-      />
     </div>
   );
 } 

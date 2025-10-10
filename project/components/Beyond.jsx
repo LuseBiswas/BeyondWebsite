@@ -11,11 +11,11 @@ export default function Beyond() {
   const EASE = "easeInOut";
 
   const carouselData = [
-    { id: 0, isStatic: true, imageUrl: "/image/bg.png", title: "Beyond the Surface", subtitle: "It's always" },
-    { id: 1, isStatic: false, videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760025674/shutterstock_3767390_1_nwf9tw.mov", title: "Beyond <br/> Attraction", subtitle: "into trust, engagement,<br/> and action." },
-    { id: 2, isStatic: false, videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760025686/shutterstock_3625121845_zvc0xp.mov", title: "Beyond <br/>Colours", subtitle: "into clarity, accessibility,<br/>and emotion." },
-    { id: 3, isStatic: false, videoUrl: null, title: "Beyond<br/>Trends", subtitle: "into timeless design<br/>that adapts to change." },
-    { id: 4, isStatic: false, videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760025710/shutterstock_3847367763_jbsax0.mov", title: "Beyond<br/>Layouts", subtitle: "into journeys that feel<br/>intuitive and human." }
+    { id: 0, isStatic: false, videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760112150/shutterstock_3499135879_rew8hi.mov", title: "Beyond the Surface", subtitle: "It's always" },
+    { id: 1, isStatic: false, videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760111518/Deepsea_av4ko4.mp4", title: "Beyond <br/> Attraction", subtitle: "It's always" },
+    { id: 2, isStatic: false, videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760025686/shutterstock_3625121845_zvc0xp.mov", title: "Beyond <br/>Colours", subtitle: "It's always" },
+    { id: 3, isStatic: false, videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760110792/Website_Videos_kdvmfv.mp4", title: "Beyond<br/>Trends", subtitle: "It's always" },
+    { id: 4, isStatic: false, videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760025710/shutterstock_3847367763_jbsax0.mov", title: "Beyond<br/>Layouts", subtitle: "It's always" }
   ];
 
   const [activeIndex, setActiveIndex] = useState(0);                 // which slide index we're on
@@ -277,33 +277,33 @@ export default function Beyond() {
                 transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
               >
                 <div className="max-w-sm lg:max-w-md xl:max-w-lg 2xl:max-w-xl">
-                  <motion.h1
-                    key={`title-${selectedCard.id}`}
+                  <motion.p
+                    key={`subtitle-${selectedCard.id}`}
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
                     className="
                       text-white mb-4 lg:mb-5 xl:mb-6 2xl:mb-8
-                      text-[56px] lg:text-[72px] xl:text-[92px] 2xl:text-[112px]
+                      text-[26px] lg:text-[30px] xl:text-[36px] 2xl:text-[44px]
+                      leading-[1.3] lg:leading-[1.35] xl:leading-[1.4] 2xl:leading-[1.45]
                     "
-                    style={{ fontFamily: "Syne, sans-serif", lineHeight: "1.1", paddingLeft: "1rem" }}
-                    dangerouslySetInnerHTML={{ __html: selectedCard.title }}
+                    style={{ fontFamily: "Questrial, sans-serif", paddingLeft: "1rem" }}
+                    dangerouslySetInnerHTML={{ __html: selectedCard.subtitle }}
                   />
 
-                  <motion.p
-                    key={`subtitle-${selectedCard.id}`}
+                  <motion.h1
+                    key={`title-${selectedCard.id}`}
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
                     className="
                       text-white
-                      text-[26px] lg:text-[30px] xl:text-[36px] 2xl:text-[44px]
-                      leading-[1.3] lg:leading-[1.35] xl:leading-[1.4] 2xl:leading-[1.45]
+                      text-[56px] lg:text-[72px] xl:text-[92px] 2xl:text-[112px]
                     "
-                    style={{ fontFamily: "Questrial, sans-serif", paddingLeft: "1rem" }}
-                    dangerouslySetInnerHTML={{ __html: selectedCard.subtitle }}
+                    style={{ fontFamily: "Syne, sans-serif", lineHeight: "1.1", paddingLeft: "1rem" }}
+                    dangerouslySetInnerHTML={{ __html: selectedCard.title }}
                   />
                 </div>
               </motion.div>

@@ -37,14 +37,7 @@ export default function PriceMobile() {
   }, []);
 
   const openCalendly = () => {
-    if (typeof window !== 'undefined' && window.Calendly) {
-      window.Calendly.initPopupWidget({
-        url: 'https://calendly.com/riteshbiswasut'
-      });
-    } else {
-      console.error('Calendly is not loaded yet');
-      alert('Please wait a moment and try again');
-    }
+    window.open('https://calendly.com/hello-designresponsible/new-meeting', '_blank');
   };
 
   return (

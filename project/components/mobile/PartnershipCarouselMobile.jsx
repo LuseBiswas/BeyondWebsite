@@ -7,7 +7,7 @@ import { getOptimizedVideoUrl } from "../../lib/cloudinary";
 export default function PartnershipCarouselMobile() {
   const carouselData = [
     { title: "Discover", videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760027731/shutterstock_3627320917_kprijd.mov", videoText: "We listen <br/> deeply.", textPos: "30%" },
-    { title: "Design",   videoUrl: null, videoText: "We shape <br/> with empathy <br/> and strategy", textPos: "35%" },
+    { title: "Design",   videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760111025/River_k5zwtq.mp4", videoText: "We shape <br/> with empathy <br/> and strategy", textPos: "35%" },
     { title: "Deliver",  videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760027725/shutterstock_1105052247_wrlamw.mov", videoText: "We launch <br/> with precision", textPos: "40%" },
     { title: "Evolve",   videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760027734/shutterstock_3833232295_kqnwyv.mov", videoText: "Because your <br/> growth doesn't <br/> stop here.", textPos: "35%" },
   ];

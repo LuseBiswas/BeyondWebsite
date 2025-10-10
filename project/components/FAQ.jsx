@@ -2,12 +2,10 @@
 import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import Script from "next/script";
 import FAQMobile from "./mobile/FAQMobile";
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(null);
-  const [calendlyLoaded, setCalendlyLoaded] = useState(false);
 
   const faqs = [
     {
@@ -53,14 +51,7 @@ export default function FAQ() {
   };
 
   const openCalendly = () => {
-    if (typeof window !== 'undefined' && window.Calendly) {
-      window.Calendly.initPopupWidget({
-        url: 'https://calendly.com/riteshbiswasut'
-      });
-    } else {
-      console.error('Calendly is not loaded yet');
-      alert('Please wait a moment and try again');
-    }
+    window.open('https://calendly.com/hello-designresponsible/lets-chat-beyond-website', '_blank');
   };
 
   return (
@@ -233,14 +224,6 @@ export default function FAQ() {
       <div className="lg:hidden">
         <FAQMobile />
       </div>
-
-      {/* Calendly Script */}
-      <Script
-        src="https://assets.calendly.com/assets/external/widget.js"
-        strategy="afterInteractive"
-        onLoad={() => setCalendlyLoaded(true)}
-        onError={() => console.error('Failed to load Calendly script')}
-      />
     </>
   );
 }
