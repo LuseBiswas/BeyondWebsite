@@ -29,14 +29,7 @@ export default function Home() {
   };
 
   const handleBookCall = () => {
-    if (typeof window !== 'undefined' && window.Calendly) {
-      window.Calendly.initPopupWidget({
-        url: 'https://calendly.com/riteshbiswasut'
-      });
-    } else {
-      console.error('Calendly is not loaded yet');
-      alert('Please wait a moment and try again');
-    }
+    window.open("https://calendly.com/hello-designresponsible/new-meeting?background_color=000000&text_color=ffffff&primary_color=e8fc53&month=2025-10", "_blank");
   };
 
   useEffect(() => {

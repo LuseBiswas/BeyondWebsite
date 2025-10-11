@@ -50,7 +50,7 @@ export default function FAQMobile() {
   };
 
   const openCalendly = () => {
-    window.open('https://calendly.com/hello-designresponsible/lets-chat-beyond-website', '_blank');
+    window.open('https://calendly.com/hello-designresponsible/lets-chat-beyond-website?background_color=000000&text_color=ffffff&primary_color=e8fc53', '_blank');
   };
 
   return (

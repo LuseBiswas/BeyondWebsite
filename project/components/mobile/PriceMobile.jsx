@@ -37,7 +37,7 @@ export default function PriceMobile() {
   }, []);
 
   const openCalendly = () => {
-    window.open('https://calendly.com/hello-designresponsible/new-meeting', '_blank');
+    window.open('https://calendly.com/hello-designresponsible/new-meeting?background_color=000000&text_color=ffffff&primary_color=e8fc53&month=2025-10', '_blank');
   };
 
   return (
