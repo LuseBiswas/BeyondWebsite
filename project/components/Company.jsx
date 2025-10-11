@@ -68,7 +68,7 @@ export default function Company() {
     [SEGMENTS]
   );
 
-  const durationSec = 100; // speed (lower = faster)
+  const durationSec = 450; // speed (lower = faster)
 
   return (
     <>

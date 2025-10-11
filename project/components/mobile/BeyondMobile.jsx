@@ -14,7 +14,7 @@ export default function BeyondMobile() {
     {
       id: 0,
       isStatic: false,
-      imageUrl: "/image/bg.png",
+      videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760112150/shutterstock_3499135879_rew8hi.mov",
       title: "Beyond the Surface",
       subtitle: "It's always"
     },
@@ -23,28 +23,28 @@ export default function BeyondMobile() {
       isStatic: false,
       videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760025674/shutterstock_3767390_1_nwf9tw.mov",
       title: "Beyond <br/> Attraction",
-      subtitle: "It's always"
+      subtitle: "into trust, engagement,<br/>and action."
     },
     {
       id: 2,
       isStatic: false,
       videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760025686/shutterstock_3625121845_zvc0xp.mov",
       title: "Beyond <br/>Colours",
-      subtitle: "It's always"
+      subtitle: "into clarity, accessibility,<br/>and emotion."
     },
     {
       id: 3,
       isStatic: false,
       videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760110792/Website_Videos_kdvmfv.mp4",
       title: "Beyond<br/>Trends",
-      subtitle: "It's always"
+      subtitle: "into timeless design<br/>that adapts to change."
     },
     {
       id: 4,
       isStatic: false,
       videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760025710/shutterstock_3847367763_jbsax0.mov",
       title: "Beyond<br/>Layouts",
-      subtitle: "It's always"
+      subtitle: "into journeys that feel<br/>intuitive and human."
     }
   ];
 
@@ -381,22 +381,45 @@ export default function BeyondMobile() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: TRANSITION_MS / 1000, ease: EASE }}
               >
-                <motion.p
-                  className="text-white mb-3"
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-                  style={{ fontFamily: "Questrial, sans-serif", fontSize: "28px", lineHeight: 1.35 }}
-                  dangerouslySetInnerHTML={{ __html: selectedSlide.subtitle }}
-                />
-                <motion.h1
-                  className="text-white"
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.25 }}
-                  style={{ fontFamily: "Syne, sans-serif", fontSize: "44px", lineHeight: 1.12 }}
-                  dangerouslySetInnerHTML={{ __html: selectedSlide.title }}
-                />
+                {selectedSlide.id === 0 ? (
+                  <>
+                    <motion.p
+                      className="text-white mb-3"
+                      initial={{ opacity: 0, y: 16 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+                      style={{ fontFamily: "Questrial, sans-serif", fontSize: "28px", lineHeight: 1.35 }}
+                      dangerouslySetInnerHTML={{ __html: selectedSlide.subtitle }}
+                    />
+                    <motion.h1
+                      className="text-white"
+                      initial={{ opacity: 0, y: 18 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, ease: "easeOut", delay: 0.25 }}
+                      style={{ fontFamily: "Syne, sans-serif", fontSize: "44px", lineHeight: 1.12 }}
+                      dangerouslySetInnerHTML={{ __html: selectedSlide.title }}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <motion.h1
+                      className="text-white mb-3"
+                      initial={{ opacity: 0, y: 18 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+                      style={{ fontFamily: "Syne, sans-serif", fontSize: "44px", lineHeight: 1.12 }}
+                      dangerouslySetInnerHTML={{ __html: selectedSlide.title }}
+                    />
+                    <motion.p
+                      className="text-white"
+                      initial={{ opacity: 0, y: 16 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, ease: "easeOut", delay: 0.25 }}
+                      style={{ fontFamily: "Questrial, sans-serif", fontSize: "28px", lineHeight: 1.35 }}
+                      dangerouslySetInnerHTML={{ __html: selectedSlide.subtitle }}
+                    />
+                  </>
+                )}
               </motion.div>
             )}
           </AnimatePresence>

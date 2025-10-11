@@ -29,8 +29,8 @@ export default function Card({
       <div
         className={`rounded-2xl mb-4 lg:mb-6 xl:mb-8 2xl:mb-10 relative ${overflowImage ? 'overflow-visible' : 'overflow-hidden'}`}
         style={{
-          width: "clamp(300px, 24vw, 480px)",
-          height: "clamp(220px, 17vw, 360px)",
+          width: "clamp(340px, 28vw, 560px)",
+          height: "clamp(260px, 20vw, 420px)",
           backgroundColor: "#F2F2F2",
         }}
       >
@@ -98,7 +98,7 @@ export default function Card({
 
       {/* Header */}
       <h3
-        className="text-center mb-2 lg:mb-3 xl:mb-4 2xl:mb-5 text-[18px] lg:text-[20px] xl:text-[22px] 2xl:text-[24px]"
+        className="text-center mb-8 lg:mb-10 xl:mb-12 2xl:mb-14 text-[26px] lg:text-[30px] xl:text-[34px] 2xl:text-[38px]"
         style={{
           fontFamily: "Syne, sans-serif",
           fontWeight: 600,
@@ -111,7 +111,7 @@ export default function Card({
 
       {/* Sub Header */}
       <p
-        className="text-center text-[14px] lg:text-[16px] xl:text-[18px] 2xl:text-[20px]"
+        className="text-center text-[20px] lg:text-[23px] xl:text-[26px] 2xl:text-[28px]"
         style={{
           fontFamily: "Questrial, sans-serif",
           color: "#000000",
@@ -123,7 +123,7 @@ export default function Card({
       {/* Additional Description (Optional) */}
       {subDescription && (
         <p
-          className="text-center mt-2 lg:mt-3 xl:mt-4 2xl:mt-5 text-[12px] lg:text-[14px] xl:text-[16px] 2xl:text-[18px]"
+          className="mt-6 lg:mt-8 xl:mt-10 2xl:mt-12 text-center text-[20px] lg:text-[23px] xl:text-[26px] 2xl:text-[28px]"
           style={{
             fontFamily: "Questrial, sans-serif",
             color: "#000000",

@@ -14,11 +14,11 @@ export default function Page() {
   return (
     <div className="overflow-x-hidden w-full">
       <Home />
-      <Workflow/>
       <Company />
       <Home_2 />
       <WeDesign/>
       <PartnershipCarousel/>
+      <Workflow/>
       <Beyond/>
       <Journey/>
       <Price/>
