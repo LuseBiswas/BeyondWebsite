@@ -70,11 +70,11 @@ export default function WeDesignMobile() {
     <div className="bg-white pt-8 px-4">
       {/* Centered text - Mobile (fluid, compact) */}
       <h1
-        className="text-center mb-5 leading-[1.2]"
+        className="text-center mb-5 leading-[1.35]"
         style={{
           fontFamily: "Questrial, sans-serif",
           color: "#000",
-          fontSize: "clamp(20px, 6.2vw, 28px)",
+          fontSize: "clamp(26px, 8.2vw, 32px)",
         }}
       >
         Your <span className="text-black/50">website is</span> <br />
