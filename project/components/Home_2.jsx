@@ -4,44 +4,32 @@ import Home2Mobile from "./mobile/Home2Mobile";
 import { getOptimizedVideoUrl } from "../lib/cloudinary";
 
 export default function Home_2() {
-  const videoRef = useRef(null); // no TS generic here
+  const videoRef = useRef(null);
 
-  // Generate optimized video URL
   const optimizedVideoUrl = getOptimizedVideoUrl(
     "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760026792/shutterstock_3468863127_h7embb.mov",
-    {
-      quality: "auto",
-      format: "mp4"
-    }
+    { quality: "auto", format: "mp4" }
   );
 
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-
     v.muted = true;
     v.playsInline = true;
-
     const start = async () => {
-      try {
-        await v.play();
-      } catch (err) {
-        console.error("Autoplay blocked or failed:", err);
-      }
+      try { await v.play(); } catch (err) { console.error("Autoplay blocked or failed:", err); }
     };
-
     if (v.readyState >= 2) start();
     else v.addEventListener("canplay", start, { once: true });
-
     return () => v.removeEventListener("canplay", start);
   }, []);
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gray-800">
+      {/* Background video fills safely across breakpoints */}
       <video
         ref={videoRef}
-        className="absolute w-full h-full object-cover pointer-events-none"
-        style={{ top: '-32px', left: '-46px', transform: 'scale(1.1)' }}
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         autoPlay
         loop
         muted
@@ -53,82 +41,99 @@ export default function Home_2() {
         Your browser does not support the video tag.
       </video>
 
-      {/* Desktop and Tablet Layout (lg and above) */}
-      <div className="hidden lg:block relative z-10 px-4 lg:px-8 xl:px-12 2xl:px-16 py-5 min-h-screen">
-        <div className="border-[3px] border-white/50 rounded-4xl h-[calc(100vh-4rem)] w-full p-4 lg:p-6 xl:p-8 2xl:p-12 relative text-white">
-          {/* Top left text */}
-          <div className="absolute top-4 lg:top-6 xl:top-8 2xl:top-12 left-6 lg:left-8 xl:left-12 2xl:left-16">
-            <div 
-              className="text-white font-normal text-right text-[40px] lg:text-[48px] xl:text-[54px] 2xl:text-[64px] leading-[32px] lg:leading-[36px] xl:leading-[38px] 2xl:leading-[42px]"
-              style={{ 
-                fontFamily: 'Questrial, sans-serif',
-                fontWeight: 400
-              }}
-              dangerouslySetInnerHTML={{ __html: 'too <br/> often' }}
-            />
+      {/* Desktop & Tablet (lg and above) */}
+      <div className="hidden lg:block relative z-10 px-[clamp(20px,3vw,96px)] py-[clamp(20px,2.8vw,48px)] min-h-screen">
+        <div
+          className="
+            border-[3px] border-white/50 rounded-[32px]
+            min-h-[calc(100vh-2*clamp(20px,2.8vw,48px))]
+            w-full text-white
+            p-[clamp(20px,2.6vw,64px)] 2xl:p-[clamp(28px,3vw,80px)]
+            grid grid-rows-[auto_1fr_auto] gap-[clamp(16px,2.2vw,40px)]
+            relative
+          "
+        >
+          {/* HEADER ROW: top-left + top-right in one bar (no absolute positioning) */}
+          <div className="flex items-start justify-between gap-[clamp(12px,2vw,32px)]">
+            {/* Top-left text */}
+            <div
+              className="
+                text-right font-normal
+                text-[clamp(32px,4.8vw,64px)]
+                leading-[1.05]
+                tracking-[-0.01em]
+              "
+              style={{ fontFamily: "Questrial, sans-serif", fontWeight: 400 }}
+            >
+              <span>too</span>
+              <br />
+              <span>often</span>
+            </div>
+
+            {/* Top-right texts (wrap if space is tight) */}
+            <div className="flex flex-wrap items-start justify-end gap-[clamp(10px,1.8vw,24px)] max-w-[min(60vw,900px)]">
+              {["Treated as decoration", "Pixels arranged", "Colours chosen"].map((t) => (
+                <div
+                  key={t}
+                  className="
+                    font-normal
+                    text-[clamp(18px,2.2vw,36px)]
+                    leading-[clamp(24px,3vw,44px)]
+                    opacity-95
+                  "
+                  style={{ fontFamily: "Questrial, sans-serif", fontWeight: 400 }}
+                >
+                  {t}
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Top right texts */}
-          <div className="absolute top-4 lg:top-6 xl:top-8 2xl:top-12 right-6 lg:right-8 xl:right-12 2xl:right-16 flex gap-4 lg:gap-6 xl:gap-8 2xl:gap-10">
-            <div 
-              className="text-white font-normal text-[20px] lg:text-[26px] xl:text-[30px] 2xl:text-[36px] leading-[28px] lg:leading-[34px] xl:leading-[38px] 2xl:leading-[44px]"
-              style={{ 
-                fontFamily: 'Questrial, sans-serif',
-                fontWeight: 400
-              }}
-            >
-              Treated as decoration
-            </div>
-            <div 
-              className="text-white font-normal text-[20px] lg:text-[26px] xl:text-[30px] 2xl:text-[36px] leading-[28px] lg:leading-[34px] xl:leading-[38px] 2xl:leading-[44px]"
-              style={{ 
-                fontFamily: 'Questrial, sans-serif',
-                fontWeight: 400
-              }}
-            >
-              Pixels arranged
-            </div>
-            <div 
-              className="text-white font-normal text-[20px] lg:text-[26px] xl:text-[30px] 2xl:text-[36px] leading-[28px] lg:leading-[34px] xl:leading-[38px] 2xl:leading-[44px]"
-              style={{ 
-                fontFamily: 'Questrial, sans-serif',
-                fontWeight: 400
-              }}
-            >
-              Colours chosen
-            </div>
-          </div>
+          {/* SPACER ROW (1fr) — keeps the bottom content anchored at the base */}
+          <div />
 
-          {/* Bottom content */}
-          <div className="absolute bottom-8 2xl:bottom-12 left-6 lg:left-8 xl:left-12 2xl:left-16 right-6 lg:right-8 xl:right-12 2xl:right-16">
+          {/* BOTTOM ROW: main heading + paragraph */}
+          <div className="max-w-[min(92vw,1600px)] 2xl:max-w-[min(92vw,1800px)]">
             <h1
-              className="text-white font-normal text-[60px] lg:text-[80px] xl:text-[96px] 2xl:text-[120px] mb-12 2xl:mb-16"
-              style={{
-                fontFamily: "Syne, sans-serif",
-                lineHeight: "1.08"
-              }}
-                          >
-                <span className="opacity-60">But </span> beauty <span className="opacity-60">alone</span> <br /> 
-                doesn't last.
-              </h1>
-            <p
-              className="text-white font-normal text-[26px] lg:text-[32px] xl:text-[38px] 2xl:text-[48px] leading-[32px] lg:leading-[40px] xl:leading-[48px] 2xl:leading-[60px]"
-              style={{
-                fontFamily: "Questrial, sans-serif",
-              }}
+              className="
+                font-normal
+                text-[clamp(56px,7vw,120px)]
+                2xl:text-[clamp(72px,7.6vw,140px)]
+                leading-[1.06]
+                tracking-[-0.012em]
+                mb-[clamp(16px,2.4vw,32px)]
+              "
+              style={{ fontFamily: "Syne, sans-serif" }}
             >
-              Design with empathy, purpose,<br /> 
-              and responsibility - so your website becomes <br /> 
+              <span className="opacity-60">But </span>beauty <span className="opacity-60">alone</span>
+              <br />
+              doesn&apos;t last.
+            </h1>
+
+            <p
+              className="
+                font-normal
+                text-[clamp(20px,2.6vw,38px)]
+                2xl:text-[clamp(22px,2.4vw,48px)]
+                leading-[clamp(28px,3.4vw,60px)]
+                max-w-[72ch] opacity-95
+              "
+              style={{ fontFamily: "Questrial, sans-serif" }}
+            >
+              Design with empathy, purpose,
+              <br />
+              and responsibility — so your website becomes
+              <br />
               not just attractive, but alive.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Mobile Layout (below lg) */}
-      <div className="lg:hidden">
+      {/* Mobile (below lg) */}
+      <div className="lg:hidden relative z-10">
         <Home2Mobile />
       </div>
     </div>
   );
-} 
+}

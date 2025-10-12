@@ -11,6 +11,7 @@ export default function PriceBox({
   bulletPoints,
   onCtaClick,
   backgroundImage,
+  isTagYellow,
 }) {
   const handleClick = () => {
     if (onCtaClick) {
@@ -82,8 +83,13 @@ export default function PriceBox({
             </h3>
             {tag && (
               <span
-                className="bg-white/20 text-white px-1 rounded-full text-[14px] lg:text-[16px] xl:text-[18px] 2xl:text-[20px] font-normal flex items-center justify-center h-[24px] lg:h-[26px] xl:h-[28px] 2xl:h-[32px]"
-                style={{ fontFamily: "Questrial, sans-serif" }}
+                className={`px-1 rounded-full text-[14px] lg:text-[16px] xl:text-[18px] 2xl:text-[20px] font-normal flex items-center justify-center h-[24px] lg:h-[26px] xl:h-[28px] 2xl:h-[32px] ${
+                  isTagYellow ? 'text-black' : 'bg-white/20 text-white'
+                }`}
+                style={{ 
+                  fontFamily: "Questrial, sans-serif",
+                  backgroundColor: isTagYellow ? '#FCEE21' : undefined
+                }}
               >
                 {tag}
               </span>

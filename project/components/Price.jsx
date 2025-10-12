@@ -58,7 +58,7 @@ export default function Price() {
       </video>
 
       {/* Desktop and Tablet Layout (lg and above) */}
-      <div className="hidden lg:block relative z-10 py-12 lg:py-16 xl:py-20 2xl:py-24 px-6 lg:px-4 xl:px-12 2xl:px-16">
+      <div className="hidden lg:block relative z-10 py-12 lg:py-16 xl:py-20 2xl:py-24 px-6 lg:px-8 xl:px-16 2xl:px-24">
         <div className="max-w-5xl lg:max-w-6xl xl:max-w-7xl 2xl:max-w-8xl mx-auto">
           {/* Main Header */}
           <h1
@@ -103,6 +103,7 @@ export default function Price() {
             <PriceBox 
               title="WEBSITE+"
               tag="Popular"
+              isTagYellow={true} 
               price="6500"
               description="For growing businesses that<br/>need their website to work as<br/>hard as they do."
               cta="Get started"

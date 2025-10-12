@@ -1,107 +1,154 @@
 "use client";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import WeDesignMobile from "./mobile/WeDesignMobile";
 
 export default function WeDesign() {
-  const carouselItems = [
-    "a consumer brand winning hearts",
-    "startup searching for credibility", 
-    "any brand that appreciates design",
-    "a non-profit mobilizing action",
-    "a B2B brand simplifying complexity"
-  ];
+  const carouselItems = useMemo(
+    () => [
+      "a consumer brand winning hearts",
+      "startup searching for credibility",
+      "any brand that appreciates design",
+      "a non-profit mobilizing action",
+      "a B2B brand simplifying complexity",
+    ],
+    []
+  );
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % carouselItems.length);
-    }, 2000);
+    // Respect prefers-reduced-motion
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onChange = () => setReducedMotion(mq.matches);
+    onChange();
+    mq.addEventListener?.("change", onChange);
 
-    return () => clearInterval(interval);
+    let id;
+    if (!mq.matches) {
+      id = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % carouselItems.length);
+      }, 2200);
+    }
+    return () => {
+      if (id) clearInterval(id);
+      mq.removeEventListener?.("change", onChange);
+    };
   }, [carouselItems.length]);
+
+  // Animation timing (slightly slower for larger readability)
+  const TRANSITION = { duration: 0.8, ease: "easeInOut" };
 
   return (
     <>
-      {/* Desktop and Tablet Layout (lg and above) */}
-      <div className="hidden lg:block bg-white py-16 lg:py-20 xl:py-24 2xl:py-32">
-        {/* Centered text - Responsive */}
-        <h1
-          className="text-center mb-8 lg:mb-10 xl:mb-12 2xl:mb-16 text-[28px] lg:text-[32px] xl:text-[38px] 2xl:text-[48px] leading-[36px] lg:leading-[40px] xl:leading-[48px] 2xl:leading-[60px]"
-          style={{
-            fontFamily: "Questrial, sans-serif",
-            color: "#000000"
-          }}
-        >
-          Your <span className="text-black/50">website is</span> <br />
-          <span className="text-black/50">your most</span> powerful touchpoint.
-        </h1>
+      {/* Desktop & Tablet */}
+      <div className="hidden lg:block bg-white py-[clamp(32px,4vw,96px)]">
+        <div className="mx-auto w-full max-w-[min(96vw,1600px)] px-[clamp(16px,3vw,64px)]">
+          <h1
+            className="
+              text-center mb-[clamp(20px,3vw,48px)]
+              font-normal
+              text-[clamp(28px,3.6vw,56px)]
+              leading-[1.15]
+              tracking-[-0.01em]
+              text-black
+            "
+            style={{ fontFamily: "Questrial, sans-serif" }}
+          >
+            Your <span className="text-black/50">website is</span> <br />
+            <span className="text-black/50">your most</span> powerful touchpoint.
+          </h1>
+        </div>
 
-        {/* Container for green box - centered */}
-        <div className="flex items-center justify-center px-4 lg:px-6 xl:px-8 2xl:px-12">
-          {/* Green box - Responsive */}
+        {/* Green panel */}
+        <div className="flex items-center justify-center px-[clamp(16px,3vw,64px)]">
           <div
-            className="rounded-2xl lg:rounded-3xl relative flex items-center mx-auto"
+            className="
+              relative w-full
+              rounded-[20px] lg:rounded-[24px] xl:rounded-[28px] 2xl:rounded-[32px]
+              grid grid-cols-1 lg:grid-cols-[auto_1fr]
+              items-center
+              gap-[clamp(16px,2.4vw,40px)]
+              px-[clamp(20px,3vw,64px)]
+              py-[clamp(24px,4vw,72px)]
+              mx-auto
+            "
             style={{
               backgroundColor: "#E8FC53",
-              width: "clamp(800px, 85vw, 1400px)",
-              height: "clamp(300px, 32vw, 520px)"
+              maxWidth: "min(92vw, 1600px)",
             }}
           >
-            {/* Left side text - Responsive */}
-            <div className="absolute left-4 lg:left-6 xl:left-8 2xl:left-12">
+            {/* Left title */}
+            <div className="justify-self-start">
               <h2
-                className="text-[48px] lg:text-[60px] xl:text-[76px] 2xl:text-[96px]"
-                style={{
-                  fontFamily: "Syne, sans-serif",
-                  color: "#000000",
-                  lineHeight: "1.1"
-                }}
+                className="
+                  font-normal
+                  text-[clamp(40px,6vw,96px)]
+                  leading-[1.08]
+                  tracking-[-0.012em]
+                  text-black
+                  whitespace-pre-line
+                "
+                style={{ fontFamily: "Syne, sans-serif" }}
               >
                 We design for
               </h2>
             </div>
 
-            {/* Right side carousel - Responsive */}
-            <div className="absolute right-4 lg:right-6 xl:right-8 2xl:right-12 top-0 h-full flex flex-col justify-center overflow-hidden" style={{ width: "clamp(400px, 45vw, 600px)" }}>
-              <div className="relative flex flex-col justify-center" style={{ height: "clamp(250px, 30vw, 320px)" }}>
+            {/* Right carousel */}
+            <div className="justify-self-end w-full">
+              <div
+                className="
+                  relative mx-auto
+                  flex flex-col items-center justify-center
+                  overflow-hidden
+                "
+                style={{
+                  width: "clamp(420px,45vw,720px)",
+                  height: "clamp(220px,28vw,360px)",
+                }}
+                aria-live="polite"
+              >
                 {carouselItems.map((item, index) => {
-                  const position = (index - currentIndex + carouselItems.length) % carouselItems.length;
-                  const yOffset = (position - 2) * 60;
-                  
-                  let opacity;
-                  let scale;
-                  
+                  const position =
+                    (index - currentIndex + carouselItems.length) %
+                    carouselItems.length;
+
+                  // vertical offset per row (px). tuned for our font sizes.
+                  const STEP = 60; // you can raise to 68 for chunkier spacing
+                  const yOffset = (position - 2) * STEP;
+
+                  let opacity, scale;
                   if (position === 2) {
                     opacity = 1;
                     scale = 1;
                   } else if (position === 0 || position === 4) {
-                    opacity = 0.2;
-                    scale = 0.8;
+                    opacity = 0.25;
+                    scale = 0.86;
                   } else {
-                    opacity = 0.4;
-                    scale = 0.9;
+                    opacity = 0.55;
+                    scale = 0.93;
                   }
-                  
+
                   return (
                     <motion.div
                       key={index}
-                      className="absolute w-full text-center text-[24px] lg:text-[28px] xl:text-[32px] 2xl:text-[36px]"
-                      animate={{ 
-                        y: yOffset, 
-                        opacity: opacity,
-                        scale: scale,
-                        transition: { 
-                          duration: 0.8,
-                          ease: "easeInOut"
-                        }
-                      }}
-                      style={{
-                        fontFamily: "Questrial, sans-serif",
-                        color: "#000000",
-                        lineHeight: "1.2"
-                      }}
+                      className="
+                        absolute w-full text-center
+                        text-black
+                        font-normal
+                        px-[clamp(4px,0.8vw,12px)]
+                        text-[clamp(22px,2.2vw,36px)]
+                        leading-[1.2]
+                      "
+                      style={{ fontFamily: "Questrial, sans-serif" }}
+                      animate={
+                        reducedMotion
+                          ? { opacity: position === 2 ? 1 : 0 }
+                          : { y: yOffset, opacity, scale }
+                      }
+                      transition={TRANSITION}
                     >
                       {item}
                     </motion.div>
@@ -109,64 +156,14 @@ export default function WeDesign() {
                 })}
               </div>
             </div>
-
-            {/* Dotted indicators outside the box on the right - Responsive */}
-            {/* <div className="absolute top-0 h-full flex flex-col justify-center" style={{ right: "clamp(-60px, -12vw, -80px)" }}>
-              <div className="relative flex flex-col justify-center" style={{ height: "clamp(250px, 30vw, 320px)" }}>
-                {carouselItems.map((item, index) => {
-                  const position = (index - currentIndex + carouselItems.length) % carouselItems.length;
-                  const yOffset = (position - 2) * 60;
-                  
-                  let size;
-                  let opacity;
-                  
-                  if (position === 2) {
-                    size = { width: '39px', height: '39px' };
-                    opacity = 1;
-                  } else if (position === 1 || position === 3) {
-                    size = { width: '15px', height: '15px' };
-                    opacity = 0.7;
-                  } else if (position === 0) {
-                    size = { width: '11px', height: '11px' };
-                    opacity = 0.2;
-                  } else {
-                    size = { width: '11px', height: '11px' };
-                    opacity = 0.2;
-                  }
-                  
-                  return (
-                    <motion.div
-                      key={index}
-                      className="absolute rounded-full"
-                      animate={{ 
-                        y: yOffset,
-                        width: size.width,
-                        height: size.height,
-                        opacity: opacity,
-                        transition: { 
-                          duration: 0.8,
-                          ease: "easeInOut"
-                        }
-                      }}
-                      style={{
-                        backgroundColor: "#818181",
-                        left: "90%",
-                        transform: "translateX(-50%)",
-                        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
-                      }}
-                    />
-                  );
-                })}
-              </div>
-            </div> */}
           </div>
         </div>
       </div>
 
-      {/* Mobile Layout (below lg) */}
+      {/* Mobile */}
       <div className="lg:hidden">
         <WeDesignMobile />
       </div>
     </>
   );
-} 
+}

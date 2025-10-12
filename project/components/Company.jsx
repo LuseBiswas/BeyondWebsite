@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import CompanyMobile from "./mobile/CompanyMobile";
 
 export default function Company() {
-  // Your logos
+  // Logos
   const companyImages = [
     { id: 1, src: "/company-logos/AKCH.png", alt: "Company 1" },
     { id: 2, src: "/company-logos/BarDouro_logo.png", alt: "Company 2" },
@@ -18,8 +18,8 @@ export default function Company() {
     { id: 10, src: "/company-logos/Unistellar.png", alt: "Company 10" },
   ];
 
-  // How many "train cars" (segments) you want visible sequentially
-  const SEGMENTS = 4; // tweak this
+  // How many segments to translate per loop
+  const SEGMENTS = 4;
 
   const containerRef = useRef(null);
   const measureRowRef = useRef(null);
@@ -35,12 +35,12 @@ export default function Company() {
       const row = measureRowRef.current;
       if (!container || !row) return;
 
-      const containerW = container.offsetWidth;
-      const baseW = row.scrollWidth; // width of one base logo row
+      const containerW = Math.floor(container.offsetWidth);
+      const baseW = Math.floor(row.scrollWidth); // width of one base logo row
       if (!baseW) return;
 
       const needed = Math.max(1, Math.ceil(containerW / baseW));
-      setRepeatCount(needed + 1); // +1 buffer to avoid DPR rounding gaps
+      setRepeatCount(needed + 1); // +1 buffer avoids DPR rounding seams
     };
 
     calc();
@@ -48,47 +48,64 @@ export default function Company() {
     return () => window.removeEventListener("resize", calc);
   }, []);
 
-  // Build one segment (repeats the logos until >= container width)
+  // Build one segment (repeat logos until >= container width)
   const segmentLogos = useMemo(() => {
     const arr = [];
     for (let i = 0; i < repeatCount; i++) arr.push(...companyImages);
     return arr;
-  }, [repeatCount]); // companyImages is static here
+  }, [repeatCount]);
 
-  // After render, measure the actual pixel width of ONE segment
+  // Measure the actual pixel width of ONE segment
   useEffect(() => {
     if (!firstSegmentRef.current) return;
-    const w = firstSegmentRef.current.getBoundingClientRect().width;
-    if (w) setSegmentWidth(Math.round(w));
+    const w = Math.round(firstSegmentRef.current.getBoundingClientRect().width);
+    if (w) setSegmentWidth(w);
   }, [segmentLogos]);
 
   // Build the full track: [N segments] + [N segments clone]
   const half = useMemo(
     () => Array.from({ length: SEGMENTS }, (_, i) => ({ key: `seg-${i}` })),
-    [SEGMENTS]
+    []
   );
 
-  const durationSec = 450; // speed (lower = faster)
+  // Keep scrolling speed constant across screen sizes (pixels per second)
+  const SPEED_PX_PER_SEC = 60; // tweak to taste
+  const durationSec = useMemo(
+    () => (segmentWidth > 0 ? (segmentWidth * SEGMENTS) / SPEED_PX_PER_SEC : 60),
+    [segmentWidth]
+  );
 
   return (
     <>
-      {/* Desktop/Tablet Layout (lg and above) */}
+      {/* Desktop/Tablet (lg and above) */}
       <div className="hidden lg:block">
-        <div className="bg-white py-16 lg:py-20 xl:py-24 2xl:py-32">
-          <div className="container mx-auto px-4">
+        <section className="bg-white py-[clamp(32px,4vw,96px)]">
+          <div className="mx-auto w-full max-w-[min(96vw,1600px)] px-[clamp(16px,3vw,64px)]">
             <h2
-              className="text-center text-[38px] font-normal mb-12"
+              className="
+                text-center font-normal
+                text-[clamp(28px,3.6vw,56px)]
+                leading-[1.15]
+                tracking-[-0.01em]
+                mb-[clamp(20px,3vw,48px)]
+              "
               style={{ fontFamily: "Questrial, sans-serif", fontWeight: 400 }}
             >
               We create digital identities that breathe, adapt, and inspire change.
             </h2>
           </div>
 
+          {/* Marquee container */}
           <div
             ref={containerRef}
-            className="h-[116px] bg-gray-50 overflow-hidden relative"
+            className="
+              overflow-hidden relative
+              bg-gray-50
+              h-[clamp(96px,10vw,200px)]
+            "
+            aria-label="Trusted by companies"
           >
-            {/* Hidden measurer for one base row (to compute repeatCount) */}
+            {/* Hidden measurer for one base row */}
             <div
               ref={measureRowRef}
               className="absolute -z-10 opacity-0 pointer-events-none whitespace-nowrap"
@@ -97,7 +114,7 @@ export default function Company() {
               <LogoRow images={companyImages} />
             </div>
 
-            {/* Animated track: translate by N × segmentWidth, then loop */}
+            {/* Animated track */}
             <motion.div
               className="flex will-change-transform select-none"
               animate={
@@ -111,7 +128,7 @@ export default function Company() {
                 repeat: Infinity,
               }}
             >
-              {/* FIRST HALF (measured ref on the first segment) */}
+              {/* FIRST HALF (measure on first segment) */}
               {half.map((h, i) => (
                 <div
                   key={h.key}
@@ -122,8 +139,8 @@ export default function Company() {
                 </div>
               ))}
 
-              {/* SECOND HALF (exact clone for perfect wrap) */}
-              {half.map((h, i) => (
+              {/* SECOND HALF (clone for seamless wrap) */}
+              {half.map((h) => (
                 <div key={`${h.key}-clone`} className="flex">
                   <LogoRow images={segmentLogos} />
                 </div>
@@ -131,13 +148,13 @@ export default function Company() {
             </motion.div>
 
             {/* Optional soft fade edges */}
-            {/* <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-gray-50 to-transparent z-10" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-gray-50 to-transparent z-10" /> */}
+            {/* <div className="pointer-events-none absolute inset-y-0 left-0 w-[clamp(24px,6vw,160px)] bg-gradient-to-r from-gray-50 to-transparent z-10" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-[clamp(24px,6vw,160px)] bg-gradient-to-l from-gray-50 to-transparent z-10" /> */}
           </div>
-        </div>
+        </section>
       </div>
 
-      {/* Mobile Layout (below lg) */}
+      {/* Mobile (below lg) */}
       <div className="lg:hidden">
         <CompanyMobile />
       </div>
@@ -151,13 +168,23 @@ function LogoRow({ images }) {
       {images.map((company, idx) => (
         <div
           key={`${company.id}-${idx}`}
-          className="flex-shrink-0 mx-8 flex items-center justify-center h-[116px]"
-          style={{ width: 160 }} // fixed cell width = stable measuring, no subpixel drift
+          className="
+            flex-shrink-0 mx-[clamp(16px,2vw,40px)]
+            flex items-center justify-center
+            h-[clamp(96px,10vw,200px)]
+          "
+          style={{ width: "clamp(140px,12vw,280px)" }}
         >
           <img
             src={company.src}
             alt={company.alt}
-            className="max-h-[80px] object-contain"
+            className="
+              max-h-[clamp(56px,7vw,140px)]
+              object-contain
+              opacity-90
+            "
+            loading="lazy"
+            decoding="async"
           />
         </div>
       ))}
