@@ -63,11 +63,8 @@ export default function WorkflowMobile() {
           imageMove={true}
           title="Output"
           description="Each phase ends with a solid output."
-          subDescription="Design Phase → Figma prototype
-
-Development Phase → Launch-ready code
-
-Launch Phase → Hosted website"
+         subDescription="Design Phase<br/>→ Figma prototype<br/><br/>
+            Development Phase<br/>→  Launch-ready code<br/><br/>Launch Phase<br/>→ Hosted website"
           overflowImage={true}
           imageScale={1.3}
           imageOffsetX={20}
