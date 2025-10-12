@@ -193,7 +193,7 @@ export default function PartnershipCarousel() {
 
       {/* Desktop / Tablet */}
       <div className="hidden lg:block">
-        <div className="bg-white min-h-screen flex flex-col items-center justify-center py-16 px-8">
+        <div className="bg-white min-h-screen flex flex-col items-center justify-center pb-16 lg:pb-20 xl:pb-24 2xl:pb-32 px-8">
           <p
             className="text-center mb-6 lg:mb-8 xl:mb-10 2xl:mb-12 text-[28px] lg:text-[32px] xl:text-[38px] 2xl:text-[48px] leading-[36px] lg:leading-[40px] xl:leading-[48px] 2xl:leading-[60px]"
             style={{ fontFamily: "Questrial, sans-serif", color: "#000000" }}

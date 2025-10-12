@@ -74,7 +74,7 @@ export default function Company() {
     <>
       {/* Desktop/Tablet Layout (lg and above) */}
       <div className="hidden lg:block">
-        <div className="bg-white py-16">
+        <div className="bg-white py-16 lg:py-20 xl:py-24 2xl:py-32">
           <div className="container mx-auto px-4">
             <h2
               className="text-center text-[38px] font-normal mb-12"

@@ -6,7 +6,7 @@ export default function Workflow() {
   return (
     <>
       {/* Desktop and Tablet Layout (lg and above) */}
-      <div className="hidden lg:block bg-white py-16 lg:py-20 xl:py-24 2xl:py-32 px-4">
+      <div className="hidden lg:block bg-white pb-16 lg:pb-20 xl:pb-24 2xl:pb-32 px-4">
         <div className="max-w-5xl lg:max-w-6xl xl:max-w-7xl 2xl:max-w-8xl mx-auto">
           {/* Header */}
           <h1

@@ -145,7 +145,7 @@ export default function Beyond() {
   return (
     <>
       {/* Desktop and Tablet */}
-      <div className="hidden lg:block bg-black relative h-[1260px]">
+      <div className="hidden lg:block bg-black relative h-[1260px] pt-16 lg:pt-20 xl:pt-24 2xl:pt-32">
         {/* Background image & videos */}
         <div className="absolute inset-0" style={{ backgroundColor: "#000" }}>
           {/* Static image layer */}

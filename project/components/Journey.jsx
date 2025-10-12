@@ -27,7 +27,7 @@ export default function Journey() {
   return (
     <>
       {/* Desktop and Tablet Layout (lg and above) */}
-      <div className="hidden lg:block bg-white min-h-screen py-12 lg:py-16 xl:py-20 2xl:py-24 px-6 lg:px-4 xl:px-12 2xl:px-16">
+      <div className="hidden lg:block bg-white min-h-screen py-16 lg:py-20 xl:py-24 2xl:py-32 px-6 lg:px-4 xl:px-12 2xl:px-16">
       <div className="max-w-5xl lg:max-w-6xl xl:max-w-7xl 2xl:max-w-8xl mx-auto mt-32 lg:mt-36 xl:mt-44 2xl:mt-52">
         {/* Main Header */}
         <h1
