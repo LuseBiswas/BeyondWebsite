@@ -2,22 +2,22 @@
 import { motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 
-export default function WeDesignMobile() {
-  // base items (unchanged)
-  const base = [
-    "a consumer brand<br/>winning hearts",
-    "startup searching<br/>for credibility",
-    "any brand that<br/>appreciates design",
-    "a non-profit<br/>mobilizing action",
-    "a B2B brand<br/>simplifying complexity",
-  ];
+// Move base items outside component so they don't recreate on every render
+const base = [
+  "a consumer brand<br/>winning hearts",
+  "startup searching<br/>for credibility",
+  "any brand that<br/>appreciates design",
+  "a non-profit<br/>mobilizing action",
+  "a B2B brand<br/>simplifying complexity",
+];
 
+export default function WeDesignMobile() {
   // build with edge clones: [last, ...base, first]
   const items = useMemo(() => {
     const first = base[0];
     const last = base[base.length - 1];
     return [last, ...base, first];
-  }, [base]);
+  }, []);
 
   // start at index 1 (first real slide)
   const [index, setIndex] = useState(1);
@@ -29,7 +29,7 @@ export default function WeDesignMobile() {
     if (index === 0) return base.length - 1; // left clone -> last real
     if (index === items.length - 1) return 0; // right clone -> first real
     return index - 1; // real slides are shifted by +1
-  }, [index, base.length, items.length]);
+  }, [index, items.length]);
 
   // auto-advance every 2.2s (slightly calmer)
   useEffect(() => {
@@ -40,13 +40,19 @@ export default function WeDesignMobile() {
   // seamless loop: when animation ends on a clone, jump (no animation) to matching real
   const handleAnimComplete = () => {
     if (index === items.length - 1) {
+      // Reached the right clone (first item clone), jump to real first item
       setNoAnim(true);
-      setIndex(1);
-      requestAnimationFrame(() => setNoAnim(false));
+      setTimeout(() => {
+        setIndex(1);
+        setTimeout(() => setNoAnim(false), 50);
+      }, 0);
     } else if (index === 0) {
+      // Reached the left clone (last item clone), jump to real last item
       setNoAnim(true);
-      setIndex(items.length - 2);
-      requestAnimationFrame(() => setNoAnim(false));
+      setTimeout(() => {
+        setIndex(items.length - 2);
+        setTimeout(() => setNoAnim(false), 50);
+      }, 0);
     }
   };
 
@@ -58,7 +64,7 @@ export default function WeDesignMobile() {
       dots.push({ id: idx, position: offset, active: offset === 0 });
     }
     return dots;
-  }, [real, base.length]);
+  }, [real]);
 
   return (
     <div className="bg-white py-6 px-4">
@@ -107,8 +113,9 @@ export default function WeDesignMobile() {
           >
             <motion.div
               className="flex"
+              style={{ x: `-${index * 100}%` }}
               animate={{ x: `-${index * 100}%` }}
-              transition={{ duration: noAnim ? 0 : 0.5, ease: "easeInOut" }}
+              transition={noAnim ? { duration: 0 } : { duration: 0.5, ease: "easeInOut" }}
               onAnimationComplete={handleAnimComplete}
             >
               {items.map((item, i) => (
