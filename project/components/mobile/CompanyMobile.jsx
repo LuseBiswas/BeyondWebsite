@@ -33,7 +33,7 @@ export default function CompanyMobile() {
   };
 
   // Speed control: pixels per second (consistent feel across screen sizes)
-  const PX_PER_SEC = 22.5;
+  const PX_PER_SEC = 60;
 
   const containerRef = useRef(null);
   const measureRowRef = useRef(null);

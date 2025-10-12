@@ -81,8 +81,8 @@ export default function Home2Mobile() {
               style={{
                 fontFamily: "Questrial, sans-serif",
                 fontWeight: 400,
-                fontSize: "clamp(22px, 5.5vw, 60px)",
-                lineHeight: "1.1",
+                fontSize: "clamp(28px, 9.5vw, 44px)",
+                lineHeight: "1.08",
                 color: isMenuOpen ? "#193A43" : "#FFFFFF",
               }}
               dangerouslySetInnerHTML={{ __html: "too <br/> often" }}
@@ -150,8 +150,8 @@ export default function Home2Mobile() {
                       style={{
                         fontFamily: "Questrial, sans-serif",
                         fontWeight: 400,
-                        fontSize: "clamp(18px, 4vw, 36px)",
-                        lineHeight: "1.25",
+                        fontSize: "clamp(18px, 6vw, 28px)",
+                        lineHeight: "clamp(24px, 8vw, 36px)",
                         letterSpacing: "0%",
                       }}
                       dangerouslySetInnerHTML={{
@@ -163,8 +163,8 @@ export default function Home2Mobile() {
                       style={{
                         fontFamily: "Questrial, sans-serif",
                         fontWeight: 400,
-                        fontSize: "clamp(18px, 4vw, 36px)",
-                        lineHeight: "1.25",
+                        fontSize: "clamp(18px, 6vw, 28px)",
+                        lineHeight: "clamp(24px, 8vw, 36px)",
                         letterSpacing: "0%",
                       }}
                     >
@@ -175,8 +175,8 @@ export default function Home2Mobile() {
                       style={{
                         fontFamily: "Questrial, sans-serif",
                         fontWeight: 400,
-                        fontSize: "clamp(18px, 4vw, 36px)",
-                        lineHeight: "1.25",
+                        fontSize: "clamp(18px, 6vw, 28px)",
+                        lineHeight: "clamp(24px, 8vw, 36px)",
                         letterSpacing: "0%",
                       }}
                       dangerouslySetInnerHTML={{
@@ -189,10 +189,10 @@ export default function Home2Mobile() {
                       <button
                         className="font-normal rounded-4xl"
                         style={{
-                          width: "clamp(110px, 24vw, 180px)",
-                          height: "clamp(40px, 8vw, 64px)",
+                          width: "clamp(122px, 33.4vw, 147px)",
+                          height: "clamp(40px, 11vw, 48px)",
                           fontFamily: "Questrial, sans-serif",
-                          fontSize: "clamp(14px, 3vw, 24px)",
+                          fontSize: "clamp(16px, 4.5vw, 20px)",
                           fontWeight: 400,
                           backgroundColor: "#193A43",
                           color: "#FCEE21",
@@ -213,8 +213,8 @@ export default function Home2Mobile() {
               className="text-white font-normal mb-4 sm:mb-6 md:mb-8 lg:mb-10"
               style={{
                 fontFamily: "Syne, sans-serif",
-                fontSize: "clamp(28px, 6vw, 72px)",
-                lineHeight: "1.12",
+                fontSize: "clamp(28px, 9.5vw, 44px)",
+                lineHeight: "1.08",
               }}
             >
               <span className="opacity-60">But</span> beauty{" "}
@@ -224,8 +224,8 @@ export default function Home2Mobile() {
               className="text-white font-normal"
               style={{
                 fontFamily: "Questrial, sans-serif",
-                fontSize: "clamp(16px, 4vw, 42px)",
-                lineHeight: "1.35",
+                fontSize: "clamp(18px, 6vw, 28px)",
+                lineHeight: "clamp(24px, 8vw, 36px)",
               }}
             >
               Design with empathy,<br />

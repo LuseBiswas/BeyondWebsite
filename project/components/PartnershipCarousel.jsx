@@ -38,11 +38,13 @@ export default function PartnershipCarousel() {
 
   // ---------- State ----------
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(false); // Start paused
   const [ready, setReady] = useState(() => new Set());
   const [pendingIndex, setPendingIndex] = useState(null);
+  const [hasStarted, setHasStarted] = useState(false); // Track if carousel has started
   const videoEls = useRef({});
   const visibleRefs = useRef({});
+  const sectionRef = useRef(null); // For intersection observer
 
   // ---------- Optimized URLs ----------
   const optimizedUrls = useMemo(
@@ -156,6 +158,31 @@ export default function PartnershipCarousel() {
     }
   }, [activeIndex]);
 
+  // Intersection Observer: Start autoplay when section comes into view
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasStarted) {
+            // Section is visible and hasn't started yet
+            setIsAutoPlaying(true);
+            setHasStarted(true);
+          }
+        });
+      },
+      { threshold: 0.3 } // Trigger when 30% of section is visible
+    );
+
+    observer.observe(section);
+
+    return () => {
+      if (section) observer.unobserve(section);
+    };
+  }, [hasStarted]);
+
   return (
     <>
       <Head>
@@ -164,7 +191,7 @@ export default function PartnershipCarousel() {
 
       {/* Desktop / Tablet */}
       <div className="hidden lg:block">
-        <section className="bg-white min-h-screen flex flex-col items-center justify-center px-[clamp(16px,3vw,64px)] pb-[clamp(32px,4vw,96px)]">
+        <section ref={sectionRef} className="bg-white min-h-screen flex flex-col items-center justify-center px-[clamp(16px,3vw,64px)] pb-[clamp(32px,4vw,96px)]">
           <p
             className="
               text-center

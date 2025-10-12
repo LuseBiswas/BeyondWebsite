@@ -4,18 +4,18 @@ import Card from "../Card";
 export default function WorkflowMobile() {
 
   return (
-    <div className="bg-white py-12 sm:py-16 px-4">
+    <div className="bg-white py-8 sm:py-16 px-4">
       {/* Header */}
       <h1
         className="text-center mb-3 sm:mb-4"
         style={{
           fontFamily: "Syne, sans-serif",
-          fontSize: "clamp(24px, 6vw, 36px)",
+          fontSize: "clamp(28px, 9.5vw, 44px)",
           color: "#000000",
-          lineHeight: "1.2",
+          lineHeight: "1.08",
         }}
       >
-        Before you think about it, This is how!
+        No need to ask, here's how!
       </h1>
 
       {/* Sub Header */}
@@ -23,9 +23,9 @@ export default function WorkflowMobile() {
         className="text-center mb-8 sm:mb-12"
         style={{
           fontFamily: "Questrial, sans-serif",
-          fontSize: "clamp(14px, 3.5vw, 16px)",
+          fontSize: "clamp(18px, 6vw, 28px)",
           color: "#666666",
-          lineHeight: "1.5",
+          lineHeight: "clamp(24px, 8vw, 36px)",
         }}
       >
         We communicate to design, develop and launch with Precision.
@@ -40,7 +40,8 @@ export default function WorkflowMobile() {
           centerImageWidth={80}
           centerImageHeight={80}
           title="Tools"
-          description="We've figured out a perfect working eco-system that is lead by human centric design and development that is led by AI making us one of the fastest to deliver a digital transformation that is just not vanilla."
+          description="We've got a perfect working eco-system lead by human centric design and development led by AI."
+          subDescription="In other words, fast!"
         />
         
         <Card
@@ -54,14 +55,19 @@ export default function WorkflowMobile() {
           customImageMove={true}
           title="Workflow"
           description="Design → Develop → Launch!"
-          subDescription="We prioritise communication at all the stages, for transparency, confidence and simply projecting the right brand emotion that reflects on your site!"
+          subDescription="We prioritise communication for transparency, confidence and simply projecting the right brand emotion!"
         />
         
         <Card
           image="/image/work/Mock-up2.png"
           imageMove={true}
           title="Output"
-          description="Each phase ends with a solid output. 1. Design Phase → Figma Prototype 2. Development Phase → Final Production Code 3. Launch Phase → Hosted Website + 30 day live support."
+          description="Each phase ends with a solid output."
+          subDescription="Design Phase → Figma prototype
+
+Development Phase → Launch-ready code
+
+Launch Phase → Hosted website"
           overflowImage={true}
           imageScale={1.3}
           imageOffsetX={20}

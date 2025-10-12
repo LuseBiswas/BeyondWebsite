@@ -67,7 +67,7 @@ export default function WeDesignMobile() {
   }, [real]);
 
   return (
-    <div className="bg-white py-6 px-4">
+    <div className="bg-white pt-8 px-4">
       {/* Centered text - Mobile (fluid, compact) */}
       <h1
         className="text-center mb-5 leading-[1.2]"
@@ -109,7 +109,7 @@ export default function WeDesignMobile() {
           {/* Carousel text - fluid height & type */}
           <div
             className="relative overflow-hidden w-full"
-            style={{ height: "clamp(60px, 16vw, 100px)" }}
+            style={{ height: "clamp(90px, 24vw, 130px)" }}
           >
             <motion.div
               className="flex"

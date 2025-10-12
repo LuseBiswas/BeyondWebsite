@@ -14,11 +14,17 @@ export default function PartnershipCarouselMobile() {
 
   // ---- State / Refs ----
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(false);  // Start paused
   const [ready, setReady] = useState(() => new Set());        // indexes that fired canplaythrough (or timed-in)
   const [pendingIndex, setPendingIndex] = useState(null);     // target slide while we wait
+  const [hasStarted, setHasStarted] = useState(false);        // Track if carousel has started
   const preloaderEls = useRef({});                            // hidden <video> elements pool
   const visibleRefs = useRef({});                             // visible <video> per index
+  const sectionRef = useRef(null);                            // For intersection observer
+  
+  // ---- Touch/Swipe State ----
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
 
   const len = carouselData.length;
   const idx = (i) => (i + len) % len;
@@ -150,8 +156,59 @@ export default function PartnershipCarouselMobile() {
     }
   }, [activeIndex]);
 
+  // ---- Touch/Swipe Handlers ----
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+    
+    if (isLeftSwipe) {
+      // Swipe left -> next slide
+      requestSlide(idx(activeIndex + 1));
+    }
+    if (isRightSwipe) {
+      // Swipe right -> previous slide
+      requestSlide(idx(activeIndex - 1));
+    }
+  };
+
+  // Intersection Observer: Start autoplay when section comes into view
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasStarted) {
+            // Section is visible and hasn't started yet
+            setIsAutoPlaying(true);
+            setHasStarted(true);
+          }
+        });
+      },
+      { threshold: 0.3 } // Trigger when 30% of section is visible
+    );
+
+    observer.observe(section);
+
+    return () => {
+      if (section) observer.unobserve(section);
+    };
+  }, [hasStarted]);
+
   return (
-    <div className="bg-white min-h-screen py-12 px-4">
+    <div ref={sectionRef} className="bg-white min-h-screen pt-8 px-4">
       {/* Preconnect: faster TLS/DNS to Cloudinary */}
       <Head>
         <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="" />
@@ -166,7 +223,7 @@ export default function PartnershipCarouselMobile() {
       </p>
 
       {/* Tabs */}
-      <div className="flex justify-center gap-6 sm:gap-8 mb-10 sm:mb-12">
+      <div className="flex justify-center gap-6 sm:gap-8 mb-4 sm:mb-6">
         {carouselData.map((item, i) => (
           <button
             key={i}
@@ -189,8 +246,11 @@ export default function PartnershipCarouselMobile() {
       {/* Video viewport */}
       <div className="mx-auto w-full max-w-[30rem] mb-12 sm:mb-16">
         <div
-          className="relative overflow-hidden rounded-2xl w-full"
+          className="relative overflow-hidden rounded-2xl w-full cursor-pointer select-none"
           style={{ aspectRatio: "341 / 467", backgroundColor: "#000" }}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
         >
           <AnimatePresence mode="wait">
             <motion.div

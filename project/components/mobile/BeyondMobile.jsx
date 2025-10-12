@@ -251,7 +251,7 @@ export default function BeyondMobile() {
 
   return (
     <div
-      className="bg-white relative min-h-screen overflow-hidden px-4 flex items-center justify-center"
+      className="bg-black relative min-h-screen overflow-hidden"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
@@ -259,10 +259,10 @@ export default function BeyondMobile() {
       {/* Hidden preload video (lookahead) */}
       <video ref={preloadRef} className="hidden" muted playsInline preload="auto" />
 
-      {/* Video card container */}
-      <div className="relative w-full max-w-[360px] mx-auto" style={{ minWidth: "360px", minHeight: "646px" }}>
+      {/* Full-width video container */}
+      <div className="relative w-full min-h-screen">
         {/* Background: static image + dual video layers */}
-        <div className="absolute inset-0 rounded-3xl overflow-hidden" style={{ backgroundColor: "#000" }}>
+        <div className="absolute inset-0" style={{ backgroundColor: "#000" }}>
           {/* Static image */}
           <motion.div
             animate={{ opacity: selectedSlide?.isStatic ? 1 : 0 }}
@@ -339,13 +339,13 @@ export default function BeyondMobile() {
         </div>
 
         {/* Overlay content */}
-        <div className="relative z-10" style={{ minHeight: "646px" }}>
+        <div className="relative z-10 min-h-screen">
           <AnimatePresence mode="wait">
             {/* Static content */}
             {selectedSlide?.isStatic && (
               <motion.div
                 key="static-mobile"
-                className="absolute left-0 right-0 top-0 pt-10 px-6 text-center"
+                className="absolute left-0 right-0 top-0 pt-16 px-6 text-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -375,7 +375,7 @@ export default function BeyondMobile() {
             {selectedSlide && !selectedSlide.isStatic && (
               <motion.div
                 key={`video-mobile-${selectedSlide.id}`}
-                className="absolute left-0 right-0 top-0 pt-10 px-6 text-center"
+                className="absolute left-0 right-0 top-0 pt-16 px-6 text-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
