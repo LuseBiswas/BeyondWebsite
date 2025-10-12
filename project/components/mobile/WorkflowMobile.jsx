@@ -4,7 +4,7 @@ import Card from "../Card";
 export default function WorkflowMobile() {
 
   return (
-    <div className="bg-white py-8 sm:py-16 px-4">
+    <div className="bg-white pb-8 sm:py-16 px-4">
       {/* Header */}
       <h1
         className="text-center mb-3 sm:mb-4"
@@ -15,7 +15,7 @@ export default function WorkflowMobile() {
           lineHeight: "1.08",
         }}
       >
-        No need to ask, here's how!
+        No need to ask,<br /> here's how!
       </h1>
 
       {/* Sub Header */}
@@ -37,8 +37,8 @@ export default function WorkflowMobile() {
           image="/image/work/work1.png"
           imageMove={true}
           centerImage="/image/work/Perfectbutton.png"
-          centerImageWidth={80}
-          centerImageHeight={80}
+          centerImageWidth={130}
+          centerImageHeight={130}
           title="Tools"
           description="We've got a perfect working eco-system lead by human centric design and development led by AI."
           subDescription="In other words, fast!"

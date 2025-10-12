@@ -216,11 +216,26 @@ export default function PartnershipCarouselMobile() {
 
       {/* Sub header */}
       <p
-        className="text-center mb-8 sm:mb-10 leading-[1.35] text-[clamp(26px,8.2vw,32px)]"
-        style={{ fontFamily: "Questrial, sans-serif", color: "#000" }}
+        className="text-center mb-4 sm:mb-10"
+        style={{ 
+          fontFamily: "Questrial, sans-serif", 
+          color: "#000",
+          fontSize: "clamp(18px, 6vw, 28px)",
+          lineHeight: "clamp(24px, 8vw, 36px)"
+        }}
       >
         Our process is <br /> simple, human, and built <br /> around you.
       </p>
+
+       {/* Main header */}
+       <h1
+        className="text-center leading-[1.1] text-[clamp(28px,9vw,44px)] mb-8"
+        style={{ fontFamily: "Syne, sans-serif", color: "#000" }}
+      >
+        <span className="text-gray-500">This is not</span>
+        <br /> just a project. <br />
+        It&apos;s a partnership.
+      </h1>
 
       {/* Tabs */}
       <div className="flex justify-center gap-6 sm:gap-8 mb-4 sm:mb-6">
@@ -317,16 +332,6 @@ export default function PartnershipCarouselMobile() {
           </AnimatePresence>
         </div>
       </div>
-
-      {/* Main header */}
-      <h1
-        className="text-center leading-[1.1] text-[clamp(28px,9vw,44px)]"
-        style={{ fontFamily: "Syne, sans-serif", color: "#000" }}
-      >
-        <span className="text-gray-500">This is not</span>
-        <br /> just a project. <br />
-        It&apos;s a partnership.
-      </h1>
 
       <div className="h-12 sm:h-16" />
 
