@@ -30,7 +30,7 @@ export default function Workflow() {
               lineHeight: "1.5",
             }}
           >
-            We communicate to design, develop and launch with Precision.
+            Design + hosted website just under 2 weeks. 
           </p>
 
           {/* Cards Container */}
@@ -66,8 +66,8 @@ export default function Workflow() {
             imageMove={true}
             title="Output"
             description="Each phase ends with a solid output."
-            subDescription="Design Phase<br/>→ Figma prototype<br/><br/>
-            Development Phase<br/>→  Launch-ready code<br/><br/>Launch Phase<br/>→ Hosted website"
+            subDescription="Design Phase<br/>→ Figma prototype<br/>with best practices<br/><br/>
+            Development Phase<br/>→  Launch-ready code<br/><br/>Launch Phase<br/>→ website code(in node.js)<br/>hosted on vercel."
             overflowImage={true}
             imageScale={1.5}
             imageOffsetX={30}

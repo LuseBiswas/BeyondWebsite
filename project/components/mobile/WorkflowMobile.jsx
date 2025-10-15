@@ -64,7 +64,7 @@ export default function WorkflowMobile() {
           title="Output"
           description="Each phase ends with a solid output."
          subDescription="Design Phase<br/>→ Figma prototype<br/><br/>
-            Development Phase<br/>→  Launch-ready code<br/><br/>Launch Phase<br/>→ Hosted website"
+            Development Phase<br/>→  Launch-ready code<br/><br/>Launch Phase<br/>→ website code(in node.js)<br/>hosted on vercel."
           overflowImage={true}
           imageScale={1.3}
           imageOffsetX={20}

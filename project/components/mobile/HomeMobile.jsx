@@ -96,13 +96,12 @@ export default function HomeMobile() {
                 lineHeight: "clamp(24px, 8vw, 36px)",
               }}
             >
-              At Design Responsible,<br />
-              we don&apos;t just design<br />
-              websites. Because your<br />
-              story deserves more than<br />
-              screens and clicks — it<br />
-              deserves to live <br />
-              beyond websites.
+              Crafted with<br />
+              human-centric design,<br />
+              Development powered by AI.<br />
+              Your timeless digital<br />
+              presence, delivered<br />
+              in just two weeks!
             </p>
 
             <div className="flex flex-row gap-3 sm:gap-4 items-center justify-center">

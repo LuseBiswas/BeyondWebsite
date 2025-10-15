@@ -121,9 +121,9 @@ export default function Home() {
               "
               style={{ fontFamily: "Questrial, sans-serif" }}
             >
-              At Design Responsible, we don&apos;t just design websites. <br />
-              Because your story deserves more than screens and clicks — <br />
-              it deserves to live beyond websites.
+              Crafted with human-centric design and development <br />
+              powered by AI. Your timeless digital presence, delivered <br />
+              in just two weeks!
             </p>
 
             <div className="flex flex-wrap items-center gap-[clamp(12px,2.2vw,28px)]">
