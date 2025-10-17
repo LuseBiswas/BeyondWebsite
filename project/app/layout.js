@@ -27,6 +27,9 @@ const manrope = Manrope({
 export const metadata = {
   title: "Design Responsible",
   description: "Beyond websites, let's transform. Thoughtful design at a price that respects your growth.",
+  icons: {
+    icon: "/file.svg",
+  },
 };
 
 export default function RootLayout({ children }) {
