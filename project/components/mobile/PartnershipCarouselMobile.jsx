@@ -1,15 +1,12 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useMemo, useRef } from "react";
-import Head from "next/head";
-import { getOptimizedVideoUrl } from "../../lib/cloudinary";
-
 export default function PartnershipCarouselMobile() {
   const carouselData = [
-    { title: "Discover", videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760027731/shutterstock_3627320917_kprijd.mov", videoText: "We listen <br/> deeply.", textPos: "30%" },
-    { title: "Design",   videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760111025/River_k5zwtq.mp4", videoText: "We shape <br/> with empathy <br/> and strategy", textPos: "35%" },
-    { title: "Deliver",  videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760027725/shutterstock_1105052247_wrlamw.mov", videoText: "We launch <br/> with precision", textPos: "40%" },
-    { title: "Evolve",   videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760027734/shutterstock_3833232295_kqnwyv.mov", videoText: "Because your <br/> growth doesn't <br/> stop here.", textPos: "35%" },
+    { title: "Discover", videoUrl: "/videos/partnership-discover.mp4", videoText: "We listen <br/> deeply.", textPos: "30%" },
+    { title: "Design",   videoUrl: "/videos/partnership-design.mp4", videoText: "We shape <br/> with empathy <br/> and strategy", textPos: "35%" },
+    { title: "Deliver",  videoUrl: "/videos/partnership-deliver.mp4", videoText: "We launch <br/> with precision", textPos: "40%" },
+    { title: "Evolve",   videoUrl: "/videos/partnership-evolve.mp4", videoText: "Because your <br/> growth doesn't <br/> stop here.", textPos: "35%" },
   ];
 
   // ---- State / Refs ----
@@ -30,20 +27,10 @@ export default function PartnershipCarouselMobile() {
   const idx = (i) => (i + len) % len;
   const neighbors = (i) => [idx(i - 1), i, idx(i + 1)];
 
-  // ---- Cloudinary optimized URLs ----
+  // ---- Video URLs ----
   const optimizedUrls = useMemo(
-    () =>
-      carouselData.map((item) =>
-        item.videoUrl
-          ? getOptimizedVideoUrl(item.videoUrl, {
-              quality: "auto:good",
-              format: "mp4",
-            })
-          : null
-      ),
-    // keep stable unless the list of URLs really changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [JSON.stringify(carouselData.map((i) => i.videoUrl))]
+    () => carouselData.map((item) => item.videoUrl || null),
+    [carouselData]
   );
 
   // ---- Warm / Preload a given index (hidden <video>) ----
@@ -55,7 +42,6 @@ export default function PartnershipCarouselMobile() {
     el.muted = true;
     el.playsInline = true;
     el.loop = true;
-    el.crossOrigin = "anonymous";
     el.src = optimizedUrls[i];
 
     const markReady = () => {
@@ -209,11 +195,6 @@ export default function PartnershipCarouselMobile() {
 
   return (
     <div ref={sectionRef} className="bg-white min-h-screen pt-8 px-4">
-      {/* Preconnect: faster TLS/DNS to Cloudinary */}
-      <Head>
-        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="" />
-      </Head>
-
       {/* Sub header */}
       <p
         className="text-center mb-4 sm:mb-10"
@@ -290,7 +271,6 @@ export default function PartnershipCarouselMobile() {
                     playsInline
                     preload="auto"
                     controls={false}
-                    crossOrigin="anonymous"
                   >
                     <source src={optimizedUrls[activeIndex]} type="video/mp4" />
                   </video>
@@ -348,7 +328,6 @@ export default function PartnershipCarouselMobile() {
                   el.muted = true;
                   el.playsInline = true;
                   el.loop = true;
-                  el.crossOrigin = "anonymous";
                   el.src = optimizedUrls[i];
 
                   const markReady = () =>

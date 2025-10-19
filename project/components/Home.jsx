@@ -3,17 +3,10 @@ import { useRef, useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import Script from "next/script";
 import HomeMobile from "./mobile/HomeMobile";
-import { getOptimizedVideoUrl } from "../lib/cloudinary";
 
 export default function Home() {
   const videoRef = useRef(null);
   const [calendlyLoaded, setCalendlyLoaded] = useState(false);
-
-  // Generate optimized video URL
-  const optimizedVideoUrl = getOptimizedVideoUrl(
-    "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760025790/shutterstock_1065158980_1_jalep4.mov",
-    { quality: "auto", format: "mp4" }
-  );
 
   const scrollToPricing = () => {
     const el = document.getElementById("pricing-section");
@@ -46,9 +39,9 @@ export default function Home() {
       <video
         ref={videoRef}
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-        autoPlay loop muted playsInline preload="auto" crossOrigin="anonymous"
+        autoPlay loop muted playsInline preload="auto"
       >
-        <source src={optimizedVideoUrl} type="video/mp4" />
+        <source src="/videos/hero.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
