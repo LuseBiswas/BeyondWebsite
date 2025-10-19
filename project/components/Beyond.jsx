@@ -11,11 +11,11 @@ export default function Beyond() {
   const EASE = "easeInOut";
 
   const carouselData = [
-    { id: 0, isStatic: false, videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760112150/shutterstock_3499135879_rew8hi.mov", title: "Beyond the Surface", subtitle: "It's always" },
-    { id: 1, isStatic: false, videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760111518/Deepsea_av4ko4.mp4", title: "Beyond <br/> Attraction", subtitle: "into trust, engagement,<br/>and action." },
-    { id: 2, isStatic: false, videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760025686/shutterstock_3625121845_zvc0xp.mov", title: "Beyond <br/>Colours", subtitle: "into clarity, accessibility,<br/>and emotion." },
-    { id: 3, isStatic: false, videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760110792/Website_Videos_kdvmfv.mp4", title: "Beyond<br/>Trends", subtitle: "into timeless design<br/>that adapts to change." },
-    { id: 4, isStatic: false, videoUrl: "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760025710/shutterstock_3847367763_jbsax0.mov", title: "Beyond<br/>Layouts", subtitle: "into journeys that feel<br/>intuitive and human." }
+    { id: 0, isStatic: false, videoUrl: "/videos/beyond-surface.mp4", title: "Beyond the Surface", subtitle: "It's always" },
+    { id: 1, isStatic: false, videoUrl: "/videos/beyond-attraction.mp4", title: "Beyond <br/> Attraction", subtitle: "into trust, engagement,<br/>and action." },
+    { id: 2, isStatic: false, videoUrl: "/videos/beyond-colours.mp4", title: "Beyond <br/>Colours", subtitle: "into clarity, accessibility,<br/>and emotion." },
+    { id: 3, isStatic: false, videoUrl: "/videos/beyond-trends.mp4", title: "Beyond<br/>Trends", subtitle: "into timeless design<br/>that adapts to change." },
+    { id: 4, isStatic: false, videoUrl: "/videos/beyond-layouts.mp4", title: "Beyond<br/>Layouts", subtitle: "into journeys that feel<br/>intuitive and human." }
   ];
 
   const [activeIndex, setActiveIndex] = useState(0);                 // which slide index we're on
@@ -191,7 +191,7 @@ export default function Beyond() {
             loop
             playsInline
             preload="auto"
-            crossOrigin="anonymous"
+            
             style={{
               zIndex: activeVideoIndex === 0 ? 2 : 1,
               willChange: "opacity",
@@ -213,7 +213,7 @@ export default function Beyond() {
             loop
             playsInline
             preload="auto"
-            crossOrigin="anonymous"
+            
             style={{
               pointerEvents: "none",
               zIndex: activeVideoIndex === 1 ? 2 : 1,

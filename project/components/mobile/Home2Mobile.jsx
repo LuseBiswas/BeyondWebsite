@@ -55,9 +55,8 @@ export default function Home2Mobile() {
         muted
         playsInline
         preload="auto"
-        crossOrigin="anonymous"
       >
-        <source src={optimizedVideoUrl} type="video/mp4" />
+        <source src="/videos/home2.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 

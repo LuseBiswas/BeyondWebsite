@@ -41,7 +41,7 @@ export default function Home() {
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         autoPlay loop muted playsInline preload="auto"
       >
-        <source src="/videos/optimized-hero.mp4" type="video/mp4" />
+        <source src="/videos/hero.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 

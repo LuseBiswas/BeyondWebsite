@@ -1,37 +1,31 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef, useMemo } from "react";
-import Head from "next/head";
 import PartnershipCarouselMobile from "./mobile/PartnershipCarouselMobile";
-import { getOptimizedVideoUrl } from "../lib/cloudinary";
 
 export default function PartnershipCarousel() {
   const carouselData = [
     {
       title: "Discover",
-      videoUrl:
-        "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760027731/shutterstock_3627320917_kprijd.mov",
+      videoUrl: "/videos/partnership-discover.mp4",
       videoText: "We listen deeply.",
       marginBottom: "9rem",
     },
     {
       title: "Design",
-      videoUrl:
-        "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760111025/River_k5zwtq.mp4",
+      videoUrl: "/videos/partnership-design.mp4",
       videoText: "We shape with <br/> empathy and strategy",
       marginBottom: "9rem",
     },
     {
       title: "Deliver",
-      videoUrl:
-        "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760027725/shutterstock_1105052247_wrlamw.mov",
+      videoUrl: "/videos/partnership-deliver.mp4",
       videoText: "We launch with precision",
       marginBottom: "9rem",
     },
     {
       title: "Evolve",
-      videoUrl:
-        "https://res.cloudinary.com/drbcb1ziy/video/upload/v1760027734/shutterstock_3833232295_kqnwyv.mov",
+      videoUrl: "/videos/partnership-evolve.mp4",
       videoText: "Because your growth <br/> doesn't stop here.",
     },
   ];
@@ -46,20 +40,10 @@ export default function PartnershipCarousel() {
   const visibleRefs = useRef({});
   const sectionRef = useRef(null); // For intersection observer
 
-  // ---------- Optimized URLs ----------
+  // ---------- Video URLs ----------
   const optimizedUrls = useMemo(
-    () =>
-      carouselData.map((item) =>
-        item.videoUrl
-          ? getOptimizedVideoUrl(item.videoUrl, {
-              quality: "auto:good",
-              format: "mp4",
-            })
-          : null
-      ),
-    // keep stable without re-creating on every render
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [JSON.stringify(carouselData.map((i) => i.videoUrl))]
+    () => carouselData.map((item) => item.videoUrl || null),
+    [carouselData]
   );
 
   const len = carouselData.length;
@@ -91,7 +75,7 @@ export default function PartnershipCarousel() {
     el.muted = true;
     el.playsInline = true;
     el.loop = true;
-    el.crossOrigin = "anonymous";
+    
     el.src = optimizedUrls[i];
 
     const markReady = () => {
@@ -185,10 +169,6 @@ export default function PartnershipCarousel() {
 
   return (
     <>
-      <Head>
-        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="" />
-      </Head>
-
       {/* Desktop / Tablet */}
       <div className="hidden lg:block">
         <section ref={sectionRef} className="bg-white min-h-screen flex flex-col items-center justify-center px-[clamp(16px,3vw,64px)] pb-[clamp(32px,4vw,96px)]">
@@ -291,7 +271,7 @@ export default function PartnershipCarousel() {
                     playsInline
                     preload="auto"
                     controls={false}
-                    crossOrigin="anonymous"
+                    
                   >
                     <source src={optimizedUrls[activeIndex]} type="video/mp4" />
                   </video>
@@ -353,7 +333,7 @@ export default function PartnershipCarousel() {
                   el.muted = true;
                   el.playsInline = true;
                   el.loop = true;
-                  el.crossOrigin = "anonymous";
+                  
                   el.src = optimizedUrls[i];
                   const markReady = () =>
                     setReady((prev) =>
