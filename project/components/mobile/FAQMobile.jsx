@@ -241,7 +241,7 @@ export default function FAQMobile() {
                   fontSize: "clamp(14px, 4.2vw, 20px)",
                 }}
               >
-                Alternatively, email us at: <br /> hello@designresponsible.in
+                Alternatively, email us at: <br />  hello@designresponsible.com
               </p>
           </div>
 

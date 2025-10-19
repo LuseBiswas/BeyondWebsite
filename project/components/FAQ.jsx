@@ -213,7 +213,7 @@ export default function FAQ() {
                 className="text-center mt-6 lg:mt-8 xl:mt-10 2xl:mt-12 text-[20px] lg:text-[22px] xl:text-[24px] 2xl:text-[28px] leading-[1.3]"
                 style={{ fontFamily: "Questrial, sans-serif", color: "#FFFFFF" }}
               >
-                Alternatively, email us at: hello@designresponsible.in
+                Alternatively, email us at:  hello@designresponsible.com
               </p>
             </div>
           </div>
