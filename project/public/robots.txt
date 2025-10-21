@@ -17,5 +17,5 @@ Allow: /videos/
 Allow: /company-logos/
 
 # Sitemap location
-Sitemap: https://designresponsible.com/sitemap.xml
+Sitemap: https://beyondwebsites.designresponsible.com/sitemap.xml
 
