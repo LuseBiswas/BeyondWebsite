@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { trackBookCall, trackFAQExpand } from "@/lib/gtag";
+import { faqSchema } from "@/lib/schemas";
 
 export default function FAQMobile() {
   const [openIndex, setOpenIndex] = useState(null);
@@ -62,7 +63,14 @@ export default function FAQMobile() {
   };
 
   return (
-    <div style={{ backgroundColor: "#3D3D3D" }} className="min-h-screen py-10 px-4 sm:py-12">
+    <>
+      {/* FAQ Schema Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
+      <div style={{ backgroundColor: "#3D3D3D" }} className="min-h-screen py-10 px-4 sm:py-12">
       <div className="mx-auto w-full max-w-[46rem]"> {/* ~736px on big phones/tablets */}
         {/* Main Header */}
         <h1
@@ -257,5 +265,6 @@ export default function FAQMobile() {
           <div className="h-6 sm:h-8" />
       </div>
     </div>
+    </>
   );
 }

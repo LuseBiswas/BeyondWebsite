@@ -67,7 +67,7 @@ export default function HomeMobile() {
         <div className="border-2 border-white/50 rounded-2xl h-[calc(100vh-1.5rem)] sm:h-[calc(100vh-2rem)] w-full p-4 sm:p-6 relative text-white">
           <img
             src="/image/logo.png"
-            alt="Logo"
+            alt="Design Responsible - Web Design Agency Logo"
             className="absolute top-4 sm:top-6 left-4 sm:left-6"
             style={{ width: "clamp(160px, 50vw, 242px)", height: "clamp(70px, 22vw, 106px)" }}
           />

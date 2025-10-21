@@ -3,6 +3,7 @@ import { useRef, useEffect } from "react";
 import PriceBox from "./PriceBox";
 import PriceMobile from "./mobile/PriceMobile";
 import { trackBookCall } from "@/lib/gtag";
+import { pricingSchema } from "@/lib/schemas";
 
 export default function Price() {
   const videoRef = useRef(null);
@@ -34,7 +35,14 @@ export default function Price() {
   };
 
   return (
-    <div id="pricing-section" className="relative min-h-screen overflow-hidden bg-gray-800">
+    <>
+      {/* Pricing Schema Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingSchema) }}
+      />
+
+      <div id="pricing-section" className="relative min-h-screen overflow-hidden bg-gray-800">
       <video
         ref={videoRef}
         className="absolute w-full h-full object-cover pointer-events-none"
@@ -137,5 +145,6 @@ export default function Price() {
         <PriceMobile />
       </div>
     </div>
+    </>
   );
 } 

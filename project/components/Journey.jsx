@@ -8,19 +8,22 @@ export default function Journey() {
       id: 1,
       image: "/image/call.png",
       title: "Call",
-      description: "A 30 minute consultation<br/>call at end of which you’ll<br/>have a vision and we’ll have<br/>a plan."
+      alt: "Initial Consultation Call - Step 1",
+      description: "A 30 minute consultation<br/>call at end of which you'll<br/>have a vision and we'll have<br/>a plan."
     },
     {
       id: 2,
       image: "/image/create.png",
       title: "Create",
-      description: "We’ll have your website<br/>ready, the way you envisioned<br/>and more.<br/><br/>Will deliver a complete<br/>website, ready for hosting<br/>in your preferred platform."
+      alt: "Website Creation Process - Step 2",
+      description: "We'll have your website<br/>ready, the way you envisioned<br/>and more.<br/><br/>Will deliver a complete<br/>website, ready for hosting<br/>in your preferred platform."
     },
     {
       id: 3,
       image: "/image/celebrate.png",
       title: "Celebrate",
-      description: "We’ll stay on-call while<br/>we celebrate your new<br/>mile-stones, and optimise<br/>even after the launch."
+      alt: "Launch Celebration and Support - Step 3",
+      description: "We'll stay on-call while<br/>we celebrate your new<br/>mile-stones, and optimise<br/>even after the launch."
     }
   ];
 
@@ -69,7 +72,7 @@ export default function Journey() {
                 >
                   <Image
                     src={step.image}
-                    alt={step.title}
+                    alt={step.alt}
                     width={443}
                     height={344}
                     className="object-contain w-full h-full p-4"

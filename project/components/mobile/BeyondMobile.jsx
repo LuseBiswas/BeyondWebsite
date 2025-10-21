@@ -272,7 +272,7 @@ export default function BeyondMobile() {
           >
             <Image
               src="/image/bg.png"
-              alt="Background"
+              alt="Design Responsible - Beyond the Surface Background"
               fill
               className="object-cover object-top"
               priority

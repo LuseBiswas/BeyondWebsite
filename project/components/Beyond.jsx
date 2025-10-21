@@ -157,7 +157,7 @@ export default function Beyond() {
           >
             <Image
               src="/image/bg.png"
-              alt="Background"
+              alt="Design Responsible - Beyond the Surface Background"
               fill
               className="object-cover object-top"
               style={{ height: "100%", maxHeight: "1000px" }}

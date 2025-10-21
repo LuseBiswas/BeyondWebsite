@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono, Syne, Manrope } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
+import { organizationSchema, websiteSchema } from "@/lib/schemas";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,6 +41,16 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Questrial&family=Syne:wght@400..800&display=swap" rel="stylesheet" />
         <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+        
+        {/* Structured Data - Organization & Website Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} ${manrope.variable}`}>
         {children}

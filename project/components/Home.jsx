@@ -73,7 +73,7 @@ export default function Home() {
           <div className="flex items-center">
             <img
               src="/image/logo.png"
-              alt="Logo"
+              alt="Design Responsible - Web Design Agency Logo"
               className="
                 h-[clamp(72px,9vw,160px)]
                 2xl:h-[clamp(120px,8vw,200px)]
