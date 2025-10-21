@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useEffect } from "react";
 import PriceBox from "../PriceBox";
+import { trackBookCall } from "@/lib/gtag";
 
 export default function PriceMobile() {
   const videoRef = useRef(null);
@@ -27,6 +28,7 @@ export default function PriceMobile() {
   }, []);
 
   const openCalendly = () => {
+    trackBookCall('pricing_section_mobile');
     window.open('https://calendly.com/hello-designresponsible/new-meeting?background_color=000000&text_color=ffffff&primary_color=e8fc53&month=2025-10', '_blank');
   };
 

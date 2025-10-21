@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import FAQMobile from "./mobile/FAQMobile";
+import { trackBookCall, trackFAQExpand } from "@/lib/gtag";
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(null);
@@ -47,10 +48,17 @@ export default function FAQ() {
   ];
 
   const toggleFAQ = (index) => {
+    const isOpening = openIndex !== index;
     setOpenIndex(openIndex === index ? null : index);
+    
+    // Track only when opening (expanding) an FAQ
+    if (isOpening) {
+      trackFAQExpand(faqs[index].question);
+    }
   };
 
   const openCalendly = () => {
+    trackBookCall('faq_section');
     window.open('https://calendly.com/hello-designresponsible/lets-chat-beyond-website?background_color=000000&text_color=ffffff&primary_color=e8fc53', '_blank');
   };
 

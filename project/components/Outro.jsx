@@ -1,9 +1,11 @@
 "use client";
 import { ArrowUpRight } from "lucide-react";
 import OutroMobile from "./mobile/OutroMobile";
+import { trackBookCall, trackSeePricing } from "@/lib/gtag";
 
 export default function Outro() {
   const scrollToPricing = () => {
+    trackSeePricing('outro_section');
     // Scroll to the pricing section (where PriceBox components are used)
     const pricingSection = document.getElementById('pricing-section');
     if (pricingSection) {
@@ -15,6 +17,7 @@ export default function Outro() {
   };
 
   const handleBookCall = () => {
+    trackBookCall('outro_section');
     window.open("https://calendly.com/hello-designresponsible/new-meeting?background_color=000000&text_color=ffffff&primary_color=e8fc53&month=2025-10", "_blank");
   };
 
