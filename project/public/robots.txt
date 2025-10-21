@@ -1,0 +1,21 @@
+# robots.txt for Design Responsible
+# https://designresponsible.com
+
+User-agent: *
+Allow: /
+
+# Disallow API routes
+Disallow: /api/
+
+# Disallow Next.js build files
+Disallow: /_next/static/
+Disallow: /_next/image/
+
+# Allow all images and videos
+Allow: /image/
+Allow: /videos/
+Allow: /company-logos/
+
+# Sitemap location
+Sitemap: https://designresponsible.com/sitemap.xml
+

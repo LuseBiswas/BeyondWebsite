@@ -4,6 +4,7 @@ import { Plus, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import FAQMobile from "./mobile/FAQMobile";
 import { trackBookCall, trackFAQExpand } from "@/lib/gtag";
+import { faqSchema } from "@/lib/schemas";
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(null);
@@ -64,6 +65,12 @@ export default function FAQ() {
 
   return (
     <>
+      {/* FAQ Schema Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
       {/* Desktop and Tablet Layout (lg and above) */}
       <div className="hidden lg:block rounded-b-[50px]" style={{ backgroundColor: "#3D3D3D" }}>
         <div className="min-h-screen py-12 lg:py-16 xl:py-20 2xl:py-24 px-4 lg:px-6 xl:px-8 2xl:px-12">

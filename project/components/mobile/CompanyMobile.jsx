@@ -5,16 +5,16 @@ import { motion } from "framer-motion";
 export default function CompanyMobile() {
   // Logos
   const companyImages = [
-    { id: 1, src: "/company-logos/AKCH.png", alt: "Company 1" },
-    { id: 2, src: "/company-logos/BarDouro_logo.png", alt: "Company 2" },
-    { id: 3, src: "/company-logos/Berrilogo.png", alt: "Company 3" },
-    { id: 4, src: "/company-logos/C&CHC_logo.png", alt: "Company 4" },
-    { id: 5, src: "/company-logos/KI_Logo.png", alt: "Company 5" },
-    { id: 6, src: "/company-logos/Leanplum.png", alt: "Company 6" },
-    { id: 7, src: "/company-logos/Matterport_logo.png", alt: "Company 7" },
-    { id: 8, src: "/company-logos/Quest.png", alt: "Company 8" },
-    { id: 9, src: "/company-logos/Trint_logo.png", alt: "Company 9" },
-    { id: 10, src: "/company-logos/Unistellar.png", alt: "Company 10" },
+    { id: 1, src: "/company-logos/AKCH.png", alt: "AKCH - Trusted Client Logo" },
+    { id: 2, src: "/company-logos/BarDouro_logo.png", alt: "Bar Douro - Trusted Client Logo" },
+    { id: 3, src: "/company-logos/Berrilogo.png", alt: "Berri - Trusted Client Logo" },
+    { id: 4, src: "/company-logos/C&CHC_logo.png", alt: "C&CHC - Trusted Client Logo" },
+    { id: 5, src: "/company-logos/KI_Logo.png", alt: "KI - Trusted Client Logo" },
+    { id: 6, src: "/company-logos/Leanplum.png", alt: "Leanplum - Trusted Client Logo" },
+    { id: 7, src: "/company-logos/Matterport_logo.png", alt: "Matterport - Trusted Client Logo" },
+    { id: 8, src: "/company-logos/Quest.png", alt: "Quest - Trusted Client Logo" },
+    { id: 9, src: "/company-logos/Trint_logo.png", alt: "Trint - Trusted Client Logo" },
+    { id: 10, src: "/company-logos/Unistellar.png", alt: "Unistellar - Trusted Client Logo" },
   ];
 
   // How many “train cars” (segments) per loop

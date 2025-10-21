@@ -7,6 +7,7 @@ export default function JourneyMobile() {
       id: 1,
       image: "/image/call.png",
       title: "Call",
+      alt: "Initial Consultation Call - Step 1",
       description:
         "A 30 minute consultation<br/>call at end of which you'll<br/>have a vision and we'll have<br/>a plan.",
     },
@@ -14,6 +15,7 @@ export default function JourneyMobile() {
       id: 2,
       image: "/image/create.png",
       title: "Create",
+      alt: "Website Creation Process - Step 2",
       description:
         "We'll have your website<br/>ready, the way you envisioned<br/>and more.<br/><br/>Will deliver a complete<br/>website, ready for hosting<br/>in your preferred platform.",
     },
@@ -21,6 +23,7 @@ export default function JourneyMobile() {
       id: 3,
       image: "/image/celebrate.png",
       title: "Celebrate",
+      alt: "Launch Celebration and Support - Step 3",
       description:
         "We'll stay on-call while<br/>we celebrate your new<br/>mile-stones, and optimise<br/>even after the launch.",
     },
@@ -72,7 +75,7 @@ export default function JourneyMobile() {
                 >
                   <Image
                     src={step.image}
-                    alt={step.title}
+                    alt={step.alt}
                     fill
                     className="object-contain p-4 sm:p-5"
                     sizes="(max-width: 768px) 100vw, 50vw"
