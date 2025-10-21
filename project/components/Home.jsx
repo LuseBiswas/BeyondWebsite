@@ -3,17 +3,20 @@ import { useRef, useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import Script from "next/script";
 import HomeMobile from "./mobile/HomeMobile";
+import { trackBookCall, trackSeePricing } from "@/lib/gtag";
 
 export default function Home() {
   const videoRef = useRef(null);
   const [calendlyLoaded, setCalendlyLoaded] = useState(false);
 
   const scrollToPricing = () => {
+    trackSeePricing('hero_section');
     const el = document.getElementById("pricing-section");
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const handleBookCall = () => {
+    trackBookCall('hero_section');
     window.open(
       "https://calendly.com/hello-designresponsible/new-meeting?background_color=000000&text_color=ffffff&primary_color=e8fc53&month=2025-10",
       "_blank"
