@@ -1,6 +1,6 @@
 // Sitemap configuration for Design Responsible
 export default function sitemap() {
-  const baseUrl = 'https://designresponsible.com';
+  const baseUrl = 'https://beyondwebsites.designresponsible.com';
   const currentDate = new Date().toISOString();
 
   return [

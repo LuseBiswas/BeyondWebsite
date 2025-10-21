@@ -5,8 +5,8 @@ export const organizationSchema = {
   "@type": "Organization",
   "name": "Design Responsible",
   "alternateName": "DR",
-  "url": "https://designresponsible.com",
-  "logo": "https://designresponsible.com/image/logo.png",
+  "url": "https://beyondwebsites.designresponsible.com",
+  "logo": "https://beyondwebsites.designresponsible.com/image/logo.png",
   "description": "Beyond websites, let's transform. Thoughtful design at a price that respects your growth. Human-centric design and development powered by AI.",
   "foundingDate": "2024",
   "email": "hello@designresponsible.com",
@@ -38,7 +38,7 @@ export const serviceSchema = {
   "provider": {
     "@type": "Organization",
     "name": "Design Responsible",
-    "url": "https://designresponsible.com"
+    "url": "https://beyondwebsites.designresponsible.com"
   },
   "description": "Professional web design and development services including landing pages, full websites, and custom digital products.",
   "areaServed": {
@@ -207,19 +207,19 @@ export const breadcrumbSchema = {
       "@type": "ListItem",
       "position": 1,
       "name": "Home",
-      "item": "https://designresponsible.com"
+      "item": "https://beyondwebsites.designresponsible.com"
     },
     {
       "@type": "ListItem",
       "position": 2,
       "name": "Services",
-      "item": "https://designresponsible.com#services"
+      "item": "https://beyondwebsites.designresponsible.com#services"
     },
     {
       "@type": "ListItem",
       "position": 3,
       "name": "Pricing",
-      "item": "https://designresponsible.com#pricing-section"
+      "item": "https://beyondwebsites.designresponsible.com#pricing-section"
     }
   ]
 };
@@ -229,7 +229,7 @@ export const websiteSchema = {
   "@type": "WebSite",
   "name": "Design Responsible",
   "alternateName": "DR",
-  "url": "https://designresponsible.com",
+  "url": "https://beyondwebsites.designresponsible.com",
   "description": "Beyond websites, let's transform. Thoughtful design at a price that respects your growth.",
   "publisher": {
     "@type": "Organization",
@@ -237,7 +237,7 @@ export const websiteSchema = {
   },
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "https://designresponsible.com/search?q={search_term_string}",
+    "target": "https://beyondwebsites.designresponsible.com/search?q={search_term_string}",
     "query-input": "required name=search_term_string"
   }
 };
