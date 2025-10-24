@@ -12,6 +12,8 @@ export default function PriceBox({
   onCtaClick,
   backgroundImage,
   isTagYellow,
+  currencySymbol = "$",
+  formattedPrice,
 }) {
   const handleClick = () => {
     if (onCtaClick) {
@@ -100,7 +102,7 @@ export default function PriceBox({
             className="text-white text-[60px] lg:text-[68px] xl:text-[76px] 2xl:text-[88px] font-normal mb-6 lg:mb-7 xl:mb-8 2xl:mb-10 leading-none flex items-center"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
-            ${price}
+            {formattedPrice || `${currencySymbol}${price}`}
           </div>
 
           <p

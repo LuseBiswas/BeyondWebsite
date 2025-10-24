@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import PriceBox from "./PriceBox";
 import PriceMobile from "./mobile/PriceMobile";
 import { trackBookCall } from "@/lib/gtag";
@@ -7,6 +7,16 @@ import { pricingSchema } from "@/lib/schemas";
 
 export default function Price() {
   const videoRef = useRef(null);
+  const [currencyData, setCurrencyData] = useState({
+    symbol: "$",
+    code: "USD",
+    rate: 1,
+  });
+  const [convertedPrices, setConvertedPrices] = useState({
+    price1: null,
+    price2: null,
+    price3: null,
+  });
 
   useEffect(() => {
     const v = videoRef.current;
@@ -27,6 +37,71 @@ export default function Price() {
     else v.addEventListener("canplay", start, { once: true });
 
     return () => v.removeEventListener("canplay", start);
+  }, []);
+
+  useEffect(() => {
+    const fetchCurrencyData = async () => {
+      try {
+        // Get user's country from IP
+        const ipResponse = await fetch("https://ipapi.co/json/");
+        const ipData = await ipResponse.json();
+        const countryCode = ipData.country_code;
+        const currencyCode = ipData.currency;
+
+        // Get exchange rates
+        const ratesResponse = await fetch(
+          `https://api.exchangerate-api.com/v4/latest/USD`
+        );
+        const ratesData = await ratesResponse.json();
+        const rate = ratesData.rates[currencyCode] || 1;
+
+        // Currency symbols map
+        const currencySymbols = {
+          USD: "$", EUR: "€", GBP: "£", JPY: "¥", INR: "₹", AUD: "A$",
+          CAD: "C$", CHF: "Fr", CNY: "¥", SEK: "kr", NZD: "NZ$", MXN: "Mex$",
+          SGD: "S$", HKD: "HK$", NOK: "kr", KRW: "₩", TRY: "₺", RUB: "₽",
+          BRL: "R$", ZAR: "R", DKK: "kr", PLN: "zł", THB: "฿", IDR: "Rp",
+          HUF: "Ft", CZK: "Kč", ILS: "₪", CLP: "CLP$", PHP: "₱", AED: "د.إ",
+          SAR: "﷼", MYR: "RM", RON: "lei", VND: "₫", ARS: "ARS$", UAH: "₴",
+          NGN: "₦", BDT: "৳", PKR: "₨", EGP: "E£", QAR: "﷼", KWD: "د.ك",
+          COP: "COL$", PEN: "S/", OMR: "﷼", KES: "KSh", CRC: "₡", UYU: "$U",
+          GTQ: "Q", HRK: "kn", MAD: "د.م.", JOD: "د.ا", BHD: "د.ب", LKR: "Rs",
+          TND: "د.ت", DZD: "د.ج", IQD: "ع.د", LBP: "ل.ل", VEF: "Bs", GHS: "₵",
+          TZS: "TSh", XOF: "CFA", UGX: "USh", ZMW: "ZK", BIF: "FBu",
+          MUR: "₨", ISK: "kr", BGN: "лв", AMD: "֏", MNT: "₮", NPR: "₨",
+          ETB: "Br", RSD: "din", GEL: "₾", MZN: "MT", KZT: "₸", ALL: "L",
+          MKD: "ден", BWP: "P", JMD: "J$", PYG: "₲", AZN: "₼", DOP: "RD$",
+          LYD: "ل.د", BOB: "Bs.", SYP: "£", HNL: "L", NAD: "N$", TTD: "TT$",
+          AWG: "ƒ", SRD: "$", NIO: "C$", MMK: "K", PAB: "B/.", AFN: "؋",
+        };
+
+        const symbol = currencySymbols[currencyCode] || currencyCode;
+
+        setCurrencyData({
+          symbol,
+          code: currencyCode,
+          rate,
+        });
+
+        // Convert prices
+        const prices = [4800, 6500, 8000];
+        const converted = prices.map((price) => {
+          const convertedAmount = Math.round(price * rate);
+          return new Intl.NumberFormat("en-US").format(convertedAmount);
+        });
+
+        setConvertedPrices({
+          price1: `${symbol}${converted[0]}`,
+          price2: `${symbol}${converted[1]}`,
+          price3: `${symbol}${converted[2]}+`,
+        });
+      } catch (error) {
+        console.error("Error fetching currency data:", error);
+        // Keep defaults on error
+      }
+    };
+
+    fetchCurrencyData();
   }, []);
 
   const openCalendly = () => {
@@ -88,6 +163,7 @@ export default function Price() {
               title="PURELY WEBSITE"
               tag="Quick"
               price="4800"
+              formattedPrice={convertedPrices.price1}
               description="For startups,<br/> small businesses."
               cta="Get started"
               onCtaClick={openCalendly}
@@ -105,6 +181,7 @@ export default function Price() {
               tag="Popular"
               isTagYellow={true} 
               price="6500"
+              formattedPrice={convertedPrices.price2}
               description="For growing businesses that<br/>need their website to work as<br/>hard as they do."
               cta="Get started"
               onCtaClick={openCalendly}
@@ -122,6 +199,7 @@ export default function Price() {
               title="BEYOND SITE"
               tag="Comprehensive +"
               price="8000+"
+              formattedPrice={convertedPrices.price3}
               description="For ambitious brands,<br/>non-profits, and enterprises<br/>who want to lead change."
               cta="Get Started"
               onCtaClick={openCalendly}
